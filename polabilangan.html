@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petualangan Pola Bilangan - Misi Antar Galaksi</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e27;
+  --bg-2: #131a3a;
+  --fg: #ffffff;
+  --muted: #9ca3cf;
+  --accent: #ff6b35;
+  --accent-2: #00d9ff;
+  --accent-3: #aaff00;
+  --accent-4: #ff3e7f;
+  --card: #1a2150;
+  --card-2: #232b5c;
+  --border: rgba(255,255,255,0.12);
+}
+* { box-sizing: border-box; }
+html, body {
+  height: 100%; margin: 0; padding: 0;
+  overflow: hidden;
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg); color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(255, 107, 53, 0.18), transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(0, 217, 255, 0.18), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(170, 255, 0, 0.06), transparent 70%),
+    var(--bg);
+}
+.display-font { font-family: 'Fredoka', sans-serif; letter-spacing: -0.02em; }
+
+.star-field { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.star { position: absolute; background: white; border-radius: 50%; animation: twinkle var(--dur, 3s) ease-in-out infinite; }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.slide {
+  position: fixed; inset: 0; padding: 2rem 2rem 6rem;
+  opacity: 0;
+  transform: translateX(80px) scale(0.96); /* Default masuk dari kanan */
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none; z-index: 1;
+  overflow-y: auto; overflow-x: hidden;
+}
+.slide.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: all; }
+.slide.exit-left { transform: translateX(-80px) scale(0.96); opacity: 0; }
+.slide.exit-right { transform: translateX(80px) scale(0.96); opacity: 0; }
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-track { background: transparent; }
+.slide::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.card {
+  background: linear-gradient(135deg, var(--card), var(--card-2));
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.num-tile {
+  background: linear-gradient(135deg, #2a3580, #1e2570);
+  border: 2px solid rgba(0, 217, 255, 0.3);
+  border-radius: 1rem;
+  padding: 1.25rem 0.5rem;
+  text-align: center;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: var(--accent-2);
+  transition: all 0.3s;
+  min-width: 70px;
+}
+.num-tile.hidden-tile {
+  background: linear-gradient(135deg, #ff6b35, #ff9558);
+  color: white; cursor: pointer;
+  animation: pulse-glow 1.5s infinite;
+}
+.num-tile.revealed {
+  background: linear-gradient(135deg, var(--accent-3), #88dd00);
+  color: #0a0e27;
+  animation: pop-in 0.5s;
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.6); }
+  50% { box-shadow: 0 0 40px rgba(255, 107, 53, 1); transform: scale(1.05); }
+}
+@keyframes pop-in {
+  0% { transform: scale(0) rotate(-180deg); }
+  60% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.btn {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 0.875rem;
+  border: none; cursor: pointer;
+  transition: all 0.25s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 1rem;
+}
+.btn-primary { background: linear-gradient(135deg, var(--accent), #ff8c5a); color: white; box-shadow: 0 5px 0 #c54a1c, 0 8px 25px rgba(255, 107, 53, 0.4); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #c54a1c, 0 12px 30px rgba(255, 107, 53, 0.5); }
+.btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 #c54a1c, 0 4px 10px rgba(255, 107, 53, 0.4); }
+.btn-cyan { background: linear-gradient(135deg, var(--accent-2), #5ce6ff); color: #0a0e27; box-shadow: 0 5px 0 #008299, 0 8px 25px rgba(0, 217, 255, 0.4); }
+.btn-cyan:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #008299, 0 12px 30px rgba(0, 217, 255, 0.5); }
+.btn-lime { background: linear-gradient(135deg, var(--accent-3), #d4ff5a); color: #0a0e27; box-shadow: 0 5px 0 #6b9900, 0 8px 25px rgba(170, 255, 0, 0.4); }
+.btn-lime:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #6b9900, 0 12px 30px rgba(170, 255, 0, 0.5); }
+.btn-ghost { background: rgba(255,255,255,0.08); color: var(--fg); border: 1px solid var(--border); }
+.btn-ghost:hover { background: rgba(255,255,255,0.15); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+.name-input {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  transition: all 0.3s; width: 100%;
+}
+.name-input:focus {
+  outline: none; border-color: var(--accent-2);
+  background: rgba(0, 217, 255, 0.05);
+  box-shadow: 0 0 0 4px rgba(0, 217, 255, 0.1);
+}
+
+.quiz-option {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid var(--border);
+  border-radius: 0.875rem;
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  user-select: none;
+}
+.quiz-option:hover:not(.locked) {
+  border-color: var(--accent-2);
+  background: rgba(0, 217, 255, 0.1);
+  transform: translateY(-2px);
+}
+.quiz-option.correct {
+  background: rgba(170, 255, 0, 0.25) !important;
+  border-color: var(--accent-3) !important;
+  color: var(--accent-3);
+  animation: correct-bounce 0.5s;
+}
+.quiz-option.wrong {
+  background: rgba(255, 62, 127, 0.25) !important;
+  border-color: var(--accent-4) !important;
+  color: var(--accent-4);
+  animation: wrong-shake 0.4s;
+}
+.quiz-option.locked { opacity: 0.5; cursor: not-allowed; }
+
+@keyframes correct-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+@keyframes wrong-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+.progress-track {
+  height: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 6px; position: relative;
+}
+.progress-fill::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.nav-bar {
+  position: fixed; bottom: 1.25rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 0.75rem; align-items: center;
+  z-index: 100;
+  background: rgba(10, 14, 39, 0.9);
+  backdrop-filter: blur(16px);
+  padding: 0.6rem 1rem;
+  border-radius: 3rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+.nav-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(255,255,255,0.05); color: white;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  font-size: 1.2rem;
+}
+.nav-btn:hover:not(:disabled) { background: var(--accent); transform: scale(1.1); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-indicator {
+  color: var(--muted);
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.875rem;
+  border-radius: 2rem;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.badge-orange { background: rgba(255, 107, 53, 0.15); color: var(--accent); border: 1px solid rgba(255, 107, 53, 0.3); }
+.badge-cyan { background: rgba(0, 217, 255, 0.15); color: var(--accent-2); border: 1px solid rgba(0, 217, 255, 0.3); }
+.badge-lime { background: rgba(170, 255, 0, 0.15); color: var(--accent-3); border: 1px solid rgba(170, 255, 0, 0.3); }
+.badge-pink { background: rgba(255, 62, 127, 0.15); color: var(--accent-4); border: 1px solid rgba(255, 62, 127, 0.3); }
+
+.cover-bg-1 {
+  position: absolute; width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.35), transparent 70%);
+  filter: blur(60px);
+  top: -150px; left: -150px;
+  pointer-events: none;
+}
+.cover-bg-2 {
+  position: absolute; width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 217, 255, 0.35), transparent 70%);
+  filter: blur(80px);
+  bottom: -200px; right: -150px;
+  pointer-events: none;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float-medium { animation: float-medium 3s ease-in-out infinite; }
+
+.player-card {
+  background: linear-gradient(135deg, var(--card), var(--card-2));
+  border: 2px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.3s;
+}
+.player-card.p1 { border-color: rgba(0, 217, 255, 0.4); }
+.player-card.p2 { border-color: rgba(255, 62, 127, 0.4); }
+.player-card.active-turn {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(170, 255, 0, 0.4);
+  border-color: var(--accent-3);
+}
+.player-card.dimmed { opacity: 0.5; }
+
+.planet-vis {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--accent), #c54a1c);
+  box-shadow: inset -15px -15px 30px rgba(0,0,0,0.4), 0 0 50px rgba(255, 107, 53, 0.6);
+  position: relative;
+}
+.planet-vis::after {
+  content: '';
+  position: absolute;
+  inset: -10px -25px;
+  border: 3px solid rgba(170, 255, 0, 0.3);
+  border-radius: 50%;
+  transform: rotate(-20deg);
+}
+
+.coop-track {
+  position: relative;
+  height: 80px;
+  background: linear-gradient(90deg, rgba(0,217,255,0.05), rgba(170,255,0,0.05), rgba(255,107,53,0.05));
+  border-radius: 40px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.coop-track::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(90deg, transparent 0, transparent 40px, rgba(255,255,255,0.05) 40px, rgba(255,255,255,0.05) 80px);
+}
+.coop-rocket {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  filter: drop-shadow(0 0 10px rgba(0, 217, 255, 0.6));
+}
+.coop-goal {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px rgba(170, 255, 0, 0.6));
+  animation: pulse-goal 2s infinite;
+}
+@keyframes pulse-goal {
+  0%, 100% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.15); }
+}
+
+.objective-card {
+  background: linear-gradient(135deg, var(--card), var(--card-2));
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.objective-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+}
+.objective-card.cyan::before { background: var(--accent-2); }
+.objective-card.lime::before { background: var(--accent-3); }
+.objective-card.pink::before { background: var(--accent-4); }
+
+.tip-card {
+  background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(0,217,255,0.1));
+  border: 1px solid rgba(255,107,53,0.2);
+}
+
+.toast {
+  position: fixed;
+  top: 20px; left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  z-index: 1000;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: var(--accent-3); color: var(--accent-3); }
+.toast.error { border-color: var(--accent-4); color: var(--accent-4); }
+.toast.info { border-color: var(--accent-2); color: var(--accent-2); }
+
+@media (max-width: 768px) {
+  .slide { padding: 1.25rem 1rem 6rem; }
+  .nav-bar { padding: 0.5rem 0.75rem; }
+  .num-tile { font-size: 1.25rem; min-width: 50px; padding: 0.75rem 0.25rem; }
+}
+</style>
+</head>
+<body>
+<div class="star-field" id="starField"></div>
+
+<!-- Slide 0: Cover -->
+<section class="slide active" data-slide="0">
+  <div class="cover-bg-1"></div>
+  <div class="cover-bg-2"></div>
+  <div class="relative z-10 min-h-full flex flex-col items-center justify-center text-center max-w-5xl mx-auto py-8">
+    <div class="absolute top-10 right-10 animate-float-slow hidden md:block">
+      <div class="planet-vis"></div>
+    </div>
+    <div class="absolute top-32 left-10 animate-float-medium hidden md:block" style="font-size: 3rem;">🛰️</div>
+    <div class="absolute bottom-32 left-20 animate-float-slow hidden md:block" style="font-size: 2.5rem; animation-delay: 1s;">⭐</div>
+    
+    <div class="badge badge-orange mb-6">
+      <span>★</span> Misi Matematika Antar Galaksi
+    </div>
+    
+    <h1 class="display-font text-5xl md:text-7xl font-bold mb-4 leading-none">
+      PETUALANGAN<br>
+      <span style="background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">POLA BILANGAN</span>
+    </h1>
+    
+    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
+      Hai, astronot hebat! Bersiaplah menjelajahi galaksi angka yang penuh teka-teki. Selesaikan misi seru ini bersama-sama! 🚀
+    </p>
+    
+    <div class="grid md:grid-cols-2 gap-4 w-full max-w-2xl mb-8">
+      <div class="card p-5 text-left">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold display-font" style="background: rgba(0,217,255,0.15); color: var(--accent-2); border: 2px solid rgba(0,217,255,0.4);">1</div>
+          <div>
+            <div class="badge badge-cyan">Astronot Biru</div>
+            <div class="text-xs text-gray-400 mt-1">Siapa astronot pertama?</div>
+          </div>
+        </div>
+        <input type="text" id="player1Name" class="name-input" placeholder="Tulis namamu di sini..." maxlength="20">
+      </div>
+      <div class="card p-5 text-left">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold display-font" style="background: rgba(255,62,127,0.15); color: var(--accent-4); border: 2px solid rgba(255,62,127,0.4);">2</div>
+          <div>
+            <div class="badge badge-pink">Astronot Merah Muda</div>
+            <div class="text-xs text-gray-400 mt-1">Siapa astronot kedua?</div>
+          </div>
+        </div>
+        <input type="text" id="player2Name" class="name-input" placeholder="Tulis namamu di sini..." maxlength="20">
+      </div>
+    </div>
+    
+    <button class="btn btn-primary text-xl" id="startBtn">
+      <span>🚀</span> Mulai Petualangan
+    </button>
+    
+    <div class="mt-8 flex flex-wrap gap-4 text-sm text-gray-400 justify-center">
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span> 13 Misi Seru</div>
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-cyan-400"></span> 2 Game Petualangan</div>
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-lime-400"></span> 30 Latihan Soal</div>
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-pink-400"></span> 10 Contoh Interaktif</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 1: Apersepsi -->
+<section class="slide" data-slide="1">
+  <div class="max-w-6xl mx-auto min-h-full flex flex-col justify-center py-8">
+    <div class="text-center mb-8">
+      <div class="badge badge-cyan mb-4">🤔 Ayo Berpikir Sejenak</div>
+      <h2 class="display-font text-4xl md:text-5xl font-bold mb-3">Pernahkah Kalian Memperhatikan...</h2>
+      <p class="text-gray-400">Hal-hal di sekitar kita sering menyimpan rahasia angka yang menarik!</p>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="card p-6 text-center transform hover:scale-105 transition-transform">
+        <div class="text-5xl mb-3">🪜</div>
+        <h3 class="display-font font-bold text-xl mb-2 text-orange-400">Tangga Rumah</h3>
+        <p class="text-sm text-gray-400">Saat naik tangga, setiap anak tangga bertambah tinggi. Tangga ke-1, ke-2, ke-3, dan seterusnya...</p>
+      </div>
+      <div class="card p-6 text-center transform hover:scale-105 transition-transform">
+        <div class="text-5xl mb-3">🧱</div>
+        <h3 class="display-font font-bold text-xl mb-2 text-cyan-400">Susunan Bata</h3>
+        <p class="text-sm text-gray-400">Bata disusun rapi: 1, lalu 2, lalu 3, dan seterusnya. Bertambah ke atas!</p>
+      </div>
+      <div class="card p-6 text-center transform hover:scale-105 transition-transform">
+        <div class="text-5xl mb-3">📅</div>
+        <h3 class="display-font font-bold text-xl mb-2 text-lime-400">Kalender</h3>
+        <p class="text-sm text-gray-400">Tanggal bertambah 1 setiap hari: 1, 2, 3, 4, 5... sampai akhir bulan.</p>
+      </div>
+    </div>
+    
+    <div class="card p-6 mb-6 border-l-4" style="border-left-color: var(--accent);">
+      <div class="flex items-start gap-4">
+        <div class="text-4xl">💡</div>
+        <div>
+          <p class="display-font font-bold text-orange-400 text-lg mb-2">Pertanyaan Pemantik:</p>
+          <p class="text-lg mb-2">"Saat kalian naik tangga dari lantai 1 ke lantai 2, lalu ke lantai 3, apa yang terjadi dengan angka lantai? Apakah <span class="text-lime-400 font-bold">bertambah</span> atau <span class="text-pink-400 font-bold">berkurang</span>?"</p>
+          <p class="text-gray-400">Itulah yang disebut <span class="text-orange-400 font-bold">POLA BILANGAN</span> — angka yang berurutan dengan aturan tertentu!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 2: Tujuan Pembelajaran -->
+<section class="slide" data-slide="2">
+  <div class="max-w-5xl mx-auto min-h-full flex flex-col justify-center py-8">
+    <div class="text-center mb-8">
+      <div class="badge badge-lime mb-4">🎯 Misi Hari Ini</div>
+      <h2 class="display-font text-4xl md:text-5xl font-bold mb-3">Tujuan Pembelajaran</h2>
+      <p class="text-gray-400">Setelah petualangan ini, kalian akan bisa:</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="objective-card flex items-start gap-4">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0" style="background: rgba(255,107,53,0.15); border: 1px solid rgba(255,107,53,0.3);">🔍</div>
+        <div>
+          <h3 class="display-font font-bold text-lg text-orange-400 mb-1">Mengenal Pola Bilangan</h3>
+          <p class="text-sm text-gray-400">Memahami apa itu pola bilangan dan cara menemukannya dalam kehidupan sehari-hari.</p>
+        </div>
+      </div>
+      <div class="objective-card lime flex items-start gap-4">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0" style="background: rgba(170,255,0,0.15); border: 1px solid rgba(170,255,0,0.3);">📈</div>
+        <div>
+          <h3 class="display-font font-bold text-lg text-lime-400 mb-1">Pola Bilangan Membesar</h3>
+          <p class="text-sm text-gray-400">Mengidentifikasi pola bilangan yang bertambah (membesar) dan menemukan bilangan selanjutnya.</p>
+        </div>
+      </div>
+      <div class="objective-card pink flex items-start gap-4">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0" style="background: rgba(255,62,127,0.15); border: 1px solid rgba(255,62,127,0.3);">📉</div>
+        <div>
+          <h3 class="display-font font-bold text-lg text-pink-400 mb-1">Pola Bilangan Mengecil</h3>
+          <p class="text-sm text-gray-400">Mengidentifikasi pola bilangan yang berkurang (mengecil) dan menemukan bilangan selanjutnya.</p>
+        </div>
+      </div>
+      <div class="objective-card cyan flex items-start gap-4">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0" style="background: rgba(0,217,255,0.15); border: 1px solid rgba(0,217,255,0.3);">🧩</div>
+        <div>
+          <h3 class="display-font font-bold text-lg text-cyan-400 mb-1">Menyelesaikan Teka-Teki</h3>
+          <p class="text-sm text-gray-400">Menyelesaikan soal cerita dan game yang berkaitan dengan pola bilangan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 3: Konsep Pola Bilangan -->
+<section class="slide" data-slide="3">
+  <div class="max-w-6xl mx-auto min-h-full flex flex-col justify-center py-8">
+    <div class="text-center mb-6">
+      <div class="badge badge-orange mb-4">📖 Konsep Dasar</div>
+      <h2 class="display-font text-4xl md:text-5xl font-bold mb-3">Apa Itu Pola Bilangan?</h2>
+    </div>
+    
+    <div class="card p-6 md:p-8 mb-6 text-center">
+      <p class="text-xl md:text-2xl font-bold mb-4">
+        <span class="text-orange-400 display-font">Pola Bilangan</span> adalah susunan bilangan yang mengikuti <span class="text-cyan-400 display-font">aturan tertentu</span>.
+      </p>
+      <p class="text-gray-400">Bilangan-bilangan tersebut tersusun rapi sehingga kita bisa menebak bilangan selanjutnya!</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-3xl">🧠</span>
+          <h3 class="display-font font-bold text-xl text-cyan-400">Cara Menemukan Pola:</h3>
+        </div>
+        <ol class="space-y-3">
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-sm flex-shrink-0 display-font">1</span>
+            <span>Perhatikan susunan bilangannya.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-sm flex-shrink-0 display-font">2</span>
+            <span>Cari selisih (jarak) antar bilangan.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-sm flex-shrink-0 display-font">3</span>
+            <span>Apakah bertambah atau berkurang?</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-sm flex-shrink-0 display-font">4</span>
+            <span>Lanjutkan polanya dengan aturan yang sama!</span>
+          </li>
+        </ol>
+      </div>
+      
+      <div class="card p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-3xl">✨</span>
+          <h3 class="display-font font-bold text-xl text-lime-400">Contoh Sederhana:</h3>
+        </div>
+        <p class="text-gray-400 mb-4 text-sm">Lihat deretan bilangan ini:</p>
+        <div class="flex justify-center gap-2 mb-4 flex-wrap">
+          <div class="num-tile">2</div>
+          <div class="num-tile">4</div>
+          <div class="num-tile">6</div>
+          <div class="num-tile">8</div>
+          <div class="num-tile hidden-tile" id="demoKonsep">?</div>
+        </div>
+        <div class="rounded-lg p-3 text-center" style="background: rgba(170,255,0,0.1); border: 1px solid rgba(170,255,0,0.3);">
+          <p class="text-sm text-gray-300 mb-1">Selisih setiap bilangan:</p>
+          <p class="text-lime-400 font-bold display-font text-lg">+2, +2, +2, +2 → 10</p>
+        </div>
+        <p class="text-center mt-3 text-gray-300 text-sm">Klik tanda ? untuk lihat jawabannya!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 4: Pola Membesar -->
+<section class="slide" data-slide="4">
+  <div class="max-w-6xl mx-auto min-h-full flex flex-col justify-center py-8">
+    <div class="text-center mb-6">
+      <div class="badge badge-lime mb-4">📈 Pola Bertambah</div>
+      <h2 class="display-font text-4xl md:text-5xl font-bold mb-3">Pola Bilangan Membesar</h2>
+      <p class="text-gray-400">Bilangan yang bertambah besar dari kiri ke kanan</p>
+    </div>
+    
+    <div class="card p-6 md:p-8 mb-6">
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <div class="text-6xl animate-float-medium">🚀</div>
+        <div class="flex-1 text-center md:text-left">
+          <h3 class="display-font font-bold text-2xl text-lime-400 mb-2">Ciri khas: Bilangan selalu bertambah!</h3>
+          <p class="text-gray-300 mb-3">Pada pola membesar, setiap bilangan selanjutnya <span class="text-lime-400 font-bold">lebih besar</span> dari bilangan sebelumnya.</p>
+          <p class="text-gray-400 text-sm">Selisihnya bisa +2, +3, +5, +10, atau angka lainnya. Yang penting selisihnya sama!</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card p-6 mb-6">
+      <p class="text-center text-gray-400 mb-4">Contoh: pola dengan selisih <span class="text-lime-400 font-bold">+3</span></p>
+      <div class="flex justify-center items-center gap-2 flex-wrap mb-4">
+        <div class="num-tile">3</div>
+        <span class="text-2xl text-lime-400 display-font font-bold">→</span>
+        <div class="num-tile">6</div>
+        <span class="text-2xl text-lime-400 display-font font-bold">→</span>
+        <div class="num-tile">9</div>
+        <span class="text-2xl text-lime-400 display-font font-bold">→</span>
+        <div class="num-tile">12</div>
+        <span class="text-2xl text-lime-400 display-font font-bold">→</span>
+        <div class="num-tile hidden-tile" id="membesarDemo">?</div>
+      </div>
+      <div class="text-center">
+        <p class="text-gray-300 mb-1">Setiap bilangan bertambah <span class="text-lime-400 font-bold display-font text-xl">+3</span></p>
+        <p class="text-sm text-gray-400">Klik tanda ? untuk melihat jawabannya!</p>
+      </div>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-2">🔢</div>
+        <h4 class="display-font font-bold text-lime-400">Selisih +2</h4>
+        <p class="text-sm text-gray-400 mt-1">2, 4, 6, 8, 10...</p>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-2">🔢</div>
+        <h4 class="display-font font-bold text-lime-400">Selisih +5</h4>
+        <p class="text-sm text-gray-400 mt-1">5, 10, 15, 20, 25...</p>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-2">🔢</div>
+        <h4 class="display-font font-bold text-lime-400">Selisih +10</h4>
+        <p class="text-sm text-gray-400 mt-1">10, 20, 30, 40, 50...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 5: Pola Mengecil -->
+<section class="slide" data-slide="5">
+  <div class="max-w-6xl mx-auto min-h-full flex flex-col justify-center py-8">
+    <div class="text-center mb-6">
+      <div class="badge badge-pink mb-4">📉 Pola Berkurang</div>
+      <h2 class="display-font text-4xl md:text-5xl font-bold mb-3">Pola Bilangan Mengecil</h2>
+      <p class="text-gray-400">Bilangan yang berkurang dari kiri ke kanan</p>
+    </div>
+    
+    <div class="card p-6 md:p-8 mb-6">
+      <div class="flex flex-col md:flex-row items-center gap-6">
+        <div class="text-6xl animate-float-medium">🛬</div>
+        <div class="flex-1 text-center md:text-left">
+          <h3 class="display-font font-bold text-2xl text-pink-400 mb-2">Ciri khas: Bilangan selalu berkurang!</h3>
+          <p class="text-gray-300 mb-3">Pada pola mengecil, setiap bilangan selanjutnya <span class="text-pink-400 font-bold">lebih kecil</span> dari bilangan sebelumnya.</p>
+          <p class="text-gray-400 text-sm">Selisihnya bisa -2, -3, -5, -10, atau angka lainnya. Yang penting selisihnya sama!</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card p-6 mb-6">
+      <p class="text-center text-gray-400 mb-4">Contoh: pola dengan selisih <span class="text-pink-400 font-bold">-3</span></p>
+      <div class="flex justify-center items-center gap-2 flex-wrap mb-4">
+        <div class="num-tile">15</div>
+        <span class="text-2xl text-pink-400 display-font font-bold">→</span>
+        <div class="num-tile">12</div>
+        <span class="text-2xl text-pink-400 display-font font-bold">→</span>
+        <div class="num-tile">9</div>
+        <span class="text-2xl text-pink-400 display-font font-bold">→</span>
+        <div class="num-tile">6</div>
+        <span class="text-2xl text-pink-400 display-font font-bold">→</span>
+        <div class="num-tile hidden-tile" id="mengecilDemo">?</div>
+      </div>
+      <div class="text-center">
+        <p class="text-gray-300 mb-1">Setiap bilangan berkurang <span class="text-pink-400 font-bold display-font text-xl">-3</span></p>
+        <p class="text-sm text-gray-400">Klik tanda ? untuk melihat jawabannya!</p>
+      </div>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-2">🔢</div>
+        <h4 class="display-font font-bold text-pink-400">Selisih -2</h4>
+        <p class="text-sm text-gray-400 mt-1">20, 18, 16, 14, 12...</p>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-2">🔢</div>
+        <h4 class="display-font font-bold text-pink-400">Selisih -5</h4>
+        <p class="text-sm text-gray-400 mt-1">25, 20, 15, 10, 5...</p>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-2">🔢</div>
+        <h4 class="display-font font-bold text-pink-400">Selisih -10</h4>
+        <p class="text-sm text-gray-400 mt-1">50, 40, 30, 20, 10...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 6: 10 Contoh Interaktif -->
+<section class="slide" data-slide="6">
+  <div class="max-w-6xl mx-auto py-8">
+    <div class="text-center mb-6">
+      <div class="badge badge-orange mb-3">🎮 Ayo Praktik!</div>
+      <h2 class="display-font text-3xl md:text-4xl font-bold mb-2">10 Contoh Pola Bilangan</h2>
+      <p class="text-gray-400">Klik tanda <span class="text-orange-400 font-bold">?</span> untuk membuka jawabannya!</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-4 mb-6" id="examplesContainer"></div>
+    
+    <div class="text-center">
+      <button class="btn btn-ghost" id="resetExamplesBtn">🔄 Reset Semua Contoh</button>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 7: Latihan Soal -->
+<section class="slide" data-slide="7">
+  <div class="max-w-5xl mx-auto py-8">
+    <div id="practiceIntro">
+      <div class="text-center mb-8">
+        <div class="badge badge-cyan mb-4">✏️ Latihan Soal</div>
+        <h2 class="display-font text-3xl md:text-4xl font-bold mb-2">30 Soal Latihan Pola Bilangan</h2>
+        <p class="text-gray-400">Setiap astronot mengerjakan 15 soal. Ayo siapa yang paling jago?</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div class="card p-6 text-center player-card p1" id="p1Card">
+          <div class="text-4xl mb-2">🧑‍🚀</div>
+          <h3 class="display-font text-xl font-bold text-cyan-400 mb-1" id="p1NameDisplay">Astronot 1</h3>
+          <p class="text-gray-400 text-sm mb-4">15 soal pilihan ganda</p>
+          <div class="text-3xl display-font font-bold text-cyan-300" id="p1ScoreDisplay">0 / 15</div>
+        </div>
+        <div class="card p-6 text-center player-card p2" id="p2Card">
+          <div class="text-4xl mb-2">👨‍🚀</div>
+          <h3 class="display-font text-xl font-bold text-pink-400 mb-1" id="p2NameDisplay">Astronot 2</h3>
+          <p class="text-gray-400 text-sm mb-4">15 soal pilihan ganda</p>
+          <div class="text-3xl display-font font-bold text-pink-300" id="p2ScoreDisplay">0 / 15</div>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="btn btn-primary text-lg" id="startPracticeBtn">
+          <span>🚀</span> Mulai Latihan
+        </button>
+      </div>
+    </div>
+    
+    <div id="practiceQuiz" style="display: none;"></div>
+    <div id="practiceResults" style="display: none;"></div>
+  </div>
+</section>
+
+<!-- Slide 8: Game 1 - Cooperative -->
+<section class="slide" data-slide="8">
+  <div class="max-w-5xl mx-auto py-8">
+    <div id="coopIntro">
+      <div class="text-center mb-6">
+        <div class="badge badge-lime mb-3">🤝 Game 1: Kerja Sama</div>
+        <h2 class="display-font text-3xl md:text-4xl font-bold mb-2">Misi Bersama: Selamatkan Robot!</h2>
+        <p class="text-gray-400">Robot tersesat di luar angkasa. Kalian berdua harus bekerja sama memecahkan teka-teki pola bilangan untuk mengantar robot pulang!</p>
+      </div>
+      
+      <div class="card p-6 mb-6">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+          <div class="text-6xl animate-float-medium">🤖</div>
+          <div class="flex-1">
+            <h3 class="display-font font-bold text-2xl text-lime-400 mb-3">Cara Bermain:</h3>
+            <ul class="space-y-2 text-gray-300">
+              <li class="flex items-start gap-2"><span class="text-lime-400 font-bold display-font">1.</span> Kalian berdua kerjakan soal bersama-sama</li>
+              <li class="flex items-start gap-2"><span class="text-lime-400 font-bold display-font">2.</span> Diskusikan jawabannya sebelum mengklik</li>
+              <li class="flex items-start gap-2"><span class="text-lime-400 font-bold display-font">3.</span> Setiap jawaban benar, robot maju selangkah</li>
+              <li class="flex items-start gap-2"><span class="text-lime-400 font-bold display-font">4.</span> Selamatkan robot dengan menyelesaikan 5 misi!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="btn btn-lime text-lg" id="startCoopBtn">
+          <span>🚀</span> Mulai Misi Penyelamatan
+        </button>
+      </div>
+    </div>
+    
+    <div id="coopGame" style="display: none;"></div>
+    <div id="coopResults" style="display: none;"></div>
+  </div>
+</section>
+
+<!-- Slide 9: Game 2 - Battle -->
+<section class="slide" data-slide="9">
+  <div class="max-w-6xl mx-auto py-8">
+    <div id="battleIntro">
+      <div class="text-center mb-6">
+        <div class="badge badge-pink mb-3">⚔️ Game 2: Duel Antar Astronot</div>
+        <h2 class="display-font text-3xl md:text-4xl font-bold mb-2">Battle Pola Bilangan!</h2>
+        <p class="text-gray-400">Saatnya bertanding! Siapa yang paling cepat dan tepat menjawab?</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div class="card p-6 text-center player-card p1">
+          <div class="text-5xl mb-2">🧑‍🚀</div>
+          <h3 class="display-font text-xl font-bold text-cyan-400" id="battleP1Name">Astronot 1</h3>
+          <p class="text-gray-400 text-sm mt-1">Klik jawaban di sisi kiri</p>
+        </div>
+        <div class="card p-6 text-center player-card p2">
+          <div class="text-5xl mb-2">👨‍🚀</div>
+          <h3 class="display-font text-xl font-bold text-pink-400" id="battleP2Name">Astronot 2</h3>
+          <p class="text-gray-400 text-sm mt-1">Klik jawaban di sisi kanan</p>
+        </div>
+      </div>
+      
+      <div class="card p-6 mb-6">
+        <h3 class="display-font font-bold text-2xl text-pink-400 mb-3 text-center">Cara Bermain:</h3>
+        <div class="grid md:grid-cols-2 gap-4 text-gray-300">
+          <div class="flex items-start gap-3"><span class="text-pink-400 text-xl">⚡</span> Setiap ronde, kedua astronot melihat soal yang sama</div>
+          <div class="flex items-start gap-3"><span class="text-pink-400 text-xl">🎯</span> Klik jawaban yang menurutmu benar secepatnya!</div>
+          <div class="flex items-start gap-3"><span class="text-pink-400 text-xl">⭐</span> Yang benar duluan mendapat 1 poin</div>
+          <div class="flex items-start gap-3"><span class="text-pink-400 text-xl">🏆</span> Pemenang setelah 5 ronde menjadi juara!</div>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="btn btn-primary text-lg" id="startBattleBtn">
+          <span>⚔️</span> Mulai Pertarungan
+        </button>
+      </div>
+    </div>
+    
+    <div id="battleGame" style="display: none;"></div>
+    <div id="battleResults" style="display: none;"></div>
+  </div>
+</section>
+
+<!-- Slide 10: Kesimpulan -->
+<section class="slide" data-slide="10">
+  <div class="max-w-5xl mx-auto min-h-full flex flex-col justify-center py-8">
+    <div class="text-center mb-6">
+      <div class="badge badge-orange mb-4">📌 Kesimpulan</div>
+      <h2 class="display-font text-4xl md:text-5xl font-bold mb-3">Yang Sudah Kita Pelajari</h2>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="card p-6 text-center">
+        <div class="text-5xl mb-3">🧩</div>
+        <h3 class="display-font font-bold text-lg text-orange-400 mb-2">Pola Bilangan</h3>
+        <p class="text-sm text-gray-400">Susunan bilangan dengan aturan tertentu yang berulang.</p>
+      </div>
+      <div class="card p-6 text-center">
+        <div class="text-5xl mb-3">📈</div>
+        <h3 class="display-font font-bold text-lg text-lime-400 mb-2">Pola Membesar</h3>
+        <p class="text-sm text-gray-400">Bilangan bertambah besar. Contoh: 2, 4, 6, 8, 10.</p>
+      </div>
+      <div class="card p-6 text-center">
+        <div class="text-5xl mb-3">📉</div>
+        <h3 class="display-font font-bold text-lg text-pink-400 mb-2">Pola Mengecil</h3>
+        <p class="text-sm text-gray-400">Bilangan berkurang. Contoh: 20, 18, 16, 14, 12.</p>
+      </div>
+    </div>
+    
+    <div class="card p-6 mb-6">
+      <h3 class="display-font font-bold text-xl text-cyan-400 mb-4 text-center">💡 Langkah Menemukan Bilangan Selanjutnya:</h3>
+      <div class="grid md:grid-cols-4 gap-3">
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold display-font text-xl mx-auto mb-2">1</div>
+          <p class="text-sm">Perhatikan susunan bilangan</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold display-font text-xl mx-auto mb-2">2</div>
+          <p class="text-sm">Cari selisih antar bilangan</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold display-font text-xl mx-auto mb-2">3</div>
+          <p class="text-sm">Tentukan membesar atau mengecil</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold display-font text-xl mx-auto mb-2">4</div>
+          <p class="text-sm">Lanjutkan polanya!</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tip-card p-6 rounded-2xl text-center">
+      <p class="text-lg">🌟 <span class="text-orange-400 font-bold">Ingat!</span> Pola bilangan ada di mana-mana — di rumah, di sekolah, di alam. Terus berlatih dan jadi master pola bilangan! 🌟</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 11: Refleksi -->
+<section class="slide" data-slide="11">
+  <div class="max-w-4xl mx-auto min-h-full flex flex-col justify-center py-8">
+    <div class="text-center mb-8">
+      <div class="badge badge-cyan mb-4">💭 Refleksi</div>
+      <h2 class="display-font text-4xl md:text-5xl font-bold mb-3">Saatnya Berpikir & Merenung</h2>
+      <p class="text-gray-400">Yuk, jawab pertanyaan-pertanyaan ini di dalam hati atau ceritakan ke teman!</p>
+    </div>
+    
+    <div class="space-y-4">
+      <div class="card p-6 transform hover:scale-[1.02] transition-transform">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">🤔</div>
+          <div>
+            <h3 class="display-font font-bold text-lg text-orange-400 mb-1">Apa yang kamu pelajari hari ini?</h3>
+            <p class="text-gray-400 text-sm">Ceritakan apa yang menurutmu paling penting dari pelajaran ini.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card p-6 transform hover:scale-[1.02] transition-transform">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">⭐</div>
+          <div>
+            <h3 class="display-font font-bold text-lg text-lime-400 mb-1">Bagian mana yang paling seru?</h3>
+            <p class="text-gray-400 text-sm">Apakah contoh interaktif, latihan soal, atau game yang paling kamu suka? Kenapa?</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card p-6 transform hover:scale-[1.02] transition-transform">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">🧩</div>
+          <div>
+            <h3 class="display-font font-bold text-lg text-cyan-400 mb-1">Bagian mana yang masih membingungkan?</h3>
+            <p class="text-gray-400 text-sm">Jika ada yang masih bingung, jangan ragu bertanya ke guru atau teman!</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card p-6 transform hover:scale-[1.02] transition-transform">
+        <div class="flex items-start gap-4">
+          <div class="text-4xl">🚀</div>
+          <div>
+            <h3 class="display-font font-bold text-lg text-pink-400 mb-1">Di mana kamu melihat pola bilangan di kehidupan sehari-hari?</h3>
+            <p class="text-gray-400 text-sm">Coba perhatikan rumah, jalanan, atau jam dinding. Ada pola bilangan tidak?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 12: Thank You -->
+<section class="slide" data-slide="12">
+  <div class="cover-bg-1"></div>
+  <div class="cover-bg-2"></div>
+  <div class="relative z-10 min-h-full flex flex-col items-center justify-center text-center max-w-4xl mx-auto py-8">
+    <div class="text-7xl mb-6 animate-float-medium">🎉</div>
+    
+    <div class="badge badge-lime mb-6">✨ Misi Selesai!</div>
+    
+    <h1 class="display-font text-5xl md:text-7xl font-bold mb-4">
+      <span style="background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">THANK YOU</span>
+    </h1>
+    <p class="display-font text-2xl md:text-3xl font-bold mb-2">untuk hari ini!</p>
+    
+    <p class="text-lg text-gray-300 mb-8 max-w-2xl">
+      Kalian berdua <span class="text-cyan-400 font-bold" id="thankP1">Astronot 1</span> & <span class="text-pink-400 font-bold" id="thankP2">Astronot 2</span> sudah berhasil menaklukkan galaksi Pola Bilangan! 🌟
+    </p>
+    
+    <div class="grid md:grid-cols-3 gap-4 w-full max-w-2xl mb-8">
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-1">📚</div>
+        <div class="text-xs text-gray-400">Materi Dipelajari</div>
+        <div class="text-lg display-font font-bold text-orange-400">Lengkap!</div>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-1">✏️</div>
+        <div class="text-xs text-gray-400">Soal Dikerjakan</div>
+        <div class="text-lg display-font font-bold text-cyan-400">30 Soal</div>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-3xl mb-1">🎮</div>
+        <div class="text-xs text-gray-400">Game Selesai</div>
+        <div class="text-lg display-font font-bold text-lime-400">2 Game!</div>
+      </div>
+    </div>
+    
+    <p class="text-gray-400 italic text-center max-w-xl">
+      "Matematika itu petualangan yang seru. Teruslah berlatih, teruslah bertanya, dan jadi astronot matematika hebat!" 🚀
+    </p>
+    
+    <div class="mt-8 flex gap-3 text-2xl">
+      <span class="animate-float-medium" style="animation-delay: 0s;">⭐</span>
+      <span class="animate-float-medium" style="animation-delay: 0.3s;">🌟</span>
+      <span class="animate-float-medium" style="animation-delay: 0.6s;">✨</span>
+      <span class="animate-float-medium" style="animation-delay: 0.9s;">💫</span>
+      <span class="animate-float-medium" style="animation-delay: 1.2s;">⭐</span>
+    </div>
+  </div>
+</section>
+
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" disabled>‹</button>
+  <div class="nav-indicator" id="navIndicator">1 / 13</div>
+  <button class="nav-btn" id="nextBtn">›</button>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== STATE MANAGEMENT =====
+const state = {
+  currentSlide: 0,
+  totalSlides: 13,
+  player1Name: 'Astronot 1',
+  player2Name: 'Astronot 2',
+  p1Score: 0,
+  p2Score: 0,
+  currentPracticePlayer: 1,
+  currentPracticeQuestion: 0,
+  practiceQuestions: [],
+  coopProgress: 0,
+  coopCurrentQuestion: 0,
+  coopScore: 0,
+  battleRound: 0,
+  battleP1Score: 0,
+  battleP2Score: 0,
+  battleCurrentQuestion: null,
+  battleAnswered: false
+};
+
+// ===== STAR FIELD BACKGROUND =====
+function createStars() {
+  const field = document.getElementById('starField');
+  for (let i = 0; i < 80; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 2 + 1;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.setProperty('--dur', (Math.random() * 3 + 2) + 's');
+    star.style.animationDelay = Math.random() * 3 + 's';
+    field.appendChild(star);
+  }
+}
+
+// ===== TOAST NOTIFICATION =====
+function showToast(message, type = 'info') {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.className = 'toast ' + type;
+  setTimeout(() => toast.classList.add('show'), 10);
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ===== SLIDE NAVIGATION =====
+function goToSlide(index) {
+  if (index < 0 || index >= state.totalSlides) return;
+  if (index === state.currentSlide) return;
+  
+  const slides = document.querySelectorAll('.slide');
+  const current = slides[state.currentSlide];
+  const next = slides[index];
+  
+  // Reset classes pada kedua slide yang akan transisi
+  current.classList.remove('active');
+  next.classList.remove('exit-left', 'exit-right');
+  
+  // Jika maju ke slide berikutnya
+  if (index > state.currentSlide) {
+    current.classList.add('exit-left');
+  } 
+  // Jika mundur ke slide sebelumnya
+  else {
+    current.classList.add('exit-right');
+  }
+  
+  // Aktifkan slide tujuan
+  // Memberi sedikit jeda agar transisi mulus
+  requestAnimationFrame(() => {
+    next.classList.add('active');
+  });
+  
+  state.currentSlide = index;
+  updateNavButtons();
+  
+  // Scroll ke atas
+  setTimeout(() => {
+    slides[index].scrollTop = 0;
+  }, 100);
+}
+
+function updateNavButtons() {
+  document.getElementById('prevBtn').disabled = state.currentSlide === 0;
+  document.getElementById('nextBtn').disabled = state.currentSlide === state.totalSlides - 1;
+  document.getElementById('navIndicator').textContent = `${state.currentSlide + 1} / ${state.totalSlides}`;
+}
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (state.currentSlide > 0) goToSlide(state.currentSlide - 1);
+});
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (state.currentSlide < state.totalSlides - 1) goToSlide(state.currentSlide + 1);
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft' && state.currentSlide > 0) goToSlide(state.currentSlide - 1);
+  if (e.key === 'ArrowRight' && state.currentSlide < state.totalSlides - 1) goToSlide(state.currentSlide + 1);
+});
+
+// ===== COVER & START BUTTON =====
+document.getElementById('startBtn').addEventListener('click', () => {
+  const name1 = document.getElementById('player1Name').value.trim();
+  const name2 = document.getElementById('player2Name').value.trim();
+  
+  if (!name1) {
+    showToast('⚠️ Nama Astronot 1 belum diisi!', 'error');
+    document.getElementById('player1Name').focus();
+    return;
+  }
+  if (!name2) {
+    showToast('⚠️ Nama Astronot 2 belum diisi!', 'error');
+    document.getElementById('player2Name').focus();
+    return;
+  }
+  
+  state.player1Name = name1;
+  state.player2Name = name2;
+  
+  // Update all name displays
+  document.getElementById('p1NameDisplay').textContent = name1;
+  document.getElementById('p2NameDisplay').textContent = name2;
+  document.getElementById('battleP1Name').textContent = name1;
+  document.getElementById('battleP2Name').textContent = name2;
+  document.getElementById('thankP1').textContent = name1;
+  document.getElementById('thankP2').textContent = name2;
+  
+  showToast(`🚀 Ayo mulai petualangan, ${name1} & ${name2}!`, 'success');
+  goToSlide(1);
+});
+
+// Allow Enter key to start from name inputs
+['player1Name', 'player2Name'].forEach(id => {
+  document.getElementById(id).addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') document.getElementById('startBtn').click();
+  });
+});
+
+// ===== INTERACTIVE DEMO TILES =====
+function setupDemoTile(tileId, answer) {
+  const tile = document.getElementById(tileId);
+  if (tile) {
+    tile.addEventListener('click', () => {
+      tile.textContent = answer;
+      tile.classList.remove('hidden-tile');
+      tile.classList.add('revealed');
+      showToast('🎉 Hebat! Itulah jawabannya!', 'success');
+    });
+  }
+}
+
+setupDemoTile('demoKonsep', '10');
+setupDemoTile('membesarDemo', '15');
+setupDemoTile('mengecilDemo', '3');
+
+// ===== 10 INTERACTIVE EXAMPLES =====
+const examples = [
+  { sequence: [2, 4, 6, 8], answer: 10, type: 'membesar', diff: '+2', label: 'Pola Genap' },
+  { sequence: [1, 3, 5, 7], answer: 9, type: 'membesar', diff: '+2', label: 'Pola Ganjil' },
+  { sequence: [5, 10, 15, 20], answer: 25, type: 'membesar', diff: '+5', label: 'Lompat 5' },
+  { sequence: [10, 20, 30, 40], answer: 50, type: 'membesar', diff: '+10', label: 'Lompat 10' },
+  { sequence: [3, 6, 9, 12], answer: 15, type: 'membesar', diff: '+3', label: 'Kelipatan 3' },
+  { sequence: [20, 18, 16, 14], answer: 12, type: 'mengecil', diff: '-2', label: 'Mundur 2' },
+  { sequence: [25, 20, 15, 10], answer: 5, type: 'mengecil', diff: '-5', label: 'Mundur 5' },
+  { sequence: [50, 40, 30, 20], answer: 10, type: 'mengecil', diff: '-10', label: 'Mundur 10' },
+  { sequence: [18, 15, 12, 9], answer: 6, type: 'mengecil', diff: '-3', label: 'Turun 3' },
+  { sequence: [100, 90, 80, 70], answer: 60, type: 'mengecil', diff: '-10', label: 'Dari 100' }
+];
+
+function renderExamples() {
+  const container = document.getElementById('examplesContainer');
+  container.innerHTML = examples.map((ex, i) => `
+    <div class="card p-5">
+      <div class="flex items-center justify-between mb-3">
+        <div class="badge ${ex.type === 'membesar' ? 'badge-lime' : 'badge-pink'}">
+          ${ex.type === 'membesar' ? '📈' : '📉'} ${ex.label}
+        </div>
+        <span class="text-xs text-gray-500 display-font">Contoh ${i + 1}</span>
+      </div>
+      <div class="flex justify-center items-center gap-2 flex-wrap mb-3">
+        ${ex.sequence.map(n => `<div class="num-tile" style="font-size: 1.25rem; min-width: 50px; padding: 0.75rem 0.25rem;">${n}</div>`).join('')}
+        <span class="text-xl ${ex.type === 'membesar' ? 'text-lime-400' : 'text-pink-400'} display-font font-bold">→</span>
+        <div class="num-tile hidden-tile example-tile" data-index="${i}" style="font-size: 1.25rem; min-width: 50px; padding: 0.75rem 0.25rem;">?</div>
+      </div>
+      <div class="text-center text-sm text-gray-400">
+        Selisih: <span class="${ex.type === 'membesar' ? 'text-lime-400' : 'text-pink-400'} font-bold display-font">${ex.diff}</span>
+      </div>
+    </div>
+  `).join('');
+  
+  document.querySelectorAll('.example-tile').forEach(tile => {
+    tile.addEventListener('click', () => {
+      const idx = parseInt(tile.dataset.index);
+      const ex = examples[idx];
+      tile.textContent = ex.answer;
+      tile.classList.remove('hidden-tile');
+      tile.classList.add('revealed');
+      showToast(`🎉 Jawabannya ${ex.answer}!`, 'success');
+    });
+  });
+}
+
+document.getElementById('resetExamplesBtn').addEventListener('click', () => {
+  renderExamples();
+  showToast('🔄 Contoh telah direset!', 'info');
+});
+
+renderExamples();
+
+// ===== PRACTICE QUESTIONS (30 questions) =====
+function generatePracticeQuestions() {
+  const p1Questions = [
+    { seq: [2, 4, 6, 8], answer: 10, options: [9, 10, 11, 12] },
+    { seq: [5, 10, 15, 20], answer: 25, options: [22, 23, 24, 25] },
+    { seq: [10, 20, 30, 40], answer: 50, options: [45, 50, 55, 60] },
+    { seq: [1, 3, 5, 7], answer: 9, options: [8, 9, 10, 11] },
+    { seq: [20, 18, 16, 14], answer: 12, options: [10, 11, 12, 13] },
+    { seq: [25, 20, 15, 10], answer: 5, options: [0, 5, 10, 15] },
+    { seq: [3, 6, 9, 12], answer: 15, options: [13, 14, 15, 16] },
+    { seq: [50, 40, 30, 20], answer: 10, options: [0, 10, 15, 20] },
+    { seq: [4, 8, 12, 16], answer: 20, options: [18, 19, 20, 21] },
+    { seq: [100, 90, 80, 70], answer: 60, options: [50, 55, 60, 65] },
+    { seq: [7, 14, 21, 28], answer: 35, options: [32, 33, 34, 35] },
+    { seq: [18, 15, 12, 9], answer: 6, options: [3, 6, 7, 8] },
+    { seq: [11, 22, 33, 44], answer: 55, options: [50, 52, 55, 58] },
+    { seq: [40, 35, 30, 25], answer: 20, options: [15, 20, 25, 30] },
+    { seq: [6, 12, 18, 24], answer: 30, options: [26, 28, 30, 32] }
+  ];
+  
+  const p2Questions = [
+    { seq: [3, 5, 7, 9], answer: 11, options: [10, 11, 12, 13] },
+    { seq: [10, 15, 20, 25], answer: 30, options: [28, 29, 30, 31] },
+    { seq: [20, 40, 60, 80], answer: 100, options: [85, 90, 95, 100] },
+    { seq: [2, 5, 8, 11], answer: 14, options: [12, 13, 14, 15] },
+    { seq: [30, 25, 20, 15], answer: 10, options: [5, 10, 12, 15] },
+    { seq: [40, 36, 32, 28], answer: 24, options: [20, 24, 26, 28] },
+    { seq: [4, 7, 10, 13], answer: 16, options: [14, 15, 16, 17] },
+    { seq: [60, 50, 40, 30], answer: 20, options: [10, 15, 20, 25] },
+    { seq: [8, 16, 24, 32], answer: 40, options: [36, 38, 40, 42] },
+    { seq: [90, 80, 70, 60], answer: 50, options: [40, 45, 50, 55] },
+    { seq: [9, 18, 27, 36], answer: 45, options: [42, 43, 44, 45] },
+    { seq: [22, 19, 16, 13], answer: 10, options: [7, 10, 11, 12] },
+    { seq: [12, 24, 36, 48], answer: 60, options: [50, 54, 60, 64] },
+    { seq: [35, 30, 25, 20], answer: 15, options: [10, 15, 18, 20] },
+    { seq: [5, 10, 15, 20], answer: 25, options: [22, 24, 25, 28] }
+  ];
+  
+  state.practiceQuestions = { p1: p1Questions, p2: p2Questions };
+}
+
+generatePracticeQuestions();
+
+// ===== PRACTICE QUIZ LOGIC =====
+document.getElementById('startPracticeBtn').addEventListener('click', () => {
+  state.currentPracticePlayer = 1;
+  state.currentPracticeQuestion = 0;
+  state.p1Score = 0;
+  state.p2Score = 0;
+  updatePracticeScoreDisplay();
+  document.getElementById('practiceIntro').style.display = 'none';
+  document.getElementById('practiceResults').style.display = 'none';
+  document.getElementById('practiceQuiz').style.display = 'block';
+  renderPracticeQuestion();
+});
+
+function updatePracticeScoreDisplay() {
+  document.getElementById('p1ScoreDisplay').textContent = `${state.p1Score} / 15`;
+  document.getElementById('p2ScoreDisplay').textContent = `${state.p2Score} / 15`;
+  
+  const p1Card = document.getElementById('p1Card');
+  const p2Card = document.getElementById('p2Card');
+  if (state.currentPracticePlayer === 1) {
+    p1Card.classList.add('active-turn');
+    p2Card.classList.remove('active-turn');
+    p2Card.classList.add('dimmed');
+    p1Card.classList.remove('dimmed');
+  } else {
+    p2Card.classList.add('active-turn');
+    p1Card.classList.remove('active-turn');
+    p1Card.classList.add('dimmed');
+    p2Card.classList.remove('dimmed');
+  }
+}
+
+function renderPracticeQuestion() {
+  const player = state.currentPracticePlayer;
+  const qIndex = state.currentPracticeQuestion;
+  const questions = player === 1 ? state.practiceQuestions.p1 : state.practiceQuestions.p2;
+  const q = questions[qIndex];
+  const playerName = player === 1 ? state.player1Name : state.player2Name;
+  const playerColor = player === 1 ? 'cyan' : 'pink';
+  
+  const isMembesar = q.seq[q.seq.length - 1] > q.seq[0];
+  const typeLabel = isMembesar ? '📈 Membesar' : '📉 Mengecil';
+  const typeColor = isMembesar ? 'lime' : 'pink';
+  
+  document.getElementById('practiceQuiz').innerHTML = `
+    <div class="text-center mb-6">
+      <div class="badge badge-${playerColor} mb-3">
+        🧑‍🚀 Giliran: ${playerName}
+      </div>
+      <h3 class="display-font text-2xl font-bold mb-2">Soal ${qIndex + 1} dari 15</h3>
+      <div class="badge badge-${typeColor}">${typeLabel}</div>
+    </div>
+    
+    <div class="progress-track mb-6">
+      <div class="progress-fill" style="width: ${((qIndex + 1) / 15) * 100}%"></div>
+    </div>
+    
+    <div class="card p-6 md:p-8 mb-6">
+      <p class="text-center text-gray-400 mb-4">Apa bilangan selanjutnya?</p>
+      <div class="flex justify-center items-center gap-2 flex-wrap mb-4">
+        ${q.seq.map(n => `<div class="num-tile">${n}</div>`).join('')}
+        <span class="text-2xl ${isMembesar ? 'text-lime-400' : 'text-pink-400'} display-font font-bold">→</span>
+        <div class="num-tile hidden-tile">?</div>
+      </div>
+      <p class="text-center text-sm text-gray-400">Pilih jawaban yang benar:</p>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+      ${q.options.map(opt => `
+        <div class="quiz-option" data-answer="${opt}">${opt}</div>
+      `).join('')}
+    </div>
+    
+    <div id="practiceFeedback" class="text-center" style="min-height: 60px;"></div>
+  `;
+  
+  updatePracticeScoreDisplay();
+  
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.addEventListener('click', () => handlePracticeAnswer(parseInt(opt.dataset.answer), q.answer));
+  });
+}
+
+function handlePracticeAnswer(selected, correct) {
+  const options = document.querySelectorAll('.quiz-option');
+  options.forEach(opt => {
+    opt.classList.add('locked');
+    const val = parseInt(opt.dataset.answer);
+    if (val === correct) opt.classList.add('correct');
+    else if (val === selected) opt.classList.add('wrong');
+  });
+  
+  const isCorrect = selected === correct;
+  const player = state.currentPracticePlayer;
+  if (isCorrect) {
+    if (player === 1) state.p1Score++;
+    else state.p2Score++;
+  }
+  
+  const feedback = document.getElementById('practiceFeedback');
+  feedback.innerHTML = `
+    <div class="card p-4 inline-block" style="background: ${isCorrect ? 'rgba(170,255,0,0.1)' : 'rgba(255,62,127,0.1)'}; border-color: ${isCorrect ? 'var(--accent-3)' : 'var(--accent-4)'}">
+      <p class="display-font font-bold text-lg ${isCorrect ? 'text-lime-400' : 'text-pink-400'}">
+        ${isCorrect ? '🎉 Benar! Hebat!' : '❌ Belum tepat. Jawabannya: ' + correct}
+      </p>
+    </div>
+    <div class="mt-4">
+      <button class="btn btn-primary" id="nextPracticeBtn">
+        ${state.currentPracticeQuestion < 14 ? 'Soal Berikutnya →' : (player === 1 ? 'Giliran ' + state.player2Name : 'Lihat Hasil')}
+      </button>
+    </div>
+  `;
+  
+  document.getElementById('nextPracticeBtn').addEventListener('click', () => {
+    state.currentPracticeQuestion++;
+    if (state.currentPracticeQuestion >= 15) {
+      if (state.currentPracticePlayer === 1) {
+        state.currentPracticePlayer = 2;
+        state.currentPracticeQuestion = 0;
+        showToast(`🧑‍🚀 Sekarang giliran ${state.player2Name}!`, 'info');
+        renderPracticeQuestion();
+      } else {
+        showPracticeResults();
+      }
+    } else {
+      renderPracticeQuestion();
+    }
+  });
+  
+  updatePracticeScoreDisplay();
+}
+
+function showPracticeResults() {
+  document.getElementById('practiceQuiz').style.display = 'none';
+  document.getElementById('practiceResults').style.display = 'block';
+  
+  const winner = state.p1Score > state.p2Score ? state.player1Name : 
+                 state.p2Score > state.p1Score ? state.player2Name : 'Seri!';
+  const winnerColor = state.p1Score > state.p2Score ? 'cyan' : 
+                      state.p2Score > state.p1Score ? 'pink' : 'orange';
+  
+  document.getElementById('practiceResults').innerHTML = `
+    <div class="text-center mb-8">
+      <div class="text-6xl mb-4">🏆</div>
+      <h2 class="display-font text-3xl md:text-4xl font-bold mb-3">Hasil Latihan</h2>
+      <p class="text-gray-400">Kalian berdua hebat! Ayo lihat hasilnya:</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card p-6 text-center player-card p1 ${state.p1Score >= state.p2Score ? 'active-turn' : 'dimmed'}">
+        <div class="text-5xl mb-2">🧑‍🚀</div>
+        <h3 class="display-font text-xl font-bold text-cyan-400 mb-2">${state.player1Name}</h3>
+        <div class="text-5xl display-font font-bold text-cyan-300 mb-2">${state.p1Score}</div>
+        <p class="text-gray-400 text-sm">dari 15 soal</p>
+        <div class="progress-track mt-3">
+          <div class="progress-fill" style="width: ${(state.p1Score / 15) * 100}%"></div>
+        </div>
+      </div>
+      <div class="card p-6 text-center player-card p2 ${state.p2Score >= state.p1Score ? 'active-turn' : 'dimmed'}">
+        <div class="text-5xl mb-2">👨‍🚀</div>
+        <h3 class="display-font text-xl font-bold text-pink-400 mb-2">${state.player2Name}</h3>
+        <div class="text-5xl display-font font-bold text-pink-300 mb-2">${state.p2Score}</div>
+        <p class="text-gray-400 text-sm">dari 15 soal</p>
+        <div class="progress-track mt-3">
+          <div class="progress-fill" style="width: ${(state.p2Score / 15) * 100}%"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card p-6 text-center mb-6" style="background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(0,217,255,0.1));">
+      <p class="display-font text-2xl font-bold mb-2 text-${winnerColor}-400">
+        ${state.p1Score === state.p2Score ? '🤝 Hasil Seri!' : '🏆 Pemenang: ' + winner}
+      </p>
+      <p class="text-gray-400">Total jawaban benar: ${state.p1Score + state.p2Score} dari 30 soal</p>
+    </div>
+    
+    <div class="text-center">
+      <button class="btn btn-ghost" onclick="resetPractice()">🔄 Ulangi Latihan</button>
+      <button class="btn btn-primary" onclick="goToSlide(8)">🚀 Lanjut ke Game 1</button>
+    </div>
+  `;
+}
+
+window.resetPractice = function() {
+  state.p1Score = 0;
+  state.p2Score = 0;
+  state.currentPracticePlayer = 1;
+  state.currentPracticeQuestion = 0;
+  updatePracticeScoreDisplay();
+  document.getElementById('practiceResults').style.display = 'none';
+  document.getElementById('practiceIntro').style.display = 'block';
+};
+
+// ===== COOP GAME (Game 1) =====
+const coopQuestions = [
+  { seq: [4, 8, 12, 16], answer: 20, options: [18, 19, 20, 21] },
+  { seq: [30, 25, 20, 15], answer: 10, options: [5, 10, 12, 15] },
+  { seq: [5, 10, 15, 20], answer: 25, options: [22, 23, 24, 25] },
+  { seq: [50, 40, 30, 20], answer: 10, options: [5, 10, 15, 20] },
+  { seq: [7, 14, 21, 28], answer: 35, options: [32, 33, 34, 35] }
+];
+
+document.getElementById('startCoopBtn').addEventListener('click', () => {
+  state.coopProgress = 0;
+  state.coopCurrentQuestion = 0;
+  state.coopScore = 0;
+  document.getElementById('coopIntro').style.display = 'none';
+  document.getElementById('coopResults').style.display = 'none';
+  document.getElementById('coopGame').style.display = 'block';
+  renderCoopQuestion();
+});
+
+function renderCoopQuestion() {
+  const q = coopQuestions[state.coopCurrentQuestion];
+  const isMembesar = q.seq[q.seq.length - 1] > q.seq[0];
+  
+  document.getElementById('coopGame').innerHTML = `
+    <div class="text-center mb-6">
+      <div class="badge badge-lime mb-3">🤝 Misi ${state.coopCurrentQuestion + 1} dari 5</div>
+      <h3 class="display-font text-2xl font-bold mb-2">Selamatkan Robot Bersama!</h3>
+      <p class="text-gray-400 text-sm">${state.player1Name} & ${state.player2Name}, diskusikan jawabannya bersama!</p>
+    </div>
+    
+    <div class="card p-4 mb-6">
+      <div class="coop-track">
+        <div class="coop-rocket" id="coopRocket" style="left: ${10 + (state.coopProgress * 18)}%;">🚀</div>
+        <div class="coop-goal">🌍</div>
+      </div>
+      <div class="flex justify-between text-xs text-gray-500 mt-2">
+        <span>Bumi</span>
+        <span>Robot</span>
+        <span>Pulang</span>
+      </div>
+    </div>
+    
+    <div class="card p-6 mb-6">
+      <p class="text-center text-gray-400 mb-4">Apa bilangan selanjutnya?</p>
+      <div class="flex justify-center items-center gap-2 flex-wrap mb-4">
+        ${q.seq.map(n => `<div class="num-tile">${n}</div>`).join('')}
+        <span class="text-2xl ${isMembesar ? 'text-lime-400' : 'text-pink-400'} display-font font-bold">→</span>
+        <div class="num-tile hidden-tile">?</div>
+      </div>
+      <p class="text-center text-sm text-gray-400">Pilih jawaban yang benar bersama:</p>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+      ${q.options.map(opt => `
+        <div class="quiz-option" data-answer="${opt}">${opt}</div>
+      `).join('')}
+    </div>
+    
+    <div id="coopFeedback" class="text-center" style="min-height: 60px;"></div>
+  `;
+  
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.addEventListener('click', () => handleCoopAnswer(parseInt(opt.dataset.answer), q.answer));
+  });
+}
+
+function handleCoopAnswer(selected, correct) {
+  const options = document.querySelectorAll('.quiz-option');
+  options.forEach(opt => {
+    opt.classList.add('locked');
+    const val = parseInt(opt.dataset.answer);
+    if (val === correct) opt.classList.add('correct');
+    else if (val === selected) opt.classList.add('wrong');
+  });
+  
+  const isCorrect = selected === correct;
+  if (isCorrect) {
+    state.coopScore++;
+    state.coopProgress++;
+  }
+  
+  const feedback = document.getElementById('coopFeedback');
+  feedback.innerHTML = `
+    <div class="card p-4 inline-block" style="background: ${isCorrect ? 'rgba(170,255,0,0.1)' : 'rgba(255,62,127,0.1)'}; border-color: ${isCorrect ? 'var(--accent-3)' : 'var(--accent-4)'}">
+      <p class="display-font font-bold text-lg ${isCorrect ? 'text-lime-400' : 'text-pink-400'}">
+        ${isCorrect ? '🎉 Hebat! Robot maju selangkah!' : '❌ Belum tepat. Jawabannya: ' + correct}
+      </p>
+    </div>
+    <div class="mt-4">
+      <button class="btn btn-lime" id="nextCoopBtn">
+        ${state.coopCurrentQuestion < 4 ? 'Misi Berikutnya →' : 'Lihat Hasil'}
+      </button>
+    </div>
+  `;
+  
+  document.getElementById('nextCoopBtn').addEventListener('click', () => {
+    state.coopCurrentQuestion++;
+    if (state.coopCurrentQuestion >= 5) {
+      showCoopResults();
+    } else {
+      renderCoopQuestion();
+    }
+  });
+}
+
+function showCoopResults() {
+  document.getElementById('coopGame').style.display = 'none';
+  document.getElementById('coopResults').style.display = 'block';
+  
+  const success = state.coopScore >= 3;
+  
+  document.getElementById('coopResults').innerHTML = `
+    <div class="text-center mb-8">
+      <div class="text-7xl mb-4 animate-float-medium">${success ? '🎉' : '💪'}</div>
+      <h2 class="display-font text-3xl md:text-4xl font-bold mb-3">
+        ${success ? 'Robot Selamat!' : 'Coba Lagi!'}
+      </h2>
+      <p class="text-gray-400">
+        ${state.player1Name} & ${state.player2Name} berhasil menjawab ${state.coopScore} dari 5 misi bersama!
+      </p>
+    </div>
+    
+    <div class="card p-6 mb-6 text-center">
+      <div class="text-5xl mb-3 display-font font-bold ${success ? 'text-lime-400' : 'text-orange-400'}">${state.coopScore}/5</div>
+      <div class="progress-track mb-4">
+        <div class="progress-fill" style="width: ${(state.coopScore / 5) * 100}%"></div>
+      </div>
+      <p class="text-gray-300">
+        ${state.coopScore === 5 ? '🌟 Luar biasa! Kalian tim yang sempurna! Robot sampai dengan selamat!' : 
+          state.coopScore >= 3 ? '👍 Kerja sama yang baik! Robot berhasil selamat!' : 
+          '💪 Tetap semangat! Berlatih lagi bersama!'}
+      </p>
+    </div>
+    
+    <div class="text-center">
+      <button class="btn btn-ghost" onclick="resetCoop()">🔄 Main Lagi</button>
+      <button class="btn btn-primary" onclick="goToSlide(9)">⚔️ Lanjut ke Battle!</button>
+    </div>
+  `;
+}
+
+window.resetCoop = function() {
+  state.coopProgress = 0;
+  state.coopCurrentQuestion = 0;
+  state.coopScore = 0;
+  document.getElementById('coopResults').style.display = 'none';
+  document.getElementById('coopIntro').style.display = 'block';
+};
+
+// ===== BATTLE GAME (Game 2) =====
+const battleQuestions = [
+  { seq: [2, 4, 6, 8], answer: 10, options: [9, 10, 11, 12] },
+  { seq: [20, 18, 16, 14], answer: 12, options: [10, 11, 12, 13] },
+  { seq: [5, 10, 15, 20], answer: 25, options: [22, 23, 24, 25] },
+  { seq: [25, 20, 15, 10], answer: 5, options: [0, 5, 10, 15] },
+  { seq: [3, 6, 9, 12], answer: 15, options: [13, 14, 15, 16] }
+];
+
+document.getElementById('startBattleBtn').addEventListener('click', () => {
+  state.battleRound = 0;
+  state.battleP1Score = 0;
+  state.battleP2Score = 0;
+  document.getElementById('battleIntro').style.display = 'none';
+  document.getElementById('battleResults').style.display = 'none';
+  document.getElementById('battleGame').style.display = 'block';
+  renderBattleQuestion();
+});
+
+function renderBattleQuestion() {
+  state.battleAnswered = false;
+  const q = battleQuestions[state.battleRound];
+  const isMembesar = q.seq[q.seq.length - 1] > q.seq[0];
+  
+  document.getElementById('battleGame').innerHTML = `
+    <div class="text-center mb-6">
+      <div class="badge badge-pink mb-3">⚔️ Ronde ${state.battleRound + 1} dari 5</div>
+      <h3 class="display-font text-2xl font-bold mb-2">Siapa Paling Cepat & Tepat?</h3>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card p-4 text-center player-card p1 active-turn">
+        <div class="text-3xl mb-1">🧑‍🚀</div>
+        <h4 class="display-font font-bold text-cyan-400">${state.player1Name}</h4>
+        <div class="text-2xl display-font font-bold text-cyan-300 mt-1">${state.battleP1Score} ⭐</div>
+      </div>
+      <div class="card p-4 text-center player-card p2 active-turn">
+        <div class="text-3xl mb-1">👨‍🚀</div>
+        <h4 class="display-font font-bold text-pink-400">${state.player2Name}</h4>
+        <div class="text-2xl display-font font-bold text-pink-300 mt-1">${state.battleP2Score} ⭐</div>
+      </div>
+    </div>
+    
+    <div class="card p-6 mb-6">
+      <p class="text-center text-gray-400 mb-4">Apa bilangan selanjutnya?</p>
+      <div class="flex justify-center items-center gap-2 flex-wrap mb-4">
+        ${q.seq.map(n => `<div class="num-tile">${n}</div>`).join('')}
+        <span class="text-2xl ${isMembesar ? 'text-lime-400' : 'text-pink-400'} display-font font-bold">→</span>
+        <div class="num-tile hidden-tile">?</div>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <p class="text-center text-cyan-400 font-bold display-font mb-2">${state.player1Name}</p>
+        <div class="grid grid-cols-2 gap-2">
+          ${q.options.map(opt => `
+            <div class="quiz-option" data-answer="${opt}" data-player="1">${opt}</div>
+          `).join('')}
+        </div>
+      </div>
+      <div>
+        <p class="text-center text-pink-400 font-bold display-font mb-2">${state.player2Name}</p>
+        <div class="grid grid-cols-2 gap-2">
+          ${q.options.map(opt => `
+            <div class="quiz-option" data-answer="${opt}" data-player="2">${opt}</div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+    
+    <div id="battleFeedback" class="text-center mt-6" style="min-height: 60px;"></div>
+  `;
+  
+  document.querySelectorAll('.quiz-option[data-player]').forEach(opt => {
+    opt.addEventListener('click', () => {
+      if (state.battleAnswered) return;
+      state.battleAnswered = true;
+      handleBattleAnswer(parseInt(opt.dataset.answer), q.answer, parseInt(opt.dataset.player));
+    });
+  });
+}
+
+function handleBattleAnswer(selected, correct, player) {
+  const allOptions = document.querySelectorAll('.quiz-option[data-player]');
+  allOptions.forEach(opt => {
+    opt.classList.add('locked');
+    const val = parseInt(opt.dataset.answer);
+    if (val === correct) opt.classList.add('correct');
+    else if (val === selected && parseInt(opt.dataset.player) === player) opt.classList.add('wrong');
+  });
+  
+  const isCorrect = selected === correct;
+  const playerName = player === 1 ? state.player1Name : state.player2Name;
+  
+  if (isCorrect) {
+    if (player === 1) state.battleP1Score++;
+    else state.battleP2Score++;
+  }
+  
+  const feedback = document.getElementById('battleFeedback');
+  feedback.innerHTML = `
+    <div class="card p-4 inline-block" style="background: ${isCorrect ? 'rgba(170,255,0,0.1)' : 'rgba(255,62,127,0.1)'}; border-color: ${isCorrect ? 'var(--accent-3)' : 'var(--accent-4)'}">
+      <p class="display-font font-bold text-lg ${isCorrect ? 'text-lime-400' : 'text-pink-400'}">
+        ${isCorrect ? `🎉 ${playerName} benar! +1 poin!` : `❌ ${playerName} salah! Jawabannya: ${correct}`}
+      </p>
+    </div>
+    <div class="mt-4">
+      <button class="btn btn-primary" id="nextBattleBtn">
+        ${state.battleRound < 4 ? 'Ronde Berikutnya →' : 'Lihat Hasil'}
+      </button>
+    </div>
+  `;
+  
+  document.getElementById('nextBattleBtn').addEventListener('click', () => {
+    state.battleRound++;
+    if (state.battleRound >= 5) {
+      showBattleResults();
+    } else {
+      renderBattleQuestion();
+    }
+  });
+}
+
+function showBattleResults() {
+  document.getElementById('battleGame').style.display = 'none';
+  document.getElementById('battleResults').style.display = 'block';
+  
+  const winner = state.battleP1Score > state.battleP2Score ? state.player1Name : 
+                 state.battleP2Score > state.battleP1Score ? state.player2Name : null;
+  
+  document.getElementById('battleResults').innerHTML = `
+    <div class="text-center mb-8">
+      <div class="text-7xl mb-4 animate-float-medium">${winner ? '🏆' : '🤝'}</div>
+      <h2 class="display-font text-3xl md:text-4xl font-bold mb-3">
+        ${winner ? 'Juara: ' + winner + '!' : 'Hasil Seri!'}
+      </h2>
+      <p class="text-gray-400">Pertandingan yang seru!</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card p-6 text-center player-card p1 ${state.battleP1Score >= state.battleP2Score ? 'active-turn' : 'dimmed'}">
+        <div class="text-5xl mb-2">🧑‍🚀</div>
+        <h3 class="display-font text-xl font-bold text-cyan-400 mb-2">${state.player1Name}</h3>
+        <div class="text-5xl display-font font-bold text-cyan-300 mb-2">${state.battleP1Score} ⭐</div>
+        <p class="text-gray-400 text-sm">dari 5 ronde</p>
+      </div>
+      <div class="card p-6 text-center player-card p2 ${state.battleP2Score >= state.battleP1Score ? 'active-turn' : 'dimmed'}">
+        <div class="text-5xl mb-2">👨‍🚀</div>
+        <h3 class="display-font text-xl font-bold text-pink-400 mb-2">${state.player2Name}</h3>
+        <div class="text-5xl display-font font-bold text-pink-300 mb-2">${state.battleP2Score} ⭐</div>
+        <p class="text-gray-400 text-sm">dari 5 ronde</p>
+      </div>
+    </div>
+    
+    <div class="card p-6 text-center mb-6">
+      <p class="text-gray-300">
+        ${winner ? `🎉 Selamat ${winner}! Kamu juara Battle Pola Bilangan!` : '🤝 Kalian sama hebatnya! Pertandingan seri!'}
+      </p>
+    </div>
+    
+    <div class="text-center">
+      <button class="btn btn-ghost" onclick="resetBattle()">🔄 Main Lagi</button>
+      <button class="btn btn-primary" onclick="goToSlide(10)">📌 Lanjut ke Kesimpulan</button>
+    </div>
+  `;
+}
+
+window.resetBattle = function() {
+  state.battleRound = 0;
+  state.battleP1Score = 0;
+  state.battleP2Score = 0;
+  document.getElementById('battleResults').style.display = 'none';
+  document.getElementById('battleIntro').style.display = 'block';
+};
+
+// ===== INITIALIZATION =====
+createStars();
+updateNavButtons();
+</script>
+</body>
+</html>
