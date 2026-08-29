@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petualangan Pola Gambar - Kelas 3 SD</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #0a1235;
+    --bg2: #1a2456;
+    --orange: #ff6b35;
+    --lime: #b8e835;
+    --cyan: #00d9ff;
+    --yellow: #ffd23f;
+    --pink: #ff3d7f;
+    --cream: #fff8e7;
+    --p1: #00d9ff;
+    --p2: #ff6b35;
+  }
+  
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; height: 100vh; overflow: hidden; }
+  
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--cream);
+    font-weight: 700;
+  }
+  
+  .display { font-family: 'Fredoka', sans-serif; letter-spacing: -0.02em; }
+  
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(255, 107, 53, 0.2), transparent 45%),
+      radial-gradient(ellipse at 80% 80%, rgba(0, 217, 255, 0.2), transparent 45%),
+      radial-gradient(ellipse at 50% 50%, rgba(184, 232, 53, 0.08), transparent 60%),
+      linear-gradient(180deg, #0a1235 0%, #131c4a 100%);
+  }
+  
+  .bg-shapes { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  .floating-shape {
+    position: absolute; font-size: 2.5rem; opacity: 0.18;
+    animation: floatUp linear infinite; user-select: none;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); }
+    100% { transform: translateY(-15vh) rotate(360deg); }
+  }
+  
+  .slide {
+    position: absolute; inset: 0; padding: 3rem 4rem 6rem;
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; z-index: 1; overflow-y: auto;
+  }
+  .slide.active {
+    display: flex; opacity: 1;
+    animation: slideEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @keyframes slideEnter {
+    from { opacity: 0; transform: scale(0.92) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  
+  .progress-track {
+    position: fixed; top: 0; left: 0; right: 0; height: 6px;
+    background: rgba(255,255,255,0.08); z-index: 100;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), var(--yellow), var(--lime), var(--cyan));
+    background-size: 200% 100%;
+    animation: gradient 3s linear infinite;
+    transition: width 0.5s ease;
+    border-radius: 0 4px 4px 0;
+  }
+  @keyframes gradient { 0% { background-position: 0% 0%; } 100% { background-position: 200% 0%; } }
+  
+  .nav-bar {
+    position: fixed; bottom: 1.25rem; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 1rem; align-items: center;
+    background: rgba(10, 18, 53, 0.85); backdrop-filter: blur(16px);
+    padding: 0.6rem 1.25rem; border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.12); z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  .nav-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--orange); color: white; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; transition: all 0.2s; font-family: inherit;
+    box-shadow: 0 4px 0 #c44a1f;
+  }
+  .nav-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 0 #c44a1f; }
+  .nav-btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 #c44a1f; }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; box-shadow: none; }
+  .nav-btn.next { background: var(--lime); color: #0a1235; box-shadow: 0 4px 0 #7ba316; }
+  .nav-btn.next:hover:not(:disabled) { box-shadow: 0 6px 0 #7ba316; }
+  .nav-btn.next:active:not(:disabled) { box-shadow: 0 2px 0 #7ba316; }
+  .slide-counter { color: var(--cream); font-weight: 800; min-width: 60px; text-align: center; }
+  
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px;
+  }
+  
+  .btn-game {
+    background: linear-gradient(135deg, var(--orange), #ff8c42);
+    color: white; padding: 0.9rem 2rem; border-radius: 16px;
+    border: none; font-weight: 800; font-size: 1.1rem; cursor: pointer;
+    transition: all 0.25s; box-shadow: 0 6px 0 #c44a1f, 0 10px 20px rgba(255, 107, 53, 0.4);
+    font-family: 'Fredoka', sans-serif;
+  }
+  .btn-game:hover { transform: translateY(-2px); }
+  .btn-game:active { transform: translateY(4px); box-shadow: 0 2px 0 #c44a1f; }
+  .btn-game.lime { background: linear-gradient(135deg, var(--lime), #d4f042); color: #0a1235; box-shadow: 0 6px 0 #7ba316, 0 10px 20px rgba(184, 232, 53, 0.4); }
+  .btn-game.lime:active { box-shadow: 0 2px 0 #7ba316; }
+  .btn-game.cyan { background: linear-gradient(135deg, var(--cyan), #4de7ff); color: #0a1235; box-shadow: 0 6px 0 #0099b8, 0 10px 20px rgba(0, 217, 255, 0.4); }
+  .btn-game.cyan:active { box-shadow: 0 2px 0 #0099b8; }
+  
+  .input-name {
+    background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 16px; padding: 1rem 1.25rem; color: var(--cream);
+    font-size: 1.1rem; font-weight: 800; font-family: 'Fredoka', sans-serif;
+    transition: all 0.3s; outline: none; width: 100%;
+  }
+  .input-name:focus {
+    border-color: var(--lime); background: rgba(184, 232, 53, 0.08);
+    box-shadow: 0 0 0 4px rgba(184, 232, 53, 0.15);
+  }
+  .input-name::placeholder { color: rgba(255,255,255,0.4); }
+  
+  .pattern-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .pattern-item {
+    width: 60px; height: 60px; border-radius: 14px;
+    background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; transition: all 0.3s;
+  }
+  .pattern-item.missing {
+    background: rgba(255, 210, 63, 0.15); border-color: var(--yellow);
+    border-style: dashed; color: var(--yellow);
+    animation: pulse 1.5s ease infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(255, 210, 63, 0.5); }
+  }
+  
+  .quiz-option {
+    background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 18px; padding: 1rem 1.5rem; cursor: pointer;
+    transition: all 0.25s; font-size: 1.8rem; text-align: center;
+    font-family: 'Fredoka', sans-serif; color: var(--cream); user-select: none;
+  }
+  .quiz-option:hover { background: rgba(255,255,255,0.12); border-color: var(--cyan); transform: translateY(-2px); }
+  .quiz-option.correct { background: rgba(184, 232, 53, 0.25); border-color: var(--lime); color: var(--lime); animation: correctPulse 0.5s ease; }
+  .quiz-option.wrong { background: rgba(255, 61, 127, 0.25); border-color: var(--pink); color: var(--pink); animation: shake 0.4s ease; }
+  .quiz-option.disabled { pointer-events: none; opacity: 0.5; }
+  @keyframes correctPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+  
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 1rem; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 50px;
+    font-size: 0.85rem; font-weight: 800; color: var(--lime);
+  }
+  
+  .mega-title { font-family: 'Fredoka', sans-serif; font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; }
+  .emoji-float { display: inline-block; animation: emojiBob 2s ease-in-out infinite; }
+  @keyframes emojiBob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-8px) rotate(3deg); } }
+  
+  .canva-btn {
+    display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(184, 232, 53, 0.15));
+    border: 2px solid rgba(0, 217, 255, 0.4); border-radius: 20px;
+    color: var(--cream); text-decoration: none; font-weight: 800;
+    font-family: 'Fredoka', sans-serif; transition: all 0.3s; width: 100%;
+  }
+  .canva-btn:hover {
+    transform: translateY(-3px); border-color: var(--cyan);
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.25), rgba(184, 232, 53, 0.25));
+    box-shadow: 0 12px 24px rgba(0, 217, 255, 0.2);
+  }
+  
+  .battle-arena {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; width: 100%; max-width: 1100px;
+  }
+  .player-zone {
+    border-radius: 24px; padding: 1.25rem; background: rgba(255,255,255,0.04);
+    border: 3px solid; transition: all 0.3s;
+  }
+  .player-zone.p1 { border-color: var(--p1); }
+  .player-zone.p2 { border-color: var(--p2); }
+  .player-zone.winner-zone { box-shadow: 0 0 50px currentColor; transform: scale(1.03); }
+  .player-zone.dim { opacity: 0.5; }
+  
+  .battle-option {
+    background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 14px; padding: 0.75rem; cursor: pointer;
+    transition: all 0.2s; font-size: 1.8rem; text-align: center;
+    font-family: 'Fredoka', sans-serif;
+  }
+  .battle-option:hover { transform: scale(1.05); }
+  .battle-option.p1-correct { background: rgba(0, 217, 255, 0.35); border-color: var(--p1); transform: scale(1.05); }
+  .battle-option.p2-correct { background: rgba(255, 107, 53, 0.35); border-color: var(--p2); transform: scale(1.05); }
+  .battle-option.p1-wrong { background: rgba(255, 61, 127, 0.25); border-color: var(--pink); }
+  .battle-option.p2-wrong { background: rgba(255, 61, 127, 0.25); border-color: var(--pink); }
+  .battle-option.disabled { opacity: 0.4; pointer-events: none; }
+  
+  .mission-piece {
+    width: 70px; height: 70px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; transition: all 0.3s;
+  }
+  .mission-piece.built {
+    background: linear-gradient(135deg, var(--lime), #d4f042);
+    box-shadow: 0 4px 0 #7ba316; animation: drop 0.4s ease;
+  }
+  @keyframes drop { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .mission-piece.empty { background: rgba(255,255,255,0.04); border: 2px dashed rgba(255,255,255,0.15); }
+  
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+  
+  @media (max-width: 768px) {
+    .slide { padding: 2rem 1.5rem 5rem; }
+    .mega-title { font-size: 2.5rem !important; }
+    .pattern-item { width: 44px; height: 44px; font-size: 1.4rem; }
+    .battle-arena { grid-template-columns: 1fr; }
+    .nav-bar { padding: 0.5rem 1rem; }
+  }
+  
+  .stagger-in > * { opacity: 0; animation: staggerFade 0.5s ease forwards; }
+  .stagger-in > *:nth-child(1) { animation-delay: 0.1s; }
+  .stagger-in > *:nth-child(2) { animation-delay: 0.2s; }
+  .stagger-in > *:nth-child(3) { animation-delay: 0.3s; }
+  .stagger-in > *:nth-child(4) { animation-delay: 0.4s; }
+  .stagger-in > *:nth-child(5) { animation-delay: 0.5s; }
+  .stagger-in > *:nth-child(6) { animation-delay: 0.6s; }
+  @keyframes staggerFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .confetti {
+    position: fixed; width: 10px; height: 10px;
+    pointer-events: none; z-index: 200;
+    animation: confettiFall 2.5s ease-out forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+  
+  .vs-badge {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--yellow); color: #0a1235;
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.4rem;
+    box-shadow: 0 0 30px rgba(255, 210, 63, 0.6);
+    z-index: 5;
+  }
+  
+  .trophy-glow {
+    animation: trophyGlow 2s ease-in-out infinite;
+  }
+  @keyframes trophyGlow {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 210, 63, 0.5)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 40px rgba(255, 210, 63, 1)); transform: scale(1.05); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="bg-shapes" id="bgShapes"></div>
+
+<div class="progress-track">
+  <div class="progress-bar" id="progressBar" style="width: 7%"></div>
+</div>
+
+<main id="slidesContainer">
+
+  <!-- SLIDE 1: COVER -->
+  <section class="slide active" data-slide="0">
+    <div class="text-center max-w-4xl w-full">
+      <div class="badge mb-6"><i class="fas fa-rocket"></i> Petualangan Matematika Kelas 3 SD</div>
+      <h1 class="mega-title text-6xl md:text-8xl mb-4">
+        <span style="color: var(--orange)">POLA</span>
+        <span style="color: var(--lime)">GAMBAR</span>
+      </h1>
+      <p class="text-xl md:text-2xl mb-2 opacity-90">Misi Detektif Pola — Cari, Tebak, Menang!</p>
+      <div class="text-5xl my-6">
+        <span class="emoji-float">🔺</span>
+        <span class="emoji-float" style="animation-delay: 0.3s">⭐</span>
+        <span class="emoji-float" style="animation-delay: 0.6s">🔵</span>
+        <span class="emoji-float" style="animation-delay: 0.9s">🚀</span>
+      </div>
+      
+      <div class="glass-card p-6 md:p-8 max-w-2xl mx-auto mt-4">
+        <p class="display text-2xl mb-5" style="color: var(--yellow)">
+          <i class="fas fa-user-astronaut"></i> Daftar Petualang
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm mb-2 opacity-80">
+              <span style="color: var(--cyan)"><i class="fas fa-1"></i></span> Petualang 1
+            </label>
+            <input type="text" id="name1" class="input-name" placeholder="Nama pahlawan 1" maxlength="20">
+          </div>
+          <div>
+            <label class="block text-sm mb-2 opacity-80">
+              <span style="color: var(--orange)"><i class="fas fa-2"></i></span> Petualang 2
+            </label>
+            <input type="text" id="name2" class="input-name" placeholder="Nama pahlawan 2" maxlength="20">
+          </div>
+        </div>
+        <button class="btn-game mt-6 w-full" onclick="startAdventure()">
+          <i class="fas fa-play"></i> MULAI PETUALANGAN
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: APERSEPSI -->
+  <section class="slide" data-slide="1">
+    <div class="max-w-5xl w-full">
+      <div class="text-center mb-6">
+        <div class="badge mb-3"><i class="fas fa-lightbulb"></i> Apersepsi</div>
+        <h2 class="display text-4xl md:text-5xl mb-2">Hayo, Pernah Memperhatikan?</h2>
+        <p class="opacity-80 text-lg">Di sekitar kita ada banyak rahasia pola tersembunyi!</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 stagger-in">
+        <div class="glass-card p-6 text-center">
+          <div class="text-6xl mb-3 emoji-float">🧱</div>
+          <h3 class="display text-xl mb-2" style="color: var(--orange)">Dinding Bata</h3>
+          <p class="text-sm opacity-80">Susunan bata berselang-seling. Beraturan ya!</p>
+        </div>
+        <div class="glass-card p-6 text-center">
+          <div class="text-6xl mb-3 emoji-float" style="animation-delay: 0.3s">👕</div>
+          <h3 class="display text-xl mb-2" style="color: var(--lime)">Kemeja Seragam</h3>
+          <p class="text-sm opacity-80">Garis dan kotak berulang di kain.</p>
+        </div>
+        <div class="glass-card p-6 text-center">
+          <div class="text-6xl mb-3 emoji-float" style="animation-delay: 0.6s">🐝</div>
+          <h3 class="display text-xl mb-2" style="color: var(--cyan)">Sarang Lebah</h3>
+          <p class="text-sm opacity-80">Bentuk segi enam yang berulang rapi!</p>
+        </div>
+      </div>
+      
+      <div class="glass-card p-6 mt-6 text-center" style="border-color: var(--yellow); background: rgba(255,210,63,0.08)">
+        <p class="display text-2xl mb-3" style="color: var(--yellow)">
+          <i class="fas fa-question-circle"></i> Pertanyaan Pemantik
+        </p>
+        <div class="grid md:grid-cols-2 gap-3 text-left text-base">
+          <p>🔍 Pernahkah kalian melihat ubin lantai yang berulang?</p>
+          <p>🔍 Adakah pola di kemeja seragam kalian?</p>
+          <p>🔍 Bagaimana pola pada sarang lebah?</p>
+          <p>🔍 Apa yang berulang di pagar rumah?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: TUJUAN PEMBELAJARAN -->
+  <section class="slide" data-slide="2">
+    <div class="max-w-4xl w-full text-center">
+      <div class="badge mb-4"><i class="fas fa-bullseye"></i> Tujuan Pembelajaran</div>
+      <h2 class="display text-4xl md:text-5xl mb-6">Misi Hari Ini</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 stagger-in">
+        <div class="glass-card p-5 text-left flex items-start gap-3">
+          <div class="text-3xl">🎯</div>
+          <div>
+            <h3 class="display text-lg" style="color: var(--orange)">Mengenali Pola</h3>
+            <p class="text-sm opacity-80 mt-1">Siswa mampu mengidentifikasi pola gambar berulang</p>
+          </div>
+        </div>
+        <div class="glass-card p-5 text-left flex items-start gap-3">
+          <div class="text-3xl">🧩</div>
+          <div>
+            <h3 class="display text-lg" style="color: var(--lime)">Melanjutkan Pola</h3>
+            <p class="text-sm opacity-80 mt-1">Siswa mampu melengkapi bagian yang hilang pada pola</p>
+          </div>
+        </div>
+        <div class="glass-card p-5 text-left flex items-start gap-3">
+          <div class="text-3xl">✨</div>
+          <div>
+            <h3 class="display text-lg" style="color: var(--cyan)">Membuat Pola</h3>
+            <p class="text-sm opacity-80 mt-1">Siswa dapat menyusun pola gambar sendiri</p>
+          </div>
+        </div>
+        <div class="glass-card p-5 text-left flex items-start gap-3">
+          <div class="text-3xl">🤝</div>
+          <div>
+            <h3 class="display text-lg" style="color: var(--yellow)">Bekerja Sama</h3>
+            <p class="text-sm opacity-80 mt-1">Siswa terbiasa bekerja sama dalam menyelesaikan soal</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: KONSEP DASAR -->
+  <section class="slide" data-slide="3">
+    <div class="max-w-5xl w-full">
+      <div class="text-center mb-6">
+        <div class="badge mb-3"><i class="fas fa-book-open"></i> Konsep Dasar</div>
+        <h2 class="display text-4xl md:text-5xl mb-2">Apa itu <span style="color: var(--orange)">Pola Gambar</span>?</h2>
+      </div>
+      
+      <div class="glass-card p-6 md:p-8 mb-5">
+        <p class="text-lg md:text-xl leading-relaxed text-center">
+          <span class="display" style="color: var(--lime); font-size: 1.3em">Pola gambar</span>
+          adalah susunan gambar yang <b style="color: var(--yellow)">berulang</b> dengan aturan tertentu.
+          Gambar dapat berupa bentuk, warna, atau benda yang muncul secara teratur.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 stagger-in">
+        <div class="glass-card p-5 text-center" style="border-color: rgba(255,107,53,0.3)">
+          <div class="text-4xl mb-3">🔁</div>
+          <h3 class="display text-lg mb-2" style="color: var(--orange)">Berulang</h3>
+          <p class="text-sm opacity-80">Gambar muncul berkali-kali dengan urutan yang sama</p>
+        </div>
+        <div class="glass-card p-5 text-center" style="border-color: rgba(184,232,53,0.3)">
+          <div class="text-4xl mb-3">📏</div>
+          <h3 class="display text-lg mb-2" style="color: var(--lime)">Beraturan</h3>
+          <p class="text-sm opacity-80">Pola memiliki aturan tetap dan dapat ditebak</p>
+        </div>
+        <div class="glass-card p-5 text-center" style="border-color: rgba(0,217,255,0.3)">
+          <div class="text-4xl mb-3">🎨</div>
+          <h3 class="display text-lg mb-2" style="color: var(--cyan)">Bervariasi</h3>
+          <p class="text-sm opacity-80">Bisa berupa bentuk, warna, ukuran, atau benda</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: POLA 2 GAMBAR BERULANG -->
+  <section class="slide" data-slide="4">
+    <div class="max-w-5xl w-full">
+      <div class="text-center mb-6">
+        <div class="badge mb-3"><i class="fas fa-star"></i> Contoh 1</div>
+        <h2 class="display text-3xl md:text-4xl mb-2">Pola <span style="color: var(--orange)">2 Gambar</span> Berulang</h2>
+        <p class="opacity-80">Dua gambar bergantian secara teratur</p>
+      </div>
+      
+      <div class="glass-card p-6 mb-5">
+        <p class="display text-center text-xl mb-4" style="color: var(--yellow)">Contoh Pola Bentuk:</p>
+        <div class="pattern-row">
+          <div class="pattern-item">🔺</div>
+          <div class="pattern-item">⭐</div>
+          <div class="pattern-item">🔺</div>
+          <div class="pattern-item">⭐</div>
+          <div class="pattern-item">🔺</div>
+          <div class="pattern-item">⭐</div>
+          <div class="pattern-item missing">?</div>
+        </div>
+        <p class="text-center mt-4">Setelah ⭐ pasti muncul <b style="color: var(--lime)">🔺</b> lagi!</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card p-5">
+          <p class="display text-center mb-3" style="color: var(--cyan)">Pola Warna</p>
+          <div class="pattern-row">
+            <div class="pattern-item">🔴</div>
+            <div class="pattern-item">🔵</div>
+            <div class="pattern-item">🔴</div>
+            <div class="pattern-item">🔵</div>
+            <div class="pattern-item">🔴</div>
+            <div class="pattern-item missing">?</div>
+          </div>
+          <p class="text-center mt-3 text-sm opacity-80">Berikutnya: <b style="color: var(--cyan)">🔵</b></p>
+        </div>
+        <div class="glass-card p-5">
+          <p class="display text-center mb-3" style="color: var(--lime)">Pola Benda</p>
+          <div class="pattern-row">
+            <div class="pattern-item">🚗</div>
+            <div class="pattern-item">🚙</div>
+            <div class="pattern-item">🚗</div>
+            <div class="pattern-item">🚙</div>
+            <div class="pattern-item">🚗</div>
+            <div class="pattern-item missing">?</div>
+          </div>
+          <p class="text-center mt-3 text-sm opacity-80">Berikutnya: <b style="color: var(--lime)">🚙</b></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: POLA 3 GAMBAR BERULANG -->
+  <section class="slide" data-slide="5">
+    <div class="max-w-5xl w-full">
+      <div class="text-center mb-6">
+        <div class="badge mb-3"><i class="fas fa-fire"></i> Contoh 2</div>
+        <h2 class="display text-3xl md:text-4xl mb-2">Pola <span style="color: var(--lime)">3 Gambar</span> Berulang</h2>
+        <p class="opacity-80">Tiga gambar bergantian secara teratur</p>
+      </div>
+      
+      <div class="glass-card p-6 mb-5">
+        <p class="display text-center text-xl mb-4" style="color: var(--yellow)">Contoh Pola Bentuk:</p>
+        <div class="pattern-row">
+          <div class="pattern-item">🔺</div>
+          <div class="pattern-item">⭐</div>
+          <div class="pattern-item">🔵</div>
+          <div class="pattern-item">🔺</div>
+          <div class="pattern-item">⭐</div>
+          <div class="pattern-item">🔵</div>
+          <div class="pattern-item">🔺</div>
+          <div class="pattern-item">⭐</div>
+          <div class="pattern-item missing">?</div>
+        </div>
+        <p class="text-center mt-4">Setelah ⭐ pasti muncul <b style="color: var(--lime)">🔵</b>!</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-card p-5">
+          <p class="display text-center mb-3" style="color: var(--orange)">Pola Hewan</p>
+          <div class="pattern-row">
+            <div class="pattern-item">🐶</div>
+            <div class="pattern-item">🐱</div>
+            <div class="pattern-item">🐭</div>
+            <div class="pattern-item">🐶</div>
+            <div class="pattern-item">🐱</div>
+            <div class="pattern-item">🐭</div>
+            <div class="pattern-item">🐶</div>
+            <div class="pattern-item missing">?</div>
+          </div>
+          <p class="text-center mt-3 text-sm opacity-80">Berikutnya: <b style="color: var(--orange)">🐱</b></p>
+        </div>
+        <div class="glass-card p-5">
+          <p class="display text-center mb-3" style="color: var(--pink)">Pola Buah</p>
+          <div class="pattern-row">
+            <div class="pattern-item">🍎</div>
+            <div class="pattern-item">🍌</div>
+            <div class="pattern-item">🍇</div>
+            <div class="pattern-item">🍎</div>
+            <div class="pattern-item">🍌</div>
+            <div class="pattern-item">🍇</div>
+            <div class="pattern-item missing">?</div>
+          </div>
+          <p class="text-center mt-3 text-sm opacity-80">Berikutnya: <b style="color: var(--pink)">🍎</b></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: LATIHAN SOAL -->
+  <section class="slide" data-slide="6">
+    <div class="max-w-4xl w-full">
+      <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+        <div class="badge"><i class="fas fa-pen"></i> Latihan Soal</div>
+        <div class="display text-xl">
+          Soal <span id="qNum" style="color: var(--yellow)">1</span>/20
+          <span class="ml-4">Skor: <span id="qScore" style="color: var(--lime)">0</span></span>
+        </div>
+      </div>
+      
+      <div class="h-2 bg-white/10 rounded-full mb-5 overflow-hidden">
+        <div class="h-full transition-all" id="qProgress" style="width: 5%; background: linear-gradient(90deg, var(--orange), var(--lime))"></div>
+      </div>
+      
+      <div class="glass-card p-6 md:p-8">
+        <h3 class="display text-2xl mb-4 text-center">Apa gambar berikutnya?</h3>
+        
+        <div class="pattern-row mb-6" id="qPattern"></div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="qOptions"></div>
+        
+        <div class="text-center mt-5 hidden" id="qFeedback">
+          <p class="display text-xl" id="qFeedbackText"></p>
+          <button class="btn-game mt-4" id="qNextBtn" onclick="nextQuestion()">Lanjut <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: HASIL LATIHAN -->
+  <section class="slide" data-slide="7">
+    <div class="text-center max-w-2xl">
+      <div class="badge mb-4"><i class="fas fa-trophy"></i> Hasil Latihan</div>
+      <h2 class="display text-4xl md:text-5xl mb-4">Kerja Bagus!</h2>
+      <div class="text-9xl mb-4 trophy-glow" id="finalEmoji">🏆</div>
+      <p class="display text-2xl mb-2">Skor Akhir</p>
+      <p class="display text-7xl mb-4" style="color: var(--lime)" id="finalScore">0/20</p>
+      <p class="text-xl opacity-80 mb-6" id="finalMessage">Luar biasa!</p>
+      <p class="text-base opacity-70">Klik panah kanan untuk lanjut ke latihan Canva</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: CANVA LINKS -->
+  <section class="slide" data-slide="8">
+    <div class="max-w-4xl w-full">
+      <div class="text-center mb-6">
+        <div class="badge mb-3"><i class="fas fa-palette"></i> Latihan Kreatif</div>
+        <h2 class="display text-4xl md:text-5xl mb-2">Ayo Berlatih di <span style="color: var(--cyan)">Canva</span></h2>
+        <p class="opacity-80">Klik tombol di bawah untuk latihan seru bersama teman!</p>
+      </div>
+      
+      <div class="grid gap-4 stagger-in">
+        <a href="https://www.canva.com/design/DAHTpMv2ZUI/xjGj8tPhQPRzkKjlmYfYBg/edit?ui=eyJBIjp7fX0" target="_blank" rel="noopener" class="canva-btn">
+          <div class="text-4xl">🎨</div>
+          <div class="flex-1 text-left">
+            <div class="display text-xl" style="color: var(--pink)">Pola Warna</div>
+            <div class="text-sm opacity-70">Latihan menyusun pola warna yang berulang</div>
+          </div>
+          <i class="fas fa-external-link-alt text-xl"></i>
+        </a>
+        <a href="https://www.canva.com/design/DAHTpDbfe-o/YnOCrDDeJYmkLWTAkHmFRQ/edit?ui=eyJBIjp7fSwiRyI6eyJhIjp7IkEiOiJFQUU3OUg0dGVNYyJ9fX0" target="_blank" rel="noopener" class="canva-btn">
+          <div class="text-4xl">🔷</div>
+          <div class="flex-1 text-left">
+            <div class="display text-xl" style="color: var(--cyan)">Pola Bentuk</div>
+            <div class="text-sm opacity-70">Latihan menyusun pola bentuk yang berulang</div>
+          </div>
+          <i class="fas fa-external-link-alt text-xl"></i>
+        </a>
+        <a href="https://www.canva.com/design/DAHTpIaEOyE/vXXsZUE1gECiDELzA7L9QQ/edit?ui=eyJBIjp7fSwiRyI6eyJhIjp7IkEiOiJFQUZET0hlcjNaMCJ9fX0" target="_blank" rel="noopener" class="canva-btn">
+          <div class="text-4xl">🌈</div>
+          <div class="flex-1 text-left">
+            <div class="display text-xl" style="color: var(--lime)">Pola Warna dan Bentuk</div>
+            <div class="text-sm opacity-70">Latihan menyusun pola warna sekaligus bentuk</div>
+          </div>
+          <i class="fas fa-external-link-alt text-xl"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: GAME 1 - KERJA SAMA -->
+  <section class="slide" data-slide="9">
+    <div class="max-w-5xl w-full">
+      <div class="text-center mb-4">
+        <div class="badge mb-3"><i class="fas fa-handshake"></i> Game 1 - Kerja Sama Tim</div>
+        <h2 class="display text-3xl md:text-4xl mb-2">🌉 Misi Jembatan Pola</h2>
+        <p class="opacity-80"><span data-name-p1 style="color: var(--cyan)">Petualang 1</span> & <span data-name-p2 style="color: var(--orange)">Petualang 2</span> bekerja sama membangun jembatan!</p>
+      </div>
+      
+      <div class="flex justify-between items-center mb-4">
+        <div class="display text-lg">Skor Tim: <span id="missionScore" style="color: var(--lime)">0</span>/8</div>
+        <div class="display text-lg">Ronde: <span id="missionRound" style="color: var(--yellow)">1</span>/8</div>
+      </div>
+      
+      <!-- Bridge visualization -->
+      <div class="glass-card p-4 mb-4">
+        <div class="flex justify-center gap-1" id="bridgeContainer"></div>
+      </div>
+      
+      <div class="glass-card p-6" id="missionCard">
+        <h3 class="display text-xl mb-3 text-center">Lengkapi pola bersama-sama!</h3>
+        <div class="pattern-row mb-5" id="missionPattern"></div>
+        <p class="text-center text-sm opacity-70 mb-3">🤝 Diskusikan bersama, lalu klik jawaban yang benar!</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="missionOptions"></div>
+        
+        <div class="text-center mt-5 hidden" id="missionFeedback">
+          <p class="display text-2xl" id="missionFeedbackText"></p>
+          <button class="btn-game lime mt-4" id="missionNextBtn" onclick="nextMission()">Ronde Berikutnya <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      
+      <div class="glass-card p-6 hidden mt-4 text-center" id="missionComplete" style="border-color: var(--lime)">
+        <div class="text-7xl mb-3 trophy-glow">🎉</div>
+        <h3 class="display text-3xl mb-2" style="color: var(--lime)">Misi Selesai!</h3>
+        <p class="text-lg mb-2" id="missionCompleteText">Kalian berhasil membangun jembatan pola bersama!</p>
+        <p class="opacity-80">Kerja sama yang luar biasa, tim hebat!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11: GAME 2 - BATTLE -->
+  <section class="slide" data-slide="10">
+    <div class="max-w-6xl w-full">
+      <div class="text-center mb-4">
+        <div class="badge mb-3"><i class="fas fa-bolt"></i> Game 2 - Duel Antar Petualang</div>
+        <h2 class="display text-3xl md:text-4xl mb-2">⚔️ Duel Pola Cepat</h2>
+        <p class="opacity-80">Siapa paling cepat menjawab pola dengan benar?</p>
+      </div>
+      
+      <div class="flex justify-between items-center mb-4">
+        <div class="display text-lg">Ronde: <span id="battleRound" style="color: var(--yellow)">1</span>/7</div>
+        <div class="display text-base opacity-80">⚡ Klik jawaban secepatnya!</div>
+      </div>
+      
+      <!-- Battle arena -->
+      <div class="relative">
+        <div class="battle-arena" id="battleArena">
+          <!-- Player 1 -->
+          <div class="player-zone p1" id="zoneP1">
+            <div class="flex items-center justify-between mb-3">
+              <div class="display text-xl" style="color: var(--p1)">
+                <i class="fas fa-1"></i> <span data-name-p1>Petualang 1</span>
+              </div>
+              <div class="display text-2xl" style="color: var(--p1)" id="p1Score">0</div>
+            </div>
+            <div class="grid grid-cols-2 gap-2" id="p1Options"></div>
+          </div>
+          
+          <!-- Player 2 -->
+          <div class="player-zone p2" id="zoneP2">
+            <div class="flex items-center justify-between mb-3">
+              <div class="display text-xl" style="color: var(--p2)">
+                <i class="fas fa-2"></i> <span data-name-p2>Petualang 2</span>
+              </div>
+              <div class="display text-2xl" style="color: var(--p2)" id="p2Score">0</div>
+            </div>
+            <div class="grid grid-cols-2 gap-2" id="p2Options"></div>
+          </div>
+          
+          <div class="vs-badge">VS</div>
+        </div>
+      </div>
+      
+      <!-- Center pattern display -->
+      <div class="glass-card p-5 mt-4 text-center" id="battleCard">
+        <p class="display text-lg mb-2">Pola Ronde Ini:</p>
+        <div class="pattern-row" id="battlePattern"></div>
+      </div>
+      
+      <div class="glass-card p-5 mt-4 text-center hidden" id="battleFeedback">
+        <p class="display text-2xl mb-2" id="battleFeedbackText"></p>
+        <button class="btn-game cyan mt-3" id="battleNextBtn" onclick="nextBattle()">Ronde Berikutnya <i class="fas fa-arrow-right"></i></button>
+      </div>
+      
+      <div class="glass-card p-6 hidden mt-4 text-center" id="battleComplete" style="border-color: var(--yellow)">
+        <div class="text-7xl mb-3 trophy-glow" id="battleTrophy">🏆</div>
+        <h3 class="display text-3xl mb-2" style="color: var(--yellow)" id="battleWinnerText">Juara Duel!</h3>
+        <p class="text-lg" id="battleCompleteText"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12: KESIMPULAN -->
+  <section class="slide" data-slide="11">
+    <div class="max-w-4xl w-full">
+      <div class="text-center mb-6">
+        <div class="badge mb-3"><i class="fas fa-flag-checkered"></i> Kesimpulan</div>
+        <h2 class="display text-4xl md:text-5xl mb-2">Yang Sudah Kita <span style="color: var(--lime)">Pelajari</span></h2>
+      </div>
+      
+      <div class="glass-card p-6 md:p-8 mb-5">
+        <p class="text-lg md:text-xl leading-relaxed text-center">
+          <span class="display" style="color: var(--lime)">Pola gambar</span> adalah susunan gambar yang 
+          <b style="color: var(--yellow)">berulang</b> dengan aturan tertentu. 
+          Pola bisa terdiri dari <b style="color: var(--orange)">2 gambar</b>, 
+          <b style="color: var(--cyan)">3 gambar</b>, atau lebih, yang muncul secara teratur.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 stagger-in">
+        <div class="glass-card p-5 text-center">
+          <div class="text-4xl mb-2">👀</div>
+          <h3 class="display text-lg" style="color: var(--orange)">Amati</h3>
+          <p class="text-sm opacity-80">Lihat gambar yang berulang</p>
+        </div>
+        <div class="glass-card p-5 text-center">
+          <div class="text-4xl mb-2">🧠</div>
+          <h3 class="display text-lg" style="color: var(--lime)">Pikirkan</h3>
+          <p class="text-sm opacity-80">Cari aturan polanya</p>
+        </div>
+        <div class="glass-card p-5 text-center">
+          <div class="text-4xl mb-2">✅</div>
+          <h3 class="display text-lg" style="color: var(--cyan)">Lanjutkan</h3>
+          <p class="text-sm opacity-80">Tentukan gambar berikutnya</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 13: REFLEKSI -->
+  <section class="slide" data-slide="12">
+    <div class="max-w-4xl w-full">
+      <div class="text-center mb-6">
+        <div class="badge mb-3"><i class="fas fa-mirror"></i> Refleksi Diri</div>
+        <h2 class="display text-4xl md:text-5xl mb-2">Saatnya <span style="color: var(--cyan)">Berenung</span></h2>
+        <p class="opacity-80">Yuk jawab jujur di hati masing-masing!</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 stagger-in">
+        <div class="glass-card p-5">
+          <div class="text-3xl mb-2">😊</div>
+          <h3 class="display text-lg mb-2" style="color: var(--lime)">Bagian paling menyenangkan?</h3>
+          <p class="text-sm opacity-80">Apa yang membuat kalian paling tertarik belajar pola gambar hari ini?</p>
+        </div>
+        <div class="glass-card p-5">
+          <div class="text-3xl mb-2">🤔</div>
+          <h3 class="display text-lg mb-2" style="color: var(--orange)">Bagian yang masih sulit?</h3>
+          <p class="text-sm opacity-80">Adakah soal atau permainan yang masih terasa membingungkan?</p>
+        </div>
+        <div class="glass-card p-5">
+          <div class="text-3xl mb-2">💡</div>
+          <h3 class="display text-lg mb-2" style="color: var(--cyan)">Hal baru yang dipelajari?</h3>
+          <p class="text-sm opacity-80">Apa pengetahuan baru yang kalian dapat hari ini?</p>
+        </div>
+        <div class="glass-card p-5">
+          <div class="text-3xl mb-2">🎯</div>
+          <h3 class="display text-lg mb-2" style="color: var(--yellow)">Mau mencoba apa lagi?</h3>
+          <p class="text-sm opacity-80">Pola apa yang ingin kalian buat sendiri di rumah?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 14: THANK YOU -->
+  <section class="slide" data-slide="13">
+    <div class="text-center max-w-3xl">
+      <div class="text-9xl mb-4 trophy-glow">🌟</div>
+      <h2 class="mega-title text-5xl md:text-7xl mb-4">
+        <span style="color: var(--orange)">Thank You</span>
+        <span style="color: var(--cyan)">for</span>
+        <span style="color: var(--lime)">Today!</span>
+      </h2>
+      <p class="display text-2xl mb-6 opacity-90">
+        Hebat sekali, <span data-name-p1 style="color: var(--cyan)">Petualang 1</span> & 
+        <span data-name-p2 style="color: var(--orange)">Petualang 2</span>! 🎉
+      </p>
+      <div class="glass-card p-6 mb-6">
+        <p class="text-lg leading-relaxed">
+          Kalian sudah menjadi <b style="color: var(--yellow)">Detektif Pola</b> yang luar biasa!
+          Teruslah berlatih dan amati pola di sekitar kalian.
+          Matematika ada di mana-mana! 🚀
+        </p>
+      </div>
+      <div class="text-5xl">
+        <span class="emoji-float">⭐</span>
+        <span class="emoji-float" style="animation-delay: 0.2s">🏆</span>
+        <span class="emoji-float" style="animation-delay: 0.4s">🎯</span>
+        <span class="emoji-float" style="animation-delay: 0.6s">🚀</span>
+        <span class="emoji-float" style="animation-delay: 0.8s">⚡</span>
+      </div>
+      <p class="display text-xl mt-6 opacity-70">Sampai jumpa di petualangan berikutnya!</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+  <span class="slide-counter display" id="slideCounter">1 / 14</span>
+  <button class="nav-btn next" id="nextBtn" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<script>
+  // ===== STATE =====
+  let currentSlide = 0;
+  const totalSlides = 14;
+  let studentNames = { p1: 'Petualang 1', p2: 'Petualang 2' };
+
+  // ===== BACKGROUND =====
+  function initBackground() {
+    const shapes = ['🔺','⭐','🔵','🚀','🎯','🧩','⚡','🌈','✨','🎮'];
+    const container = document.getElementById('bgShapes');
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('div');
+      el.className = 'floating-shape';
+      el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+      el.style.left = Math.random() * 100 + '%';
+      el.style.animationDuration = (15 + Math.random() * 20) + 's';
+      el.style.animationDelay = (Math.random() * 20) + 's';
+      el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+      container.appendChild(el);
+    }
+  }
+
+  // ===== NAVIGATION =====
+  function goToSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.querySelector(`[data-slide="${n}"]`).classList.add('active');
+    currentSlide = n;
+    updateNav();
+    // Initialize slide-specific content
+    if (n === 6) initQuiz();
+    if (n === 9) initGame1();
+    if (n === 10) initGame2();
+  }
+
+  function changeSlide(dir) {
+    const newSlide = currentSlide + dir;
+    if (newSlide >= 0 && newSlide < totalSlides) {
+      goToSlide(newSlide);
+    }
+  }
+
+  function updateNav() {
+    document.getElementById('prevBtn').disabled = currentSlide === 0;
+    document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+    document.getElementById('progressBar').style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+  }
+
+  function startAdventure() {
+    const n1 = document.getElementById('name1').value.trim() || 'Petualang 1';
+    const n2 = document.getElementById('name2').value.trim() || 'Petualang 2';
+    studentNames = { p1: n1, p2: n2 };
+    document.querySelectorAll('[data-name-p1]').forEach(el => el.textContent = n1);
+    document.querySelectorAll('[data-name-p2]').forEach(el => el.textContent = n2);
+    goToSlide(1);
+  }
+
+  // ===== QUIZ =====
+  const quizQuestions = [
+    { pattern: ['🔺','⭐','🔺','⭐','🔺','⭐','?'], options: ['🔺','⭐','🔵','🟢'], answer: 0 },
+    { pattern: ['🔴','🔵','🔴','🔵','🔴','?'], options: ['🔴','🟢','🔵','🟡'], answer: 2 },
+    { pattern: ['🌙','⭐','🌙','⭐','🌙','⭐','?'], options: ['☀️','🌙','⭐','⛄'], answer: 1 },
+    { pattern: ['🔺','🔺','⭐','🔺','🔺','⭐','🔺','🔺','?'], options: ['⭐','🔺','🔵','🟢'], answer: 0 },
+    { pattern: ['🚗','🚙','🚗','🚙','🚗','?'], options: ['🚗','🚙','🏎️','🚛'], answer: 1 },
+    { pattern: ['🔵','⭐','🔵','⭐','🔵','⭐','?'], options: ['🔺','🔵','⭐','🟢'], answer: 1 },
+    { pattern: ['🍎','🍌','🍎','🍌','🍎','?'], options: ['🍇','🍎','🍌','🍊'], answer: 2 },
+    { pattern: ['⬆️','⬇️','⬆️','⬇️','⬆️','?'], options: ['⬅️','➡️','⬆️','⬇️'], answer: 3 },
+    { pattern: ['🟥','🟦','🟥','🟦','🟥','?'], options: ['🟥','🟩','🟦','🟨'], answer: 2 },
+    { pattern: ['🐶','🐱','🐭','🐶','🐱','🐭','🐶','?'], options: ['🐭','🐱','🐶','🐹'], answer: 1 },
+    { pattern: ['🔺','⭐','🔵','🔺','⭐','🔵','🔺','?'], options: ['⭐','🔵','🔺','🟢'], answer: 0 },
+    { pattern: ['🌞','🌙','⭐','🌞','🌙','⭐','🌞','?'], options: ['⭐','🌙','🌞','☁️'], answer: 1 },
+    { pattern: ['🟢','🟢','🟡','🟢','🟢','🟡','🟢','🟢','?'], options: ['🟢','🟡','🔵','🔴'], answer: 1 },
+    { pattern: ['⭐','⭐','🌙','⭐','⭐','🌙','⭐','⭐','?'], options: ['⭐','🌙','☀️','💫'], answer: 1 },
+    { pattern: ['🔵','🔵','⭐','🔵','🔵','⭐','🔵','🔵','?'], options: ['⭐','🔵','🔺','🟢'], answer: 0 },
+    { pattern: ['🦖','🦕','🦖','🦕','🦖','🦕','?'], options: ['🦖','🦕','🐊','🐢'], answer: 0 },
+    { pattern: ['⬛','⬜','⬛','⬜','⬛','⬜','?'], options: ['⬛','⬜','🟫','🟨'], answer: 0 },
+    { pattern: ['🍕','🍔','🌭','🍕','🍔','🌭','🍕','?'], options: ['🌭','🍔','🍕','🌮'], answer: 1 },
+    { pattern: ['🔺','▽','🔺','▽','🔺','▽','?'], options: ['🔺','▽','🔵','⭐'], answer: 0 },
+    { pattern: ['🚀','🛸','🌍','🚀','🛸','🌍','🚀','?'], options: ['🌍','🛸','🚀','⭐'], answer: 1 },
+  ];
+
+  let quizState = { current: 0, score: 0, answered: false };
+
+  function initQuiz() {
+    quizState = { current: 0, score: 0, answered: false };
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = quizQuestions[quizState.current];
+    document.getElementById('qNum').textContent = quizState.current + 1;
+    document.getElementById('qScore').textContent = quizState.score;
+    document.getElementById('qProgress').style.width = `${((quizState.current + 1) / 20) * 100}%`;
+    
+    const patternEl = document.getElementById('qPattern');
+    patternEl.innerHTML = '';
+    q.pattern.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'pattern-item' + (p === '?' ? ' missing' : '');
+      item.textContent = p;
+      patternEl.appendChild(item);
+    });
+    
+    const optionsEl = document.getElementById('qOptions');
+    optionsEl.innerHTML = '';
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('div');
+      btn.className = 'quiz-option';
+      btn.textContent = opt;
+      btn.onclick = () => answerQuestion(idx);
+      optionsEl.appendChild(btn);
+    });
+    
+    document.getElementById('qFeedback').classList.add('hidden');
+    quizState.answered = false;
+  }
+
+  function answerQuestion(idx) {
+    if (quizState.answered) return;
+    quizState.answered = true;
+    const q = quizQuestions[quizState.current];
+    const options = document.querySelectorAll('#qOptions .quiz-option');
+    options.forEach((opt, i) => {
+      opt.onclick = null;
+      opt.classList.add('disabled');
+      if (i === q.answer) opt.classList.add('correct');
+      else if (i === idx) opt.classList.add('wrong');
+    });
+    
+    const correct = idx === q.answer;
+    if (correct) {
+      quizState.score++;
+      document.getElementById('qFeedbackText').innerHTML = '<span style="color: var(--lime)"><i class="fas fa-check-circle"></i> Hebat! Jawaban benar!</span>';
+      confetti();
+    } else {
+      document.getElementById('qFeedbackText').innerHTML = '<span style="color: var(--pink)"><i class="fas fa-times-circle"></i> Belum tepat. Ayo semangat di soal berikutnya!</span>';
+    }
+    document.getElementById('qFeedback').classList.remove('hidden');
+    document.getElementById('qScore').textContent = quizState.score;
+  }
+
+  function nextQuestion() {
+    if (quizState.current < 19) {
+      quizState.current++;
+      renderQuestion();
+    } else {
+      showQuizResults();
+    }
+  }
+
+  function showQuizResults() {
+    document.getElementById('finalScore').textContent = `${quizState.score}/20`;
+    let emoji = '🏆', msg = 'Luar biasa! Kamu jago pola!';
+    if (quizState.score < 10) { emoji = '💪'; msg = 'Tetap semangat berlatih ya!'; }
+    else if (quizState.score < 15) { emoji = '👍'; msg = 'Bagus! Sedikit lagi sempurna!'; }
+    else if (quizState.score < 20) { emoji = '🌟'; msg = 'Hebat! Hampir sempurna!'; }
+    document.getElementById('finalEmoji').textContent = emoji;
+    document.getElementById('finalMessage').textContent = msg;
+    confetti();
+    goToSlide(7);
+  }
+
+  // ===== CONFETTI =====
+  function confetti() {
+    const colors = ['#ff6b35', '#b8e835', '#00d9ff', '#ffd23f', '#ff3d7f'];
+    for (let i = 0; i < 35; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDelay = Math.random() * 0.5 + 's';
+      el.style.width = (5 + Math.random() * 10) + 'px';
+      el.style.height = (5 + Math.random() * 10) + 'px';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }
+  }
+
+  // ===== GAME 1: MISSION (COOPERATION) =====
+  const missionQuestions = [
+    { pattern: ['🔺','🔵','🔺','🔵','🔺','?'], options: ['🔵','🔺','⭐','🟢'], answer: 0 },
+    { pattern: ['🚗','🚙','🚗','🚙','🚗','🚙','?'], options: ['🚗','🚙','🏎️','🚲'], answer: 0 },
+    { pattern: ['🍎','🍌','🍇','🍎','🍌','🍇','🍎','?'], options: ['🍌','🍇','🍎','🍊'], answer: 0 },
+    { pattern: ['🌙','⭐','🌙','⭐','🌙','?'], options: ['🌙','⭐','☀️','⛄'], answer: 1 },
+    { pattern: ['🔺','🔺','⭐','🔺','🔺','⭐','🔺','?'], options: ['⭐','🔺','🔵','🟢'], answer: 1 },
+    { pattern: ['🟥','🟦','🟩','🟥','🟦','🟩','🟥','?'], options: ['🟦','🟩','🟥','🟨'], answer: 0 },
+    { pattern: ['🐶','🐱','🐭','🐶','🐱','🐭','?'], options: ['🐶','🐱','🐭','🐹'], answer: 0 },
+    { pattern: ['🚀','🛸','🌍','🚀','🛸','🌍','?'], options: ['🚀','🛸','🌍','⭐'], answer: 0 },
+  ];
+
+  let missionState = { current: 0, score: 0, answered: false };
+
+  function initGame1() {
+    missionState = { current: 0, score: 0, answered: false };
+    document.getElementById('missionComplete').classList.add('hidden');
+    document.getElementById('missionCard').classList.remove('hidden');
+    renderBridge();
+    renderMission();
+  }
+
+  function renderBridge() {
+    const container = document.getElementById('bridgeContainer');
+    container.innerHTML = '';
+    for (let i = 0; i < 8; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'mission-piece ' + (i < missionState.score ? 'built' : 'empty');
+      piece.textContent = i < missionState.score ? '🪵' : '';
+      container.appendChild(piece);
+    }
+  }
+
+  function renderMission() {
+    const q = missionQuestions[missionState.current];
+    document.getElementById('missionRound').textContent = missionState.current + 1;
+    document.getElementById('missionScore').textContent = missionState.score;
+    
+    const patternEl = document.getElementById('missionPattern');
+    patternEl.innerHTML = '';
+    q.pattern.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'pattern-item' + (p === '?' ? ' missing' : '');
+      item.textContent = p;
+      patternEl.appendChild(item);
+    });
+    
+    const optionsEl = document.getElementById('missionOptions');
+    optionsEl.innerHTML = '';
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('div');
+      btn.className = 'quiz-option';
+      btn.textContent = opt;
+      btn.onclick = () => answerMission(idx);
+      optionsEl.appendChild(btn);
+    });
+    
+    document.getElementById('missionFeedback').classList.add('hidden');
+    missionState.answered = false;
+  }
+
+  function answerMission(idx) {
+    if (missionState.answered) return;
+    missionState.answered = true;
+    const q = missionQuestions[missionState.current];
+    const options = document.querySelectorAll('#missionOptions .quiz-option');
+    const correct = idx === q.answer;
+    
+    options.forEach((opt, i) => {
+      opt.onclick = null;
+      opt.classList.add('disabled');
+      if (i === q.answer) opt.classList.add('correct');
+      else if (i === idx) opt.classList.add('wrong');
+    });
+    
+    if (correct) {
+      missionState.score++;
+      document.getElementById('missionFeedbackText').innerHTML = '<span style="color: var(--lime)"><i class="fas fa-check-circle"></i> Kerja sama hebat! Jembatan bertambah!</span>';
+      confetti();
+    } else {
+      document.getElementById('missionFeedbackText').innerHTML = '<span style="color: var(--pink)"><i class="fas fa-times-circle"></i> Belum tepat. Tetap semangat, tim!</span>';
+    }
+    document.getElementById('missionFeedback').classList.remove('hidden');
+    document.getElementById('missionScore').textContent = missionState.score;
+    renderBridge();
+  }
+
+  function nextMission() {
+    if (missionState.current < 7) {
+      missionState.current++;
+      renderMission();
+    } else {
+      // Complete
+      document.getElementById('missionCard').classList.add('hidden');
+      const complete = document.getElementById('missionComplete');
+      complete.classList.remove('hidden');
+      document.getElementById('missionCompleteText').textContent = 
+        `Kalian membangun ${missionState.score} bagian jembatan dari 8!`;
+      if (missionState.score >= 6) confetti();
+    }
+  }
+
+  // ===== GAME 2: BATTLE =====
+  const battleQuestions = [
+    { pattern: ['🔺','⭐','🔺','⭐','🔺','?'], options: ['🔺','⭐','🔵','🟢'], answer: 1 },
+    { pattern: ['🔴','🔵','🔴','🔵','🔴','?'], options: ['🔴','🟢','🔵','🟡'], answer: 2 },
+    { pattern: ['🚗','🚙','🚗','🚙','🚗','🚙','?'], options: ['🚗','🚙','🏎️','🚲'], answer: 0 },
+    { pattern: ['🌙','⭐','🌙','⭐','🌙','?'], options: ['☀️','🌙','⭐','⛄'], answer: 2 },
+    { pattern: ['🍎','🍌','🍎','🍌','🍎','?'], options: ['🍇','🍎','🍌','🍊'], answer: 2 },
+    { pattern: ['🐶','🐱','🐭','🐶','🐱','🐭','?'], options: ['🐶','🐱','🐭','🐹'], answer: 0 },
+    { pattern: ['🟥','🟦','🟩','🟥','🟦','🟩','?'], options: ['🟥','🟦','🟩','🟨'], answer: 0 },
+  ];
+
+  let battleState = { current: 0, p1Score: 0, p2Score: 0, answered: false, p1Answered: false, p2Answered: false };
+
+  function initGame2() {
+    battleState = { current: 0, p1Score: 0, p2Score: 0, answered: false, p1Answered: false, p2Answered: false };
+    document.getElementById('battleComplete').classList.add('hidden');
+    document.getElementById('battleCard').classList.remove('hidden');
+    document.getElementById('battleFeedback').classList.add('hidden');
+    document.getElementById('zoneP1').classList.remove('winner-zone', 'dim');
+    document.getElementById('zoneP2').classList.remove('winner-zone', 'dim');
+    renderBattle();
+  }
+
+  function renderBattle() {
+    const q = battleQuestions[battleState.current];
+    document.getElementById('battleRound').textContent = battleState.current + 1;
+    document.getElementById('p1Score').textContent = battleState.p1Score;
+    document.getElementById('p2Score').textContent = battleState.p2Score;
+    
+    // Pattern
+    const patternEl = document.getElementById('battlePattern');
+    patternEl.innerHTML = '';
+    q.pattern.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'pattern-item' + (p === '?' ? ' missing' : '');
+      item.textContent = p;
+      patternEl.appendChild(item);
+    });
+    
+    // Options for both players
+    ['p1Options', 'p2Options'].forEach(containerId => {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      const player = containerId.startsWith('p1') ? 1 : 2;
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('div');
+        btn.className = 'battle-option';
+        btn.textContent = opt;
+        btn.onclick = () => answerBattle(player, idx, btn);
+        container.appendChild(btn);
+      });
+    });
+    
+    document.getElementById('battleFeedback').classList.add('hidden');
+    document.getElementById('zoneP1').classList.remove('winner-zone', 'dim');
+    document.getElementById('zoneP2').classList.remove('winner-zone', 'dim');
+    battleState.answered = false;
+    battleState.p1Answered = false;
+    battleState.p2Answered = false;
+  }
+
+  function answerBattle(player, idx, btn) {
+    if (battleState.answered) return;
+    const q = battleQuestions[battleState.current];
+    
+    // Mark this player as answered
+    if (player === 1 && battleState.p1Answered) return;
+    if (player === 2 && battleState.p2Answered) return;
+    
+    if (player === 1) battleState.p1Answered = true;
+    if (player === 2) battleState.p2Answered = true;
+    
+    const correct = idx === q.answer;
+    const cls = correct ? `p${player}-correct` : `p${player}-wrong`;
+    btn.classList.add(cls);
+    
+    // Disable this player's options
+    const containerId = player === 1 ? 'p1Options' : 'p2Options';
+    document.querySelectorAll(`#${containerId} .battle-option`).forEach(b => {
+      b.classList.add('disabled');
+    });
+    
+    if (correct) {
+      // This player wins the round
+      if (player === 1) battleState.p1Score++;
+      else battleState.p2Score++;
+      battleState.answered = true;
+      
+      // Disable other player
+      const otherContainer = player === 1 ? 'p2Options' : 'p1Options';
+      document.querySelectorAll(`#${otherContainer} .battle-option`).forEach(b => b.classList.add('disabled'));
+      
+      const winnerName = player === 1 ? studentNames.p1 : studentNames.p2;
+      const color = player === 1 ? 'var(--p1)' : 'var(--p2)';
+      document.getElementById('battleFeedbackText').innerHTML = 
+        `<span style="color: ${color}"><i class="fas fa-bolt"></i> ${winnerName} menang ronde ini!</span>`;
+      document.getElementById(`zoneP${player}`).classList.add('winner-zone');
+      document.getElementById(`zoneP${player === 1 ? 2 : 1}`).classList.add('dim');
+      document.getElementById('battleFeedback').classList.remove('hidden');
+      document.getElementById('p1Score').textContent = battleState.p1Score;
+      document.getElementById('p2Score').textContent = battleState.p2Score;
+      confetti();
+    } else {
+      // Wrong answer - opponent gets a chance or wins
+      if ((player === 1 && battleState.p2Answered) || (player === 2 && battleState.p1Answered)) {
+        // Both answered, no one correct - opponent who already answered gets point? No, both wrong = no point
+        // Actually if both wrong, find the correct answer
+        battleState.answered = true;
+        document.querySelectorAll('#p1Options .battle-option, #p2Options .battle-option').forEach((b, i) => {
+          const opts = q.options;
+          const optIdx = i % 4;
+          if (optIdx === q.answer) {
+            b.classList.remove('disabled');
+            b.classList.add(player === 1 ? 'p2-correct' : 'p1-correct');
+          }
+        });
+        document.getElementById('battleFeedbackText').innerHTML = 
+          '<span style="color: var(--pink)"><i class="fas fa-flag"></i> Ronde ini tidak ada yang benar. Lanjut!</span>';
+        document.getElementById('battleFeedback').classList.remove('hidden');
+      } else {
+        // Wait for opponent
+        const opponentName = player === 1 ? studentNames.p2 : studentNames.p1;
+        // Don't end round yet
+      }
+    }
+  }
+
+  function nextBattle() {
+    if (battleState.current < 6) {
+      battleState.current++;
+      renderBattle();
+    } else {
+      // Game complete
+      document.getElementById('battleCard').classList.add('hidden');
+      document.getElementById('battleFeedback').classList.add('hidden');
+      const complete = document.getElementById('battleComplete');
+      complete.classList.remove('hidden');
+      
+      let winnerText, trophy, msg;
+      if (battleState.p1Score > battleState.p2Score) {
+        winnerText = `🏆 Juara: ${studentNames.p1}!`;
+        trophy = '🥇';
+        msg = `${studentNames.p1} menang dengan skor ${battleState.p1Score} - ${battleState.p2Score}!`;
+      } else if (battleState.p2Score > battleState.p1Score) {
+        winnerText = `🏆 Juara: ${studentNames.p2}!`;
+        trophy = '🥇';
+        msg = `${studentNames.p2} menang dengan skor ${battleState.p2Score} - ${battleState.p1Score}!`;
+      } else {
+        winnerText = `🤝 Seri!`;
+        trophy = '🤝';
+        msg = `Kalian sama-sama hebat dengan skor ${battleState.p1Score} - ${battleState.p2Score}!`;
+      }
+      document.getElementById('battleWinnerText').textContent = winnerText;
+      document.getElementById('battleTrophy').textContent = trophy;
+      document.getElementById('battleCompleteText').textContent = msg;
+      confetti();
+    }
+  }
+
+  // ===== INIT =====
+  document.addEventListener('DOMContentLoaded', () => {
+    initBackground();
+    updateNav();
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) changeSlide(1);
+      if (e.key === 'ArrowLeft' && currentSlide > 0) changeSlide(-1);
+    });
+    
+    // Enter key on name inputs
+    document.getElementById('name1').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') document.getElementById('name2').focus();
+    });
+    document.getElementById('name2').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') startAdventure();
+    });
+  });
+</script>
+
+</body>
+</html>
