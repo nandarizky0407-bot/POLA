@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal Pola Bilangan & Pola Gambar — Kelas 3 SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#FFF0F6; --card:#FFFDFA; --ink:#4A3B52;
+  --pink:#FF7BAC; --pink2:#FFB3CF; --lav:#B794F6; --mint:#5FD3BC;
+  --sun:#FFD166; --ok:#3BB273; --no:#E5637A; --blue:#1B7FB4;
+}
+html,body{height:100%}
+body{
+  font-family:'Nunito',sans-serif;font-weight:700;color:var(--ink);
+  background:var(--paper);
+  background-image:radial-gradient(rgba(74,59,82,.07) 1.6px,transparent 1.6px);
+  background-size:26px 26px;overflow:hidden;
+}
+h1,h2,h3,.fred{font-family:'Fredoka',sans-serif}
+button{font-family:inherit;color:inherit}
+.ic{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.icf{fill:currentColor;stroke:none}
+
+/* deko背景 */
+#deco{position:fixed;inset:0;z-index:0;pointer-events:none}
+#deco span{position:absolute;font-size:24px;opacity:.4;animation:floaty 7s ease-in-out infinite alternate}
+@keyframes floaty{from{transform:translateY(0) rotate(-6deg)}to{transform:translateY(-26px) rotate(8deg)}}
+
+.card{background:var(--card);border:3px solid var(--ink);border-radius:22px;box-shadow:7px 7px 0 rgba(74,59,82,.85)}
+.btn{
+  font-family:'Fredoka';font-weight:600;font-size:1.05rem;border:3px solid var(--ink);
+  border-radius:16px;background:var(--sun);box-shadow:5px 5px 0 var(--ink);padding:.6em 1.2em;
+  cursor:pointer;display:inline-flex;align-items:center;gap:.5em;transition:transform .08s,box-shadow .08s;
+}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(5px,5px);box-shadow:0 0 0 var(--ink)}
+.btn.pink{background:var(--pink);color:#fff}
+.btn.mint{background:var(--mint);color:#fff}
+.btn.ghost{background:#fff}
+.btn.big{font-size:1.25rem;padding:.75em 1.5em}
+.btn:disabled{opacity:.45;cursor:default}
+.tag{font-family:'Fredoka';font-weight:600;font-size:.72rem;letter-spacing:.14em;background:#fff;border:2.5px solid var(--ink);border-radius:999px;padding:.4em 1em;box-shadow:3px 3px 0 var(--ink);display:inline-flex;align-items:center;gap:.6em}
+.tag .dot{width:10px;height:10px;border-radius:50%;background:var(--pink);border:2px solid var(--ink)}
+.scorechip{font-family:'Fredoka';background:#fff;border:3px solid var(--ink);border-radius:14px;padding:.35em .8em;box-shadow:3px 3px 0 var(--ink);font-size:.95rem}
+.hl{position:relative;z-index:0;white-space:nowrap}
+.hl::after{content:'';position:absolute;left:-3%;right:-3%;bottom:.06em;height:.44em;background:var(--sun);z-index:-1;border-radius:5px;transform:skew(-8deg) rotate(-1deg)}
+.hl.pink::after{background:var(--pink2)}
+.hl.mint::after{background:#BDEDE2}
+.hl.lav::after{background:#E2D4FA}
+
+header{position:fixed;inset:0 0 auto 0;height:64px;z-index:50;background:var(--card);border-bottom:3px solid var(--ink);display:flex;align-items:center;gap:14px;padding:0 16px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand .mmini{width:38px;height:38px;flex:none}
+.brand b{font-family:'Fredoka';font-size:.98rem;white-space:nowrap;display:block;line-height:1.1}
+.brand small{font-size:.68rem;font-weight:800;opacity:.65;display:block}
+.progress{flex:1;height:16px;border:3px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden;min-width:60px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--lav));transition:width .45s cubic-bezier(.3,1,.4,1)}
+.hud{display:flex;align-items:center;gap:8px}
+.hud .no{font-family:'Fredoka';font-size:.9rem;background:var(--paper);border:2.5px solid var(--ink);border-radius:12px;padding:.3em .7em;white-space:nowrap}
+.icbtn{width:42px;height:42px;border:3px solid var(--ink);border-radius:13px;background:#fff;box-shadow:3px 3px 0 var(--ink);cursor:pointer;display:grid;place-items:center}
+.icbtn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+.navbtn{position:fixed;bottom:16px;z-index:50;height:60px;min-width:60px;padding:0 18px;font-family:'Fredoka';font-weight:600;font-size:1.05rem;cursor:pointer;border:3px solid var(--ink);border-radius:18px;box-shadow:5px 5px 0 var(--ink);display:flex;align-items:center;gap:.5em;transition:transform .08s,box-shadow .08s,opacity .2s}
+.navbtn:active{transform:translate(5px,5px);box-shadow:0 0 0 var(--ink)}
+.navbtn.dis{opacity:.35;pointer-events:none}
+#btnPrev{left:16px;background:#fff}
+#btnNext{right:16px;background:var(--mint);color:#fff}
+
+#menuPanel{position:fixed;top:72px;right:14px;width:290px;max-height:72vh;overflow:auto;z-index:60;background:var(--card);border:3px solid var(--ink);border-radius:20px;box-shadow:8px 8px 0 rgba(74,59,82,.85);padding:12px;transform:scale(.85);transform-origin:top right;opacity:0;pointer-events:none;transition:.18s}
+#menuPanel.open{transform:none;opacity:1;pointer-events:auto}
+#menuPanel h4{font-family:'Fredoka';margin:4px 6px 10px;font-size:1rem}
+#menuList button{width:100%;display:flex;align-items:center;gap:10px;text-align:left;background:transparent;border:2.5px solid transparent;border-radius:12px;padding:7px 8px;font-weight:800;font-size:.86rem;cursor:pointer}
+#menuList button:hover{background:#FFE4EF;border-color:var(--ink)}
+#menuList button.on{background:var(--pink2);border-color:var(--ink)}
+#menuList .mn{flex:none;width:26px;height:26px;border:2.5px solid var(--ink);border-radius:9px;background:#fff;display:grid;place-items:center;font-family:'Fredoka';font-size:.75rem}
+
+.slide{position:fixed;inset:0;overflow-y:auto;padding:88px 22px 100px;opacity:0;transform:translateX(46px);pointer-events:none;transition:opacity .4s,transform .4s;z-index:1}
+.slide.active{opacity:1;transform:none;pointer-events:auto;z-index:2}
+.wrap{width:min(1100px,100%);margin:auto;text-align:center}
+.up{opacity:0;transform:translateY(20px)}
+.slide.active .up{animation:rise .55s cubic-bezier(.2,.9,.3,1.2) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+.slide h2{font-size:clamp(1.7rem,4.4vw,2.6rem);font-weight:600;margin:.35em 0 .4em;line-height:1.15}
+.lead{font-size:clamp(1rem,2.2vw,1.15rem);max-width:660px;margin:0 auto 18px;font-weight:800;opacity:.85}
+
+.seq{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;margin:14px auto}
+.chip{font-family:'Fredoka';font-weight:600;font-size:clamp(1.2rem,2.8vw,1.6rem);background:#fff;border:3px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);min-width:58px;padding:.25em .5em;text-align:center}
+.chip.ex{font-size:clamp(1.05rem,2.4vw,1.35rem);min-width:52px}
+.chip.pic{font-size:clamp(1.5rem,3.2vw,2rem)}
+.chip.q{background:var(--sun);animation:pulse 1.3s infinite}
+.chip.hide{visibility:hidden}
+.gap{display:inline-flex;flex-direction:column;align-items:center;opacity:0;transform:translateX(-8px);transition:.35s}
+.gap.show{opacity:1;transform:none}
+.gap .d{font-family:'Fredoka';font-size:.85rem;line-height:1.1}
+.d.plus{color:var(--ok)} .d.minus{color:var(--no)} .d.mul{color:var(--blue)} .d.div{color:var(--lav)}
+@keyframes pulse{50%{transform:scale(1.07)}}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.pop{animation:pop .45s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.shake{animation:shake .4s}
+@keyframes bob{50%{transform:translateY(-9px)}}
+.bob{animation:bob 2.8s ease-in-out infinite}
+.msg{min-height:1.6em;margin-top:10px;font-weight:900}
+.msg.good{color:var(--ok)} .msg.bad{color:var(--no)}
+
+/* COVER */
+.cover{display:flex;align-items:center;justify-content:center;gap:34px;text-align:left}
+.cover-left{flex:1.15;min-width:0}
+.cover-left h1{font-size:clamp(2.2rem,6vw,3.9rem);font-weight:700;line-height:1.08;margin:.3em 0 .3em}
+.cover-right{flex:.85;display:flex;justify-content:center;position:relative}
+.cover-right .balloon{position:absolute;top:-4px;right:4%;background:#fff;border:3px solid var(--ink);border-radius:18px 18px 18px 4px;padding:.5em .9em;font-family:'Fredoka';box-shadow:4px 4px 0 var(--ink);transform:rotate(3deg);font-size:.95rem}
+.cover-right svg.mascot{width:min(280px,56vw);height:auto}
+.cover .seq{justify-content:flex-start;margin:8px 0 18px}
+.namebox{display:flex;gap:12px;justify-content:flex-start;flex-wrap:wrap;margin:16px 0 6px}
+.namebox input{font-family:'Fredoka';font-size:1.12rem;padding:.6em 1.1em;border:3px solid var(--ink);border-radius:999px;background:#fff;box-shadow:5px 5px 0 var(--ink);width:min(320px,75vw);text-align:center;color:var(--ink)}
+.namebox input::placeholder{color:#C9B8D4}
+.namebox input:focus{outline:3px solid var(--pink)}
+
+/* REVIEW */
+.rev2{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.revc{width:min(480px,100%);padding:20px 18px}
+.rtag{font-family:'Fredoka';font-size:.78rem;letter-spacing:.1em;border:2.5px solid var(--ink);border-radius:999px;padding:.35em .9em;display:inline-block;box-shadow:3px 3px 0 var(--ink);margin-bottom:6px}
+.t-up{background:#CFF3E4} .t-dn{background:#FFD9E4} .t-fib{background:#FBE3B8} .t-mul{background:#D9ECFB} .t-rep{background:#EADCFA} .t-add{background:#FFE4EF}
+.grows{display:flex;gap:10px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:10px 0}
+.grow{display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:3px solid var(--ink);border-radius:14px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px 6px;font-size:1.5rem;letter-spacing:.04em}
+.grow .gl{font-family:'Fredoka';font-size:.62rem;opacity:.6}
+.grow.hide{visibility:hidden}
+.gplus{font-family:'Fredoka';font-weight:700;font-size:1.05rem;color:var(--ok);opacity:0;transform:translateX(-8px);transition:.3s;align-self:center}
+.gplus.show{opacity:1;transform:none}
+.ug{background:#FFE9B8;outline:3px dashed var(--pink);outline-offset:2px}
+
+/* RULES */
+.rsteps{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+.rstep{width:250px;padding:16px;text-align:left}
+.rstep .rn{font-family:'Fredoka';font-size:1.4rem;width:42px;height:42px;border-radius:13px;border:3px solid var(--ink);display:grid;place-items:center;margin-bottom:8px;color:#fff;background:var(--pink)}
+.rstep:nth-child(2) .rn{background:var(--lav)} .rstep:nth-child(3) .rn{background:var(--mint)} .rstep:nth-child(4) .rn{background:var(--sun);color:var(--ink)}
+.rstep p{font-size:.88rem;font-weight:800;line-height:1.45}
+
+/* ============ UJIAN ============ */
+.exam-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.exam-layout{display:grid;grid-template-columns:310px 1fr;gap:16px;align-items:start;max-width:1120px;margin:0 auto}
+.qside{padding:16px 14px;text-align:center}
+.qside h3{font-family:'Fredoka';font-size:1.08rem}
+.hintk{font-size:.78rem;font-weight:800;opacity:.65;margin:2px 0 12px}
+.qgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.qcell{border:2.5px solid var(--ink);border-radius:12px;background:#fff;box-shadow:3px 3px 0 var(--ink);font-family:'Fredoka';font-weight:600;font-size:1rem;padding:6px 0 4px;cursor:pointer;line-height:1;transition:transform .08s}
+.qcell:hover{transform:translateY(-2px)}
+.qcell .qtime{display:block;font-size:.55rem;opacity:.8;margin-top:2px;font-family:'Nunito';font-weight:900}
+.qcell.run{background:var(--sun);animation:pulse 1.2s infinite}
+.qcell.ok{background:var(--ok);color:#fff}
+.qcell.help{background:var(--lav);color:#fff}
+.qpanel{padding:20px 22px;text-align:left;min-height:380px}
+.ph{text-align:center;padding:30px 10px}
+.ph svg{width:130px;height:130px}
+.ph h3{font-size:1.4rem;margin:.3em 0}
+.ph p{font-weight:800;opacity:.8;max-width:380px;margin:0 auto;line-height:1.5}
+.qtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.qnum{font-family:'Fredoka';font-weight:700;font-size:1rem;background:var(--pink);color:#fff;border:2.5px solid var(--ink);border-radius:12px;padding:.3em .75em;box-shadow:3px 3px 0 var(--ink)}
+.qtag{font-family:'Fredoka';font-size:.68rem;letter-spacing:.08em;background:#F3EAFB;border:2.5px solid var(--ink);border-radius:999px;padding:.35em .8em}
+.sw{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:'Fredoka';background:#fff;border:2.5px solid var(--ink);border-radius:999px;padding:.35em .85em;box-shadow:3px 3px 0 var(--ink);font-size:1rem}
+.sw.on{background:var(--sun)}
+.qtext{font-family:'Fredoka';font-size:1.18rem;margin:4px 0 2px;line-height:1.45}
+/* kartu pola gambar */
+.prow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.pcard{width:92px;background:#fff;border:3px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);overflow:hidden}
+.pv{height:84px;display:grid;place-items:center;background:#FBF6FF}
+.pv svg{width:80px;height:80px}
+.plab{font-family:'Fredoka';font-size:.66rem;text-align:center;padding:4px 0;border-top:2.5px solid var(--ink)}
+.pcard.pq .pv{font-size:2.1rem;background:var(--sun)}
+.pell{display:grid;place-items:center;font-family:'Fredoka';font-size:1.6rem;opacity:.55;width:34px}
+/* opsi */
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.opt{font-family:'Fredoka';font-weight:600;font-size:1.3rem;background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:.5em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5em;transition:transform .1s,box-shadow .1s}
+.opt:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.opt .abc{font-size:.78rem;background:var(--paper);border:2.5px solid var(--ink);border-radius:9px;width:28px;height:28px;display:grid;place-items:center;flex:none}
+.opt.sel{background:var(--sun)}
+.opt.correct{background:var(--ok);color:#fff}
+.opt.correct .abc{background:rgba(255,255,255,.25);border-color:#fff}
+.opt.wrong{background:var(--no);color:#fff;animation:shake .4s}
+.opt.wrong .abc{background:rgba(255,255,255,.25);border-color:#fff}
+.opt:disabled{cursor:default}
+/* feedback */
+.fb{margin-top:16px;display:none}
+.fb.show{display:flex;gap:12px;align-items:flex-start;border:3px solid var(--ink);border-radius:16px;padding:14px 16px;text-align:left;animation:pop .35s both}
+.fb.ok{background:#E8F7EE} .fb.no{background:#FDE9EE} .fb.warn{background:#FFF5DC}
+.fb .fic{flex:none;width:36px;height:36px;border-radius:50%;border:3px solid var(--ink);display:grid;place-items:center;color:#fff}
+.fb.ok .fic{background:var(--ok)} .fb.no .fic{background:var(--no)} .fb.warn .fic{background:var(--sun);color:var(--ink)}
+.fb b{font-family:'Fredoka';display:block;margin-bottom:2px}
+.fb p{font-size:.9rem;font-weight:800;line-height:1.5}
+.ftime{margin-top:6px;font-size:.82rem;opacity:.85}
+.qnav{margin-top:16px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+
+/* HASIL */
+.resultbox{max-width:660px;margin:0 auto;padding:30px 28px}
+.stars{display:flex;justify-content:center;gap:8px;margin:12px 0}
+.stars .icf{width:52px;height:52px;color:#EADFEE}
+.stars .icf.on{color:var(--sun);animation:pop .5s both}
+.stars .icf.on:nth-child(2){animation-delay:.15s}.stars .icf.on:nth-child(3){animation-delay:.3s}
+.statrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.recap{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;max-width:520px;margin:16px auto}
+.rcell{border:2px solid var(--ink);border-radius:9px;background:#fff;padding:4px 0 3px;font-family:'Fredoka';font-size:.82rem;line-height:1.1}
+.rcell small{display:block;font-size:.53rem;font-weight:900;font-family:'Nunito'}
+.rcell.ok{background:var(--ok);color:#fff}
+.rcell.help{background:var(--lav);color:#fff}
+.rcell.un{opacity:.5}
+
+/* REFLEKSI dll */
+.panel{max-width:760px;margin:0 auto;padding:24px 26px;text-align:center}
+.moods{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:16px 0 4px}
+.mood{background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);width:96px;padding:10px 6px 8px;cursor:pointer;font-family:'Fredoka';font-size:.72rem;transition:transform .1s}
+.mood:hover{transform:translateY(-3px)}
+.mood svg{width:50px;height:50px;display:block;margin:0 auto 4px}
+.mood.sel{background:var(--pink2);transform:scale(1.06)}
+.chiprows{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.wchip{font-family:'Fredoka';border:2.5px solid var(--ink);border-radius:999px;background:#fff;box-shadow:3px 3px 0 var(--ink);padding:.4em 1em;cursor:pointer;font-size:.88rem}
+.wchip.sel{background:var(--pink2)}
+textarea{width:100%;max-width:560px;min-height:86px;margin-top:12px;border:3px solid var(--ink);border-radius:16px;padding:12px 14px;font-family:'Nunito';font-weight:800;font-size:1rem;resize:vertical;background:#fff}
+textarea:focus{outline:3px solid var(--pink)}
+.concl{max-width:700px;margin:20px auto 0;display:flex;flex-direction:column;gap:12px;text-align:left}
+.concl .ci{display:flex;gap:14px;align-items:flex-start;padding:13px 18px}
+.concl .ci .icf{flex:none;width:32px;height:32px;margin-top:2px}
+.concl .ci:nth-child(1) .icf{color:var(--pink)} .concl .ci:nth-child(2) .icf{color:var(--sun)}
+.concl .ci:nth-child(3) .icf{color:var(--lav)} .concl .ci:nth-child(4) .icf{color:var(--mint)}
+.concl b{font-family:'Fredoka'}
+
+#toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(16px);z-index:95;background:var(--ink);color:#FFF0F6;font-family:'Fredoka';padding:.7em 1.4em;border-radius:16px;opacity:0;pointer-events:none;transition:.25s;max-width:88vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%)}
+#fx{position:fixed;inset:0;z-index:90;pointer-events:none}
+
+@media (max-width:900px){
+  .exam-layout{grid-template-columns:1fr}
+  .qgrid{grid-template-columns:repeat(8,1fr)}
+}
+@media (max-width:640px){
+  .slide{padding:80px 12px 96px}
+  .brand b{display:none}
+  .hud .no{display:none}
+  .navbtn{min-width:52px;height:54px;padding:0 14px;font-size:.95rem}
+  .opts{gap:10px} .opt{font-size:1.08rem}
+  .cover{flex-direction:column;text-align:center;gap:8px}
+  .cover .seq,.namebox{justify-content:center}
+  .cover-right{order:-1}
+  .cover-right .balloon{right:0}
+  .qpanel{padding:16px 14px}
+  .pcard{width:78px} .pv{height:72px} .pv svg{width:68px;height:68px}
+  .recap{grid-template-columns:repeat(6,1fr)}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-right" viewBox="0 0 24 24"><path class="ic" d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path class="ic" d="M19 12H5m6-6-6 6 6 6"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path class="ic" d="M4 6h16M4 12h16M4 18h10"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path class="icf" d="M4 9v6h4l5 4.5v-15L8 9H4z"/><path class="ic" d="M16.5 8.5c1.8 1.8 1.8 5.2 0 7"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path class="icf" d="M4 9v6h4l5 4.5v-15L8 9H4z"/><path class="ic" d="M16.5 9.5l5 5m0-5-5 5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path class="icf" d="M12 2.2l2.9 6.1 6.7.9-4.9 4.6 1.2 6.6L12 17.2l-5.9 3.2 1.2-6.6L2.4 9.2l6.7-.9z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path class="ic" d="M4.5 12.5l5 5 10-11"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path class="ic" d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path class="ic" d="M9.5 18h5m-4 3h3M12 3a6.2 6.2 0 0 1 4.1 10.8c-.8.7-1.1 1.4-1.1 2.2H9c0-.8-.3-1.5-1.1-2.2A6.2 6.2 0 0 1 12 3z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle class="ic" cx="12" cy="12" r="9"/><path class="ic" d="M12 7v5l3.5 2"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path class="ic" d="M5 21V4m0 1h12l-2.5 4L17 13H5"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path class="ic" d="M4 12a8 8 0 1 0 2.5-5.8M4 4v5h5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path class="icf" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></symbol>
+  <symbol id="uni" viewBox="0 0 220 230">
+    <circle cx="52" cy="122" r="30" fill="#C9A7EB"/>
+    <circle cx="46" cy="154" r="23" fill="#C9A7EB"/>
+    <circle cx="168" cy="122" r="30" fill="#FFB3CF"/>
+    <circle cx="174" cy="154" r="23" fill="#FFB3CF"/>
+    <path d="M70 86 Q58 58 84 66 L94 80 Z" fill="#fff" stroke="#4A3B52" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M150 86 Q162 58 136 66 L126 80 Z" fill="#fff" stroke="#4A3B52" stroke-width="5" stroke-linejoin="round"/>
+    <ellipse cx="110" cy="132" rx="63" ry="59" fill="#fff" stroke="#4A3B52" stroke-width="5.5"/>
+    <path d="M98 78 L110 20 L122 78 Z" fill="#FFD166" stroke="#4A3B52" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M102 64 L118 57 M100 50 L120 42" stroke="#E8A200" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M70 106 Q82 76 110 74 Q138 76 150 106 Q138 96 125 102 Q121 88 110 88 Q99 88 95 102 Q82 96 70 106Z" fill="#FF8FAB" stroke="#4A3B52" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="86" cy="140" r="9.5" fill="#4A3B52"/><circle cx="89.5" cy="137" r="3" fill="#fff"/>
+    <circle cx="134" cy="140" r="9.5" fill="#4A3B52"/><circle cx="137.5" cy="137" r="3" fill="#fff"/>
+    <path d="M72 128q7-8 16-6M132 122q9-2 16 6" stroke="#4A3B52" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <circle cx="68" cy="156" r="8" fill="#FFB3CF" opacity=".9"/>
+    <circle cx="152" cy="156" r="8" fill="#FFB3CF" opacity=".9"/>
+    <path d="M100 160 Q110 170 120 160" stroke="#4A3B52" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+    <path d="M182 40l3.2 7.4 7.4 3.2-7.4 3.2-3.2 7.4-3.2-7.4-7.4-3.2 7.4-3.2Z" fill="#FFD166"/>
+    <path d="M28 92l2.4 5.6 5.6 2.4-5.6 2.4-2.4 5.6-2.4-5.6-5.6-2.4 5.6-2.4Z" fill="#C9A7EB"/>
+  </symbol>
+</svg>
+
+<div id="deco" aria-hidden="true">
+  <span style="top:12%;left:6%">💕</span><span style="top:22%;right:8%;animation-delay:1.2s">⭐</span>
+  <span style="top:64%;left:4%;animation-delay:2s">🎀</span><span style="top:74%;right:6%;animation-delay:.6s">🌸</span>
+  <span style="top:42%;left:94%;animation-delay:1.8s">⭐</span><span style="top:88%;left:46%;animation-delay:2.6s">💕</span>
+</div>
+
+<canvas id="fx"></canvas>
+
+<header>
+  <div class="brand">
+    <svg class="mmini bob" viewBox="0 0 220 230"><use href="#uni"/></svg>
+    <div><b>Latihan Pola Bilangan & Pola Gambar</b><small id="stuName">Matematika • Kelas 3 SD</small></div>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="hud">
+    <span class="no" id="slideNo">1 / 10</span>
+    <button class="icbtn" id="soundBtn" title="Suara nyala/mati"><svg id="icSnd" width="22" height="22" viewBox="0 0 24 24"><use href="#i-sound"/></svg></button>
+    <button class="icbtn" id="menuBtn" title="Daftar slide"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-list"/></svg></button>
+  </div>
+</header>
+
+<div id="menuPanel"><h4>Daftar Isi</h4><div id="menuList"></div></div>
+
+<!-- ================= 1. COVER ================= -->
+<section class="slide" data-label="Cover">
+  <div class="wrap cover">
+    <div class="cover-left">
+      <span class="tag up" style="--d:.05s"><span class="dot"></span>LATIHAN SOAL • KELAS 3 SD • 40 SOAL SERU</span>
+      <h1 class="up" style="--d:.15s">Petualangan<br><span class="hl pink">Pola</span> <span class="hl">Bilangan</span> &amp; <span class="hl mint">Gambar</span></h1>
+      <p class="lead up" style="--d:.25s">Halo, putri hebat! Aku <b>Uni</b> si unicorn 🦄. Tulis namamu dulu ya, nanti namamu muncul di sertifikat hasil belajarmu!</p>
+      <div class="namebox up" style="--d:.33s">
+        <input id="nameInput" maxlength="20" placeholder="Tulis namamu di sini… 💕" autocomplete="off">
+        <button class="btn pink big" id="btnStart">Mulai ✨</button>
+      </div>
+      <div class="seq up" style="--d:.4s">
+        <span class="chip pic">🍓</span><span class="chip pic">⭐</span><span class="chip pic">🍓</span><span class="chip pic">⭐</span>
+        <span class="chip pic q" id="coverQ" title="Ketuk aku!">❓</span>
+      </div>
+    </div>
+    <div class="cover-right up" style="--d:.3s">
+      <div class="balloon fred">Hai, aku Uni! 🦄</div>
+      <svg class="mascot bob" viewBox="0 0 220 230"><use href="#uni"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2. REVIEW 1 ================= -->
+<section class="slide" data-label="Review: Membesar & Mengecil">
+  <div class="wrap">
+    <span class="tag up" style="--d:.05s"><span class="dot"></span>REVIEW MATERI 1</span>
+    <h2 class="up" style="--d:.12s">Pola <span class="hl mint">Membesar</span> &amp; <span class="hl pink">Mengecil</span></h2>
+    <div class="rev2">
+      <div class="card revc up" style="--d:.2s">
+        <span class="rtag t-up">⬆ POLA MEMBESAR (+)</span>
+        <div class="seq" id="rvUp">
+          <span class="chip">2</span><span class="gap"><b class="d plus">+3</b></span>
+          <span class="chip">5</span><span class="gap"><b class="d plus">+3</b></span>
+          <span class="chip">8</span><span class="gap"><b class="d plus">+3</b></span>
+          <span class="chip">11</span><span class="gap"><b class="d plus">+3</b></span>
+          <span class="chip hide" id="rvUpA">14</span>
+        </div>
+        <p class="msg" id="msgRvUp"></p>
+        <button class="btn mint" id="btnRvUp">Suku Berikutnya!</button>
+      </div>
+      <div class="card revc up" style="--d:.28s">
+        <span class="rtag t-dn">⬇ POLA MENGECIL (−)</span>
+        <div class="seq" id="rvDn">
+          <span class="chip">20</span><span class="gap"><b class="d minus">−3</b></span>
+          <span class="chip">17</span><span class="gap"><b class="d minus">−3</b></span>
+          <span class="chip">14</span><span class="gap"><b class="d minus">−3</b></span>
+          <span class="chip">11</span><span class="gap"><b class="d minus">−3</b></span>
+          <span class="chip hide" id="rvDnA">8</span>
+        </div>
+        <p class="msg" id="msgRvDn"></p>
+        <button class="btn pink" id="btnRvDn">Suku Berikutnya!</button>
+      </div>
+    </div>
+    <p class="lead up" style="--d:.36s"> 💡 <b>Kuncinya:</b> kurangkan dua suku bertetangga. Kalau selisihnya selalu sama — itu dia aturan polanya!</p>
+  </div>
+</section>
+
+<!-- ================= 3. REVIEW 2 ================= -->
+<section class="slide" data-label="Review: Fibonacci & Kali/Bagi">
+  <div class="wrap">
+    <span class="tag up" style="--d:.05s"><span class="dot"></span>REVIEW MATERI 2</span>
+    <h2 class="up" style="--d:.12s">Pola <span class="hl">Fibonacci</span> &amp; <span class="hl lav">Kali / Bagi</span></h2>
+    <div class="rev2">
+      <div class="card revc up" style="--d:.2s">
+        <span class="rtag t-fib">🐚 POLA FIBONACCI</span>
+        <div class="seq" id="rvFb">
+          <span class="chip">1</span><span class="chip">1</span><span class="chip">2</span>
+          <span class="chip">3</span><span class="chip">5</span><span class="chip">8</span>
+          <span class="chip hide" id="rvFbA1">13</span><span class="chip hide" id="rvFbA2">21</span>
+        </div>
+        <p class="msg" id="msgRvFb"></p>
+        <button class="btn" id="btnRvFb">Lanjutkan Barisannya!</button>
+      </div>
+      <div class="card revc up" style="--d:.28s">
+        <span class="rtag t-mul">✖️ POLA KALI &nbsp;•&nbsp; ➗ POLA BAGI</span>
+        <div class="seq" id="rvMul">
+          <span class="chip">2</span><span class="gap"><b class="d mul">×3</b></span>
+          <span class="chip">6</span><span class="gap"><b class="d mul">×3</b></span>
+          <span class="chip">18</span><span class="gap"><b class="d mul">×3</b></span>
+          <span class="chip">54</span><span class="gap"><b class="d mul">×3</b></span>
+          <span class="chip hide" id="rvMulA">162</span>
+        </div>
+        <div class="seq" id="rvDiv">
+          <span class="chip">96</span><span class="gap"><b class="d div">÷2</b></span>
+          <span class="chip">48</span><span class="gap"><b class="d div">÷2</b></span>
+          <span class="chip">24</span><span class="gap"><b class="d div">÷2</b></span>
+          <span class="chip hide" id="rvDivA">12</span>
+        </div>
+        <p class="msg" id="msgRvMul"></p>
+        <button class="btn ghost" id="btnRvMul">Tunjukkan Polanya!</button>
+      </div>
+    </div>
+    <p class="lead up" style="--d:.36s">💡 <b>Fibonacci:</b> jumlahkan dua suku sebelumnya! &nbsp;•&nbsp; <b>Kali/Bagi:</b> setiap suku dikali atau dibagi bilangan yang sama.</p>
+  </div>
+</section>
+
+<!-- ================= 4. REVIEW 3 ================= -->
+<section class="slide" data-label="Review: Pola Gambar">
+  <div class="wrap">
+    <span class="tag up" style="--d:.05s"><span class="dot"></span>REVIEW MATERI 3</span>
+    <h2 class="up" style="--d:.12s">Pola Gambar <span class="hl pink">Berulang</span> &amp; <span class="hl">Bertambah</span></h2>
+    <div class="rev2">
+      <div class="card revc up" style="--d:.2s">
+        <span class="rtag t-rep">🔁 POLA GAMBAR BERULANG</span>
+        <div class="seq" id="rvRep">
+          <span class="chip pic">🍓</span><span class="chip pic">⭐</span>
+          <span class="chip pic">🍓</span><span class="chip pic">⭐</span>
+          <span class="chip pic">🍓</span><span class="chip pic">⭐</span>
+          <span class="chip pic hide" id="rvRepA">🍓</span>
+        </div>
+        <p class="msg" id="msgRvRep"></p>
+        <button class="btn" id="btnRvRep">Lanjutkan Polanya!</button>
+      </div>
+      <div class="card revc up" style="--d:.28s">
+        <span class="rtag t-add">📈 POLA GAMBAR BERTAMBAH</span>
+        <div class="grows" id="rvGrow">
+          <div class="gplus">+1</div><div class="grow">🟣<span class="gl">suku 1</span></div>
+          <div class="gplus">+1</div><div class="grow">🟣🟣<span class="gl">suku 2</span></div>
+          <div class="gplus">+1</div><div class="grow">🟣🟣🟣<span class="gl">suku 3</span></div>
+          <div class="gplus">+1</div><div class="grow hide" id="rvGrowA">🟣🟣🟣🟣<span class="gl">suku 4</span></div>
+        </div>
+        <p class="msg" id="msgRvGrow"></p>
+        <button class="btn pink" id="btnRvGrow">Suku Berikutnya!</button>
+      </div>
+    </div>
+    <p class="lead up" style="--d:.36s">💡 <b>Berulang:</b> satu kelompok gambar diulang terus. <b>Bertambah:</b> setiap kelompok bertambah dengan jumlah yang sama.</p>
+  </div>
+</section>
+
+<!-- ================= 5. CARA MENGERJAKAN ================= -->
+<section class="slide" data-label="Cara Mengerjakan">
+  <div class="wrap">
+    <span class="tag up" style="--d:.05s"><span class="dot"></span>SEBELUM MULAI</span>
+    <h2 class="up" style="--d:.12s">Cara <span class="hl pink">Mengerjakan</span></h2>
+    <div class="rsteps">
+      <div class="card rstep up" style="--d:.2s"><div class="rn">1</div><p>Ketuk <b>nomor soal</b> (1–40). Stopwatch ⏱ langsung <b>mulai berjalan</b>!</p></div>
+      <div class="card rstep up" style="--d:.28s"><div class="rn">2</div><p>Pilih jawaban A–D, lalu tekan tombol <b>“Cek Jawaban”</b>.</p></div>
+      <div class="card rstep up" style="--d:.36s"><div class="rn">3</div><p>Benar → stopwatch <b>berhenti</b> & waktu tersimpan ⏱. Salah → boleh coba lagi, waktu tetap berjalan. Setelah salah, kamu bisa membuka <b>Pembahasan</b> 💡.</p></div>
+      <div class="card rstep up" style="--d:.44s"><div class="rn">4</div><p>Selesai semua? Tekan <b>“Finish Exam”</b> untuk melihat skor & rata-rata waktumu! 🏁</p></div>
+    </div>
+    <button class="btn pink big up" style="--d:.52s" id="btnGoExam">Aku Siap, Mulai Ujian! 🎀 <svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-right"/></svg></button>
+    <p class="lead up" style="--d:.6s" style="margin-top:12px">Ada <b>40 soal</b>. Kerjakan dengan teliti dan santai ya, kamu pasti bisa! 🌟</p>
+  </div>
+</section>
+
+<!-- ================= 6. UJIAN ================= -->
+<section class="slide" data-label="Ujian (40 Soal)">
+  <div class="wrap">
+    <div class="exam-head up" style="--d:.05s">
+      <span class="tag"><span class="dot"></span>LATIHAN SOAL POLA</span>
+      <span class="scorechip" id="exStat">Terselesaikan: 0 / 40</span>
+      <button class="btn pink" id="btnFinish"><svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-flag"/></svg> Finish Exam</button>
+    </div>
+    <div class="exam-layout up" style="--d:.12s">
+      <div class="card qside">
+        <h3>Pilih Nomor Soal</h3>
+        <p class="hintk">⏱ Stopwatch mulai saat nomor ditekan</p>
+        <div class="qgrid" id="qGrid"></div>
+      </div>
+      <div class="card qpanel" id="qPanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7. HASIL ================= -->
+<section class="slide" data-label="Hasil Ujian">
+  <div class="wrap"><div id="resBox"></div></div>
+</section>
+
+<!-- ================= 8. REFLEKSI ================= -->
+<section class="slide" data-label="Refleksi">
+  <div class="wrap">
+    <span class="tag up" style="--d:.05s"><span class="dot"></span>REFLEKSI</span>
+    <h2 class="up" style="--d:.12s">Ayo <span class="hl pink">refleksi!</span></h2>
+    <div id="reflBox">
+      <div class="card panel up" style="--d:.2s">
+        <p class="qtext fred" style="font-size:1.2rem">1. Bagaimana perasaanmu setelah latihan hari ini?</p>
+        <div class="moods" id="moodRow">
+          <button class="mood" data-m="Masih bingung"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="#FFD0DC" stroke="#4A3B52" stroke-width="4"/><circle cx="23" cy="27" r="3.5" fill="#4A3B52"/><circle cx="41" cy="27" r="3.5" fill="#4A3B52"/><path class="ic" d="M23 43q9-7 18 0" stroke-width="4"/></svg>Masih bingung</button>
+          <button class="mood" data-m="Biasa saja"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="#FFE9B8" stroke="#4A3B52" stroke-width="4"/><circle cx="23" cy="27" r="3.5" fill="#4A3B52"/><circle cx="41" cy="27" r="3.5" fill="#4A3B52"/><path class="ic" d="M23 42h18" stroke-width="4"/></svg>Biasa saja</button>
+          <button class="mood" data-m="Senang"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="#D5F4E9" stroke="#4A3B52" stroke-width="4"/><circle cx="23" cy="27" r="3.5" fill="#4A3B52"/><circle cx="41" cy="27" r="3.5" fill="#4A3B52"/><path class="ic" d="M23 38q9 8 18 0" stroke-width="4"/></svg>Senang</button>
+          <button class="mood" data-m="Sangat senang"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="#EADCFA" stroke="#4A3B52" stroke-width="4"/><path class="ic" d="M18 26q5-5 10 0m8 0q5-5 10 0" stroke-width="4"/><path class="ic" d="M21 37q11 11 22 0" stroke-width="4"/></svg>Sangat senang!</button>
+        </div>
+      </div>
+      <div class="card panel up" style="--d:.3s;margin-top:16px">
+        <p class="qtext fred" style="font-size:1.2rem">2. Tuliskan satu hal yang paling kamu suka atau masih perlu dilatih:</p>
+        <textarea id="reflText" placeholder="Contoh: Aku suka pola Fibonacci! Tapi aku masih perlu latihan pola bertingkat…"></textarea>
+        <p class="qtext fred" style="font-size:1.2rem;margin-top:14px">3. Materi mana yang ingin kamu latihan lagi?</p>
+        <div class="chiprows" id="reflChips">
+          <button class="wchip">Membesar / Mengecil</button>
+          <button class="wchip">Fibonacci</button>
+          <button class="wchip">Kali / Bagi</button>
+          <button class="wchip">Pola Gambar</button>
+          <button class="wchip">Soal waktu / cepat</button>
+        </div>
+        <button class="btn pink big" style="margin-top:18px" id="btnRefl">Kirim Refleksiku 💕</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9. KESIMPULAN ================= -->
+<section class="slide" data-label="Kesimpulan">
+  <div class="wrap">
+    <span class="tag up" style="--d:.05s"><span class="dot"></span>KESIMPULAN</span>
+    <h2 class="up" style="--d:.12s">Hari ini kamu sudah <span class="hl">belajar…</span></h2>
+    <div class="concl">
+      <div class="card ci up" style="--d:.2s"><svg class="icf" viewBox="0 0 24 24"><use href="#i-star"/></svg><p><b>Pola membesar & mengecil</b>: hitung selisih dua suku bertetangga, kalau selisihnya selalu sama (+ atau −), itu aturannya.</p></div>
+      <div class="card ci up" style="--d:.28s"><svg class="icf" viewBox="0 0 24 24"><use href="#i-star"/></svg><p><b>Pola Fibonacci</b>: suku berikutnya = jumlah dua suku sebelumnya. <b>Pola kali/bagi</b>: setiap suku dikali atau dibagi bilangan yang sama.</p></div>
+      <div class="card ci up" style="--d:.36s"><svg class="icf" viewBox="0 0 24 24"><use href="#i-star"/></svg><p><b>Pola gambar berulang</b> punya kelompok (unit) yang diulang; <b>pola gambar bertambah</b> bertambah dengan jumlah yang sama — hitung titiknya satu per satu!</p></div>
+      <div class="card ci up" style="--d:.44s"><svg class="icf" viewBox="0 0 24 24"><use href="#i-star"/></svg><p>Soal terbaik dikerjakan dengan <b>tenang dan teliti</b> — waktu bukan untuk diburu-buru, tapi untuk berpikir! 💪</p></div>
+    </div>
+    <div class="seq up" style="--d:.52s">
+      <span class="chip">2</span><span class="chip">4</span><span class="chip">6</span><span class="chip">8</span>
+      <span class="chip pic">🍓</span><span class="chip pic">⭐</span><span class="chip pic">🍓</span><span class="chip pic q" style="cursor:default">…</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10. PENUTUP ================= -->
+<section class="slide" data-label="Terima Kasih">
+  <div class="wrap" style="display:flex;flex-direction:column;align-items:center;gap:8px">
+    <svg class="mascot bob up" style="width:min(230px,50vw);height:auto;--d:.1s" viewBox="0 0 220 230"><use href="#uni"/></svg>
+    <h2 class="up" style="--d:.25s">Thank you for today,<br><span class="hl pink" id="tyName">Sahabat Uni!</span> 💕</h2>
+    <p class="lead up" style="--d:.35s">Kamu sudah berjuang hebat menyelesaikan 40 soal pola! Uni bangga sekali padamu. Sampai jumpa di petualangan berikutnya! 🦄✨</p>
+    <div class="up" style="--d:.45s;display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+      <button class="btn ghost big" id="btnRestart"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-redo"/></svg> Ulangi dari Awal</button>
+      <button class="btn pink big" id="btnFx"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-star"/></svg> Hujan Confetti!</button>
+    </div>
+  </div>
+</section>
+
+<button class="navbtn" id="btnPrev"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-left"/></svg> Kembali</button>
+<button class="navbtn" id="btnNext">Lanjut <svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-right"/></svg></button>
+<div id="toast"></div>
+
+<script>
+(()=>{'use strict';
+/* ================= UTIL ================= */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ri=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuffle=a=>{const r=[...a];for(let i=r.length-1;i>0;i--){const j=ri(0,i);[r[i],r[j]]=[r[j],r[i]]}return r};
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+let toastT;
+function toast(m,ms=2200){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),ms)}
+
+/* ================= AUDIO ================= */
+let actx=null,soundOn=true;
+document.addEventListener('pointerdown',()=>{if(!actx){try{actx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}},{once:true});
+function note(f,delay,dur,type='triangle',vol=.13){
+  if(!actx)return;const t=actx.currentTime+delay;
+  const o=actx.createOscillator(),g=actx.createGain();
+  o.type=type;o.frequency.value=f;
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.015);
+  g.gain.exponentialRampToValueAtTime(.001,t+dur);
+  o.connect(g).connect(actx.destination);o.start(t);o.stop(t+dur+.05);
+}
+function sfx(n){
+  if(!soundOn||!actx)return;
+  if(n==='click')note(620,0,.06,'square',.05);
+  else if(n==='pop')note(880,0,.1);
+  else if(n==='good'){note(523.25,0,.12);note(659.25,.1,.16)}
+  else if(n==='great'){note(523.25,0,.1);note(659.25,.09,.1);note(783.99,.18,.12);note(1046.5,.27,.24)}
+  else if(n==='wrong'){note(262,0,.15,'sine',.09);note(196,.13,.22,'sine',.09)}
+  else if(n==='sparkle'){note(1318.5,0,.08);note(1568,.06,.08);note(2093,.12,.14)}
+  else if(n==='fanfare'){note(392,0,.12);note(523.25,.12,.12);note(659.25,.24,.12);note(783.99,.36,.14);note(1046.5,.5,.4)}
+}
+ $('#soundBtn').onclick=()=>{soundOn=!soundOn;$('#icSnd').innerHTML=`<use href="#i-${soundOn?'sound':'mute'}"/>`;toast(soundOn?'Suara dinyalakan 🔔':'Suara dimatikan 🔇',1300)};
+
+/* ================= CONFETTI ================= */
+const cv=$('#fx'),cx=cv.getContext('2d');let pieces=[];
+function sizeFx(){cv.width=innerWidth;cv.height=innerHeight}
+sizeFx();addEventListener('resize',sizeFx);
+const CC=['#FF7BAC','#B794F6','#FFD166','#5FD3BC','#FFB3CF','#4A3B52'];
+function burst(x,y,n=26){for(let i=0;i<n;i++)pieces.push({x,y,vx:Math.random()*9-4.5,vy:Math.random()*-5.5-2.5,g:.2,rot:Math.random()*6.3,vr:Math.random()*.5-.25,w:ri(6,10),h:ri(9,15),c:CC[ri(0,5)],life:ri(55,85)})}
+function burstAt(el,n=24){const r=el.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,n)}
+function rain(n=90){for(let i=0;i<n;i++)pieces.push({x:Math.random()*cv.width,y:Math.random()*-cv.height*.4-20,vx:Math.random()*1.4-.7,vy:Math.random()*2.2+2,g:.02,rot:Math.random()*6.3,vr:Math.random()*.4-.2,w:ri(7,11),h:ri(10,16),c:CC[ri(0,5)],life:ri(160,240)})}
+(function loop(){cx.clearRect(0,0,cv.width,cv.height);pieces=pieces.filter(p=>p.life>0&&p.y<cv.height+40);
+for(const p of pieces){p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.rot+=p.vr;p.life--;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.globalAlpha=Math.min(1,p.life/28);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()}requestAnimationFrame(loop)})();
+
+/* ================= DECK ================= */
+const slides=$$('.slide'),N=slides.length;let cur=0;
+const menuList=$('#menuList');
+slides.forEach((s,i)=>{const b=document.createElement('button');b.innerHTML=`<span class="mn">${i+1}</span>${s.dataset.label}`;b.onclick=()=>{go(i);setMenu(false)};menuList.appendChild(b)});
+const showHooks={
+  5(){renderExam()},
+  6(){renderResults()},
+  9(){const t=Date.now();$('#tyName').textContent=(EX.name||'Sahabat Uni');if(t-(showHooks._lt||0)>1600){showHooks._lt=t;rain(110);sfx('fanfare')}}
+};
+function go(n){
+  if(n<0||n>=N)return;
+  slides[cur].classList.remove('active');cur=n;
+  const s=slides[cur];s.classList.add('active');s.scrollTop=0;
+  $('#bar').style.width=((cur+1)/N*100)+'%';
+  $('#slideNo').textContent=(cur+1)+' / '+N;
+  $('#btnPrev').classList.toggle('dis',cur===0);
+  $('#btnNext').classList.toggle('dis',cur===N-1);
+  [...menuList.children].forEach((b,i)=>b.classList.toggle('on',i===cur));
+  showHooks[cur]&&showHooks[cur]();
+}
+ $('#btnPrev').onclick=()=>{sfx('click');go(cur-1)};
+ $('#btnNext').onclick=()=>{sfx('click');go(cur+1)};
+document.addEventListener('keydown',e=>{
+  if(/TEXTAREA|INPUT/.test(e.target.tagName))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();go(cur+1)}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1)}
+  else if(e.key==='Escape')setMenu(false);
+});
+function setMenu(v){$('#menuPanel').classList.toggle('open',v)}
+ $('#menuBtn').onclick=()=>setMenu(!$('#menuPanel').classList.contains('open'));
+document.addEventListener('click',e=>{if(!e.target.closest('#menuPanel')&&!e.target.closest('#menuBtn'))setMenu(false)});
+
+/* ================= COVER ================= */
+ $('#coverQ').onclick=function(){
+  if(this.dataset.done)return;this.dataset.done='1';
+  this.classList.remove('q');this.textContent='🍓';this.classList.add('pop');
+  sfx('good');burstAt(this,24);toast('Pintar! Polanya 🍓⭐ berulang, jadi setelah ⭐ adalah 🍓!');
+};
+function start(){
+  const v=$('#nameInput').value.trim();
+  if(!v){toast('Tulis dulu namamu ya, cantik! 💕');sfx('wrong');$('#nameInput').focus();return}
+  EX.name=v;
+  $('#stuName').textContent='Siswa: '+v;
+  const p=$('#phName');if(p)p.textContent=v;
+  sfx('sparkle');rain(60);go(1);
+}
+ $('#btnStart').onclick=start;
+ $('#nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')start()});
+
+/* ================= REVIEW 1 ================= */
+function twoStage(btnSel,gapsSel,ansSel,msgSel,gapTxt,ansTxt,dirClass){
+  let k=0;const btn=$(btnSel),gaps=$$(gapsSel),ans=$(ansSel),msg=$(msgSel);
+  btn.onclick=()=>{
+    if(k===0){gaps.forEach(g=>g.classList.add('show'));msg.textContent=gapTxt;msg.className='msg good';sfx('pop');btn.textContent='Suku Berikutnya!';k=1}
+    else if(k===1){ans.classList.remove('hide');ans.classList.add('pop');sfx('good');burstAt(ans,22);msg.textContent=ansTxt;k=2;btn.textContent='Putar Ulang'}
+    else{k=0;gaps.forEach(g=>g.classList.remove('show'));ans.classList.add('hide');ans.classList.remove('pop');msg.textContent='';msg.className='msg';btn.textContent='Suku Berikutnya!'}
+  };
+}
+twoStage('#btnRvUp','#rvUp .gap','#rvUpA','#msgRvUp','Setiap suku bertambah 3 (+3) — barisannya MEMBESAR!','11 + 3 = 14. Suku berikutnya adalah 14! 🎉');
+twoStage('#btnRvDn','#rvDn .gap','#rvDnA','#msgRvDn','Setiap suku berkurang 3 (−3) — barisannya MENGECIL!','11 − 3 = 8. Suku berikutnya adalah 8! 🎉');
+
+/* ================= REVIEW 2 ================= */
+(function(){
+  let k=0;const btn=$('#btnRvFb'),a1=$('#rvFbA1'),a2=$('#rvFbA2'),msg=$('#msgRvFb');
+  btn.onclick=()=>{
+    if(k===0){msg.textContent='Rahasia Fibonacci: jumlahkan DUA suku sebelumnya! 5 + 8 = … ?';msg.className='msg good';sfx('pop');k=1;btn.textContent='Lanjut Lagi!'}
+    else if(k===1){a1.classList.remove('hide');a1.classList.add('pop');sfx('good');msg.textContent='5 + 8 = 13! Sekarang: 8 + 13 = … ?';k=2}
+    else if(k===2){a2.classList.remove('hide');a2.classList.add('pop');sfx('great');burstAt(a2,22);msg.textContent='8 + 13 = 21! Barisannya: 1, 1, 2, 3, 5, 8, 13, 21 ✨';k=3;btn.textContent='Putar Ulang'}
+    else{k=0;a1.classList.add('hide');a2.classList.add('hide');a1.classList.remove('pop');a2.classList.remove('pop');msg.textContent='';msg.className='msg';btn.textContent='Lanjutkan Barisannya!'}
+  };
+})();
+(function(){
+  let k=0;const btn=$('#btnRvMul'),gapsM=$$('#rvMul .gap'),gapsD=$$('#rvDiv .gap'),
+  am=$('#rvMulA'),ad=$('#rvDivA'),msg=$('#msgRvMul');
+  btn.onclick=()=>{
+    if(k===0){gapsM.forEach(g=>g.classList.add('show'));msg.textContent='Baris atas: setiap suku DIKALI 3 (membesar cepat!). Baris bawah menyusul…';sfx('pop');k=1}
+    else if(k===1){gapsD.forEach(g=>g.classList.add('show'));msg.textContent='Baris bawah: setiap suku DIBAGI 2 (mengecil!). Sekarang tekan lagi!';sfx('pop');k=2}
+    else if(k===2){am.classList.remove('hide');ad.classList.remove('hide');am.classList.add('pop');ad.classList.add('pop');sfx('great');burstAt(btn,20);msg.textContent='54 × 3 = 162 dan 24 ÷ 2 = 12. Kamu hebat! 🎉';k=3;btn.textContent='Putar Ulang'}
+    else{k=0;[...gapsM,...gapsD].forEach(g=>g.classList.remove('show'));am.classList.add('hide');ad.classList.add('hide');am.classList.remove('pop');ad.classList.remove('pop');msg.textContent='';msg.className='msg';btn.textContent='Tunjukkan Polanya!'}
+  };
+})();
+
+/* ================= REVIEW 3 ================= */
+(function(){
+  let k=0;const btn=$('#btnRvRep'),chips=[...$('#rvRep').children].filter(c=>c.id!=='rvRepA'),a=$('#rvRepA'),msg=$('#msgRvRep');
+  btn.onclick=()=>{
+    if(k===0){chips.forEach((c,i)=>setTimeout(()=>{c.classList.add('ug');sfx('click')},i*110));msg.textContent='Kelompok 🍓⭐ diulang terus-menerus — itulah unit polanya!';msg.className='msg good';sfx('pop');k=1;btn.textContent='Suku Berikutnya!'}
+    else if(k===1){a.classList.remove('hide');a.classList.add('pop');sfx('good');burstAt(a,20);msg.textContent='Setelah ⭐ selalu 🍓. Jadi gambar berikutnya adalah 🍓! 🎉';k=2;btn.textContent='Putar Ulang'}
+    else{k=0;chips.forEach(c=>c.classList.remove('ug'));a.classList.add('hide');a.classList.remove('pop');msg.textContent='';msg.className='msg';btn.textContent='Lanjutkan Polanya!'}
+  };
+})();
+(function(){
+  let k=0;const btn=$('#btnRvGrow'),pluses=$$('#rvGrow .gplus'),a=$('#rvGrowA'),msg=$('#msgRvGrow');
+  btn.onclick=()=>{
+    if(k<pluses.length){pluses[k].classList.add('show');sfx('pop');k++;
+      if(k===pluses.length)setTimeout(()=>{a.classList.remove('hide');a.classList.add('pop');sfx('great');burstAt(a,22);msg.textContent='Setiap kelompok bertambah 1 🟣: 1, 2, 3, 4. Suku berikutnya 4 🟣! 🎉';msg.className='msg good';btn.textContent='Putar Ulang'},350)}
+    else{k=0;pluses.forEach(p=>p.classList.remove('show'));a.classList.add('hide');a.classList.remove('pop');msg.textContent='';msg.className='msg';btn.textContent='Suku Berikutnya!'}
+  };
+})();
+ $('#btnGoExam').onclick=()=>{sfx('pop');go(5)};
+
+/* ================================================================
+   GENERATOR GAMBAR POLA (SVG)
+================================================================ */
+const BLUE='#1B7FB4',ORG='#F5A623',REDC='#E5504E',PUR='#8E5BD0',INKC='#4A3B52';
+const dot=(x,y,r=5,c=BLUE)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
+function gridD(rows,cols,g=13,r=4.6){let s='';const w=(cols-1)*g,h=(rows-1)*g,x0=50-w/2,y0=50-h/2;
+  for(let i=0;i<rows;i++)for(let j=0;j<cols;j++)s+=dot(x0+j*g,y0+i*g,r);return s}
+function triD(n){let s='';const g=13;for(let i=0;i<n;i++){const c=i+1,w=(c-1)*g,x0=50-w/2,y0=50-((n-1)*g)/2+i*g;for(let j=0;j<c;j++)s+=dot(x0+j*g,y0)}return s}
+function Lsh(n){const len=n+1,g=11,x0=50-(len-1)*g/2,y0=50+(len-1)*g/2;let s='';
+  for(let i=0;i<len;i++)s+=dot(x0,y0-i*g);for(let j=1;j<len;j++)s+=dot(x0+j*g,y0);return s}
+function crossD(n){const g=10;let s=dot(50,50);for(let i=1;i<=n;i++)s+=dot(50,50-i*g)+dot(50,50+i*g)+dot(50-i*g,50)+dot(50+i*g,50);return s}
+function Vsh(n){const g=11;let s=dot(50,50+n*g*.5);for(let i=1;i<=n;i++)s+=dot(50-i*g*.95,50+n*g*.5-i*g)+dot(50+i*g*.95,50+n*g*.5-i*g);return s}
+function frameD(n){const m=n+2,g=11,w=(m-1)*g,x0=50-w/2,y0=50-w/2;let s='';
+  for(let j=0;j<m;j++)s+=dot(x0+j*g,y0)+dot(x0+j*g,y0+w);
+  for(let i=1;i<m-1;i++)s+=dot(x0,y0+i*g)+dot(x0+w,y0+i*g);return s}
+function Ush(n){const g=10,w=3*g,x0=50-w/2,y0=50+n*g/2;let s='';
+  for(let j=0;j<4;j++)s+=dot(x0+j*g,y0);for(let i=1;i<=n;i++)s+=dot(x0,y0-i*g)+dot(x0+w,y0-i*g);return s}
+function Tsh(n){const g=11,hw=n+2,w=(hw-1)*g,x0=50-w/2,y0=50-n*g/2;let s='';
+  for(let j=0;j<hw;j++)s+=dot(x0+j*g,y0);for(let i=1;i<=n;i++)s+=dot(50,y0+i*g);return s}
+function linesS(n,c=BLUE){let s='';const g=13,y0=50-(n-1)*g/2;
+  for(let i=0;i<n;i++)s+=`<line x1="26" y1="${y0+i*g}" x2="74" y2="${y0+i*g}" stroke="${c}" stroke-width="5.5" stroke-linecap="round"/>`;return s}
+function circS(n,c=PUR){let s='';for(let i=0;i<n;i++)s+=`<circle cx="50" cy="50" r="${7+i*6.5}" fill="none" stroke="${c}" stroke-width="3.2"/>`;return s}
+function clockS(h){const a=((h%12)*30-90)*Math.PI/180,hx=50+19*Math.cos(a),hy=50+19*Math.sin(a);let t='';
+  [0,90,180,270].forEach(d=>{const r=d*Math.PI/180;t+=`<line x1="${50+25*Math.cos(r)}" y1="${50+25*Math.sin(r)}" x2="${50+29*Math.cos(r)}" y2="${50+29*Math.sin(r)}" stroke="#2C3E50" stroke-width="2.4"/>`});
+  return `<circle cx="50" cy="50" r="31" fill="#fff" stroke="#2C3E50" stroke-width="3.5"/>${t}<line x1="50" y1="50" x2="${hx}" y2="${hy}" stroke="${REDC}" stroke-width="4.5" stroke-linecap="round"/><circle cx="50" cy="50" r="3" fill="#2C3E50"/>`}
+function arrowS(dir){const rot={up:0,right:90,down:180,left:270}[dir];
+  return `<g transform="rotate(${rot} 50 50)"><rect x="44" y="30" width="12" height="34" rx="4" fill="${REDC}"/><path d="M50 11 L69 36 L31 36 Z" fill="${REDC}"/></g>`}
+function polyS(n){let p='';const R=27;for(let i=0;i<n;i++){const a=(-90+i*360/n)*Math.PI/180;p+=`${50+R*Math.cos(a)},${50+R*Math.sin(a)} `}
+  return `<polygon points="${p}" fill="none" stroke="${INKC}" stroke-width="3.5" stroke-linejoin="round"/>`}
+function stairsD(n){let s='';const g=15,sz=13;
+  for(let r=0;r<n;r++)for(let c=0;c<n-r;c++)s+=`<rect x="${32+c*g}" y="${37+r*g}" width="${sz}" height="${sz}" rx="2.5" fill="${ORG}" stroke="#C77F00" stroke-width="1.6"/>`;return s}
+const PC=(s,l)=>({s,l}),PQ=l=>({s:null,l,q:1}),PE=()=>({s:null,l:'…',e:1});
+
+/* ================================================================
+   DATA 40 SOAL (sesuai file latihan)
+================================================================ */
+const QS=[
+{q:'Suku berikutnya dari barisan bilangan di bawah ini adalah…',seq:'2, 4, 6, 8, …',opts:['10','12','14','16'],a:0,tag:'Pola Membesar',why:'Barisan ini membesar dengan selisih +2 (4−2=2, 6−4=2, 8−6=2). Jadi setelah 8 adalah 8 + 2 = 10.'},
+{q:'Pola bilangan ganjil: 1, 3, 5, 7, …. Suku ke-8 dari pola tersebut adalah…',seq:'1, 3, 5, 7, …',opts:['11','13','15','17'],a:2,tag:'Pola Membesar',why:'Bilangan ganjil selalu bertambah 2: 1, 3, 5, 7, 9, 11, 13, 15. Suku ke-8 adalah 15.'},
+{q:'Suku berikutnya dari barisan bilangan di bawah ini adalah…',seq:'1, 4, 9, 16, 25, …',opts:['30','36','42','49'],a:1,tag:'Pola Persegi',why:'Pola bilangan persegi: 1×1, 2×2, 3×3, 4×4, 5×5. Suku berikutnya 6×6 = 36.'},
+{q:'Perhatikan barisan bilangan berikut. Angka selanjutnya yang tepat adalah…',seq:'3, 6, 12, 24, …',opts:['36','40','48','60'],a:2,tag:'Kali & Bagi',why:'Setiap suku dikali 2: 3×2=6, 6×2=12, 12×2=24. Jadi 24 × 2 = 48.'},
+{q:'Barisan Fibonacci dimulai dengan angka di bawah ini. Dua suku berikutnya adalah…',seq:'1, 1, 2, 3, 5, 8, …',opts:['12 dan 18','13 dan 21','13 dan 20','14 dan 22'],a:1,tag:'Fibonacci',why:'Pola Fibonacci: jumlahkan dua suku sebelumnya. 5 + 8 = 13, lalu 8 + 13 = 21.'},
+{q:'Diketahui barisan mengecil berikut. Nilai suku ke-10 adalah…',seq:'100, 95, 90, 85, …',opts:['55','50','45','60'],a:0,tag:'Pola Mengecil',why:'Barisan mengecil dengan −5. Dari suku ke-4 (85) ke suku ke-10 ada 6 langkah: 85 − (5×6) = 85 − 30 = 55.'},
+{q:'Suku ke-n dari suatu barisan dirumuskan dengan Un = 3n + 2. Suku ke-4 barisan tersebut adalah…',seq:'',opts:['10','12','14','16'],a:2,tag:'Rumus Suku',why:'Ganti n dengan 4: Un = 3×4 + 2 = 12 + 2 = 14. (Barisannya juga naik +3 mulai dari 5: 5, 8, 11, 14.)'},
+{q:'Perhatikan pola bilangan berikut. Suku berikutnya adalah…',seq:'2, 6, 12, 20, 30, …',opts:['38','40','42','46'],a:2,tag:'Pola Bertingkat',why:'Selisihnya bertingkat: +4, +6, +8, +10, lalu +12. Jadi 30 + 12 = 42.'},
+{q:'Tentukan lanjutan dari barisan berikut.',seq:'5, 10, 8, 16, 14, 28, …',opts:['26','30','56','24'],a:0,tag:'Kali & Bagi',why:'Operasinya bergantian: ×2 lalu −2. 5×2=10, 10−2=8, 8×2=16, 16−2=14, 14×2=28. Selanjutnya 28 − 2 = 26.'},
+{q:'Berapakah suku kelima dari barisan berikut?',seq:'1, 8, 27, 64, …',opts:['81','100','125','144'],a:2,tag:'Pola Kubik',why:'Pola pangkat tiga: 1×1×1, 2×2×2, 3×3×3, 4×4×4. Suku ke-5 = 5×5×5 = 125.'},
+{q:'Pola bilangan pecahan berikut. Suku berikutnya adalah…',seq:'1/2, 1/4, 1/8, 1/16, …',opts:['1/24','1/32','1/64','1/20'],a:1,tag:'Kali & Bagi',why:'Setiap suku setengah dari sebelumnya (dibagi 2). 1/16 dibagi 2 = 1/32.'},
+{q:'Diberikan barisan bilangan prima berikut. Suku berikutnya adalah…',seq:'2, 3, 5, 7, 11, …',opts:['12','13','14','15'],a:1,tag:'Bilangan Prima',why:'Bilangan prima hanya habis dibagi 1 dan dirinya sendiri. Prima setelah 11 adalah 13.'},
+{q:'Perhatikan barisan bertingkat berikut. Suku selanjutnya adalah…',seq:'4, 7, 12, 19, …',opts:['26','27','28','29'],a:2,tag:'Pola Bertingkat',why:'Selisihnya bertingkat: +3, +5, +7, lalu +9. Jadi 19 + 9 = 28.'},
+{q:'Suku ke-6 dari pola bilangan berikut adalah…',seq:'10, 20, 40, 80, …',opts:['120','160','320','240'],a:2,tag:'Kali & Bagi',why:'Pola kali 2: suku ke-5 = 80×2 = 160, suku ke-6 = 160×2 = 320.'},
+{q:'Pola huruf berurutan: A, C, E, G, … Huruf selanjutnya adalah…',seq:'',opts:['H','I','J','K'],a:1,tag:'Pola Huruf',why:'Pola ini melompati satu huruf: A → C → E → G. Setelah G, huruf H dilewati, jadi huruf berikutnya adalah I.'},
+{q:'Perhatikan pola noktah (titik) berikut. Berapa banyak titik pada Pola ke-4?',viz:[PC(triD(1),'Pola 1'),PC(triD(2),'Pola 2'),PC(triD(3),'Pola 3'),PQ('Pola 4')],opts:['8','9','10','12'],a:2,tag:'Pola Gambar',why:'Pola segitiga: 1, 3, 6 titik — selisihnya +2, lalu +3, berikutnya +4. Pola ke-4 = 6 + 4 = 10 titik.'},
+{q:'Perhatikan pola persegi berikut. Berapa banyak titik penyusun Pola ke-4?',viz:[PC(gridD(1,1),'Pola 1'),PC(gridD(2,2),'Pola 2'),PC(gridD(3,3),'Pola 3'),PQ('Pola 4')],opts:['12','15','16','20'],a:2,tag:'Pola Gambar',why:'Pola persegi: 1×1, 2×2, 3×3. Pola ke-4 = 4×4 = 16 titik.'},
+{q:'Berdasarkan susunan titik berbentuk L berikut, berapakah banyak titik pada Pola ke-4?',viz:[PC(Lsh(1),'Pola 1'),PC(Lsh(2),'Pola 2'),PC(Lsh(3),'Pola 3'),PQ('Pola 4')],opts:['7','9','11','13'],a:1,tag:'Pola Gambar',why:'Banyak titik: 3, 5, 7 — selalu bertambah 2. Pola ke-4 = 7 + 2 = 9 titik.'},
+{q:'Perhatikan pola bangun datar yang tersusun dari titik-titik berikut. Banyak titik pada Pola ke-4 adalah…',viz:[PC(gridD(1,2),'Pola 1'),PC(gridD(2,3),'Pola 2'),PC(gridD(3,4),'Pola 3'),PQ('Pola 4')],opts:['16','18','20','24'],a:2,tag:'Pola Gambar',why:'Pola persegi panjang: 1×2 = 2, 2×3 = 6, 3×4 = 12. Pola ke-4 = 4×5 = 20 titik.'},
+{q:'Gambar menunjukkan pola bentuk tambah (silang). Berapa banyak titik pada Pola ke-4?',viz:[PC(crossD(1),'Pola 1'),PC(crossD(2),'Pola 2'),PC(crossD(3),'Pola 3'),PQ('Pola 4')],opts:['13','15','17','19'],a:2,tag:'Pola Gambar',why:'Banyak titik: 5, 9, 13 — bertambah 4 setiap pola. Pola ke-4 = 13 + 4 = 17 titik.'},
+{q:'Berdasarkan urutan bangun datar berikut, bangun datar apa yang tepat untuk Pola ke-4?',viz:[PC(polyS(3),'Pola 1'),PC(polyS(4),'Pola 2'),PC(polyS(5),'Pola 3'),PQ('Pola 4')],opts:['Segienam','Segitujuh','Lingkaran','Belah Ketupat'],a:0,tag:'Pola Gambar',why:'Jumlah sisi bertambah satu: 3 (segitiga), 4 (belah ketupat), 5 (segilima). Pola ke-4 punya 6 sisi = segienam.'},
+{q:'Pola titik berbentuk V ini terus berkembang. Berapa banyak titik pada Pola ke-4?',viz:[PC(Vsh(1),'Pola 1'),PC(Vsh(2),'Pola 2'),PC(Vsh(3),'Pola 3'),PQ('Pola 4')],opts:['7','9','11','13'],a:1,tag:'Pola Gambar',why:'Banyak titik: 3, 5, 7 — bertambah 2 setiap pola. Pola ke-4 = 7 + 2 = 9 titik.'},
+{q:'Perhatikan pola persegi berlubang (bingkai) berikut. Berapa titik pada Pola ke-4?',viz:[PC(frameD(1),'Pola 1'),PC(frameD(2),'Pola 2'),PC(frameD(3),'Pola 3'),PQ('Pola 4')],opts:['20','24','28','32'],a:0,tag:'Pola Gambar',why:'Bingkai: 8, 12, 16 — bertambah 4 titik setiap pola. Pola ke-4 = 16 + 4 = 20 titik.'},
+{q:'Perhatikan arah jarum jam pada pola berikut. Jam berapakah yang ditunjukkan pada Pola ke-4?',viz:[PC(clockS(12),'Pola 1'),PC(clockS(3),'Pola 2'),PC(clockS(6),'Pola 3'),PQ('Pola 4')],opts:['07.00','08.00','09.00','12.00'],a:2,tag:'Pola Gambar',why:'Jarum merah berputar 90° searah jarum jam setiap pola: 12.00 → 03.00 → 06.00 → 09.00.'},
+{q:'Berapakah jumlah garis lurus sejajar pada Pola ke-4?',viz:[PC(linesS(1),'Pola 1'),PC(linesS(2),'Pola 2'),PC(linesS(3),'Pola 3'),PQ('Pola 4')],opts:['3','4','5','6'],a:1,tag:'Pola Gambar',why:'Banyak garis bertambah satu setiap pola: 1, 2, 3. Pola ke-4 = 4 garis.'},
+{q:'Bentuk huruf T di bawah ini tersusun dari titik-titik. Berapa banyak titik pada Pola ke-4?',viz:[PC(Tsh(1),'Pola 1'),PC(Tsh(2),'Pola 2'),PC(Tsh(3),'Pola 3'),PQ('Pola 4')],opts:['9','11','13','15'],a:1,tag:'Pola Gambar',why:'Banyak titik: 5, 7, 9 — bertambah 2 setiap pola. Pola ke-4 = 9 + 2 = 11 titik.'},
+{q:'Panah merah ini berputar. Ke arah manakah panah menunjuk pada Pola ke-4?',viz:[PC(arrowS('up'),'Pola 1'),PC(arrowS('right'),'Pola 2'),PC(arrowS('down'),'Pola 3'),PQ('Pola 4')],opts:['Kiri','Kanan','Atas','Bawah'],a:0,tag:'Pola Gambar',why:'Panah berputar 90° searah jarum jam: atas → kanan → bawah → kiri.'},
+{q:'Perhatikan jumlah lingkaran konsentris berikut. Berapakah jumlah lingkaran pada Pola ke-5?',viz:[PC(circS(1),'Pola 1'),PC(circS(2),'Pola 2'),PC(circS(3),'Pola 3'),PQ('Pola 4')],opts:['4','5','6','7'],a:1,tag:'Pola Gambar',why:'Banyak lingkaran bertambah satu: 1, 2, 3, 4. Jadi Pola ke-5 memiliki 5 lingkaran.'},
+{q:'Bentuk huruf U ini terdiri dari titik-titik. Berapa banyak titik pada Pola ke-4?',viz:[PC(Ush(1),'Pola 1'),PC(Ush(2),'Pola 2'),PC(Ush(3),'Pola 3'),PQ('Pola 4')],opts:['10','12','14','16'],a:1,tag:'Pola Gambar',why:'Banyak titik: 6, 8, 10 — bertambah 2 setiap tingkatnya. Pola ke-4 = 10 + 2 = 12 titik.'},
+{q:'Perhatikan susunan blok tangga berikut. Berapa banyak blok pada susunan ke-4?',viz:[PC(stairsD(1),'Pola 1'),PC(stairsD(2),'Pola 2'),PC(stairsD(3),'Pola 3'),PQ('Pola 4')],opts:['8','10','12','16'],a:1,tag:'Pola Gambar',why:'Bilangan segitiga: 1, 3, 6 — selisih +2, lalu +3, berikutnya +4. Susunan ke-4 = 6 + 4 = 10 blok.'},
+{q:'Perhatikan pola titik berbentuk segitiga berikut. Berapakah banyak titik pada Pola ke-7?',viz:[PC(triD(1),'Pola 1'),PC(triD(2),'Pola 2'),PC(triD(3),'Pola 3'),PE(),PQ('Pola 7')],opts:['21','28','36','45'],a:1,tag:'Pola Gambar',why:'Pola segitiga: 1, 3, 6, 10, 15, 21, 28. Pola ke-7 = 28 titik.'},
+{q:'Diketahui suatu barisan aritmatika berikut. Berapakah suku ke-15 dari barisan tersebut?',seq:'4, 11, 18, 25, …',opts:['95','102','109','116'],a:1,tag:'Pola Membesar',why:'Beda barisan +7. Dari suku ke-4 (25) ke suku ke-15 ada 11 langkah: 25 + (7×11) = 25 + 77 = 102.'},
+{q:'Perhatikan pola persegi berikut. Berapa banyak titik penyusun yang dibutuhkan untuk membuat Pola ke-8?',viz:[PC(gridD(1,1),'Pola 1'),PC(gridD(2,2),'Pola 2'),PC(gridD(3,3),'Pola 3'),PE(),PQ('Pola 8')],opts:['49','64','81','100'],a:1,tag:'Pola Gambar',why:'Pola ke-n = n×n titik. Pola ke-8 = 8×8 = 64 titik.'},
+{q:'Diberikan barisan geometri berikut. Berapakah suku ke-7 dari barisan tersebut?',seq:'2, 6, 18, 54, …',opts:['486','1458','4374','13122'],a:1,tag:'Kali & Bagi',why:'Pola kali 3: ke-5 = 162, ke-6 = 486, ke-7 = 486 × 3 = 1458.'},
+{q:'Sebuah pola bilangan disusun sebagai berikut. Berapakah nilai pada pola ke-10?',seq:'2, 5, 10, 17, 26, …',opts:['82','101','122','145'],a:1,tag:'Pola Bertingkat',why:'Pola: n×n + 1 → 1+1=2, 4+1=5, 9+1=10, 16+1=17, 25+1=26. Pola ke-10 = 100 + 1 = 101.'},
+{q:'Tentukan bilangan yang tepat untuk melengkapi bagian yang kosong pada barisan berikut.',seq:'12, 17, 22, …, 32, 37',opts:['25','26','27','28'],a:2,tag:'Suku Hilang',why:'Selisih konstan +5: 22 + 5 = 27. Bukti: 27 + 5 = 32 ✓ (cocok dengan barisan).'},
+{q:'Berdasarkan urutan garis lurus berderet di bawah, berapakah jumlah garis pada Pola ke-3 yang hilang?',viz:[PC(linesS(1),'Pola 1'),PC(linesS(2),'Pola 2'),PQ('Pola 3'),PC(linesS(4),'Pola 4')],opts:['2','3','4','5'],a:1,tag:'Pola Gambar',why:'Bertambah 1 garis setiap pola: 1, 2, 3, 4. Jadi Pola ke-3 memiliki 3 garis.'},
+{q:'Tentukan angka yang hilang di tengah pada deret Fibonacci berikut.',seq:'2, 3, 5, 8, …, 21, 34',opts:['11','12','13','15'],a:2,tag:'Fibonacci',why:'Pola Fibonacci: angka berikutnya = jumlah dua sebelumnya. 5 + 8 = 13. Bukti: 8 + 13 = 21 ✓.'},
+{q:'Pecahan manakah yang tepat untuk melengkapi bagian yang hilang pada barisan ini?',seq:'1, 1/3, 1/9, …, 1/81',opts:['1/18','1/27','1/36','1/54'],a:1,tag:'Kali & Bagi',why:'Setiap suku dibagi 3: 1/9 dibagi 3 = 1/27. Bukti: 1/27 dibagi 3 = 1/81 ✓.'},
+{q:'Pola arah panah di bawah ini berputar secara teratur. Ke arah manakah panah menunjuk pada Pola ke-3 yang hilang?',viz:[PC(arrowS('up'),'Pola 1'),PC(arrowS('right'),'Pola 2'),PQ('Pola 3'),PC(arrowS('left'),'Pola 4')],opts:['Atas','Bawah','Kiri','Kanan'],a:1,tag:'Pola Gambar',why:'Berputar 90° searah jarum jam: atas → kanan → bawah → kiri. Jadi Pola ke-3 menunjuk ke bawah.'},
+];
+
+/* ================= MESIN UJIAN ================= */
+const EX={name:'',open:-1,finished:false,
+  st:QS.map(()=>({solved:false,help:false,first:false,att:0,picked:null,wrong:[],time:0,run:false}))};
+const done=()=>EX.st.filter(s=>s.solved).length;
+
+/* stopwatch global: satu detak untuk semua soal */
+setInterval(()=>{
+  const i=EX.st.findIndex(s=>s.run);
+  if(i<0)return;
+  EX.st[i].time++;
+  if(EX.open===i){const el=$('#swT');if(el)el.textContent=fmt(EX.st[i].time)}
+},1000);
+
+function seqHTML(str){
+  return `<div class="seq">`+str.split(',').map(t=>`<span class="chip ex">${t.trim()}</span>`).join('')+`</div>`;
+}
+function vizHTML(v){
+  return `<div class="prow">`+v.map(c=>{
+    if(c.e)return `<div class="pell">…</div>`;
+    if(c.q)return `<div class="pcard pq"><div class="pv">❓</div><div class="plab">${c.l}</div></div>`;
+    return `<div class="pcard"><div class="pv"><svg viewBox="0 0 100 100">${c.s}</svg></div><div class="plab">${c.l}</div></div>`;
+  }).join('')+`</div>`;
+}
+
+function renderExam(){
+  const g=$('#qGrid');
+  g.innerHTML=QS.map((q,i)=>{
+    const st=EX.st[i];
+    let cls=st.solved?(st.help?'help':'ok'):(EX.open===i?'run':'un');
+    const tip=st.solved?`Selesai • ${fmt(st.time)}${st.help?' • via pembahasan':(st.att===0?' • tepat sekali coba':' • '+st.att+'x salah')}`:(EX.open===i?'Sedang dikerjakan…':'Belum dikerjakan');
+    return `<button class="qcell ${cls}" data-i="${i}" title="Soal ${i+1} • ${tip}">${i+1}${st.solved?`<span class="qtime">${fmt(st.time)}</span>`:''}</button>`;
+  }).join('');
+  g.querySelectorAll('.qcell').forEach(b=>b.onclick=()=>{sfx('pop');openQ(+b.dataset.i)});
+  $('#exStat').textContent=`Terselesaikan: ${done()} / 40`;
+  const p=$('#qPanel');
+  if(EX.open<0){
+    p.innerHTML=`<div class="ph"><svg viewBox="0 0 220 230"><use href="#uni"/></svg>
+      <h3>Halo, <span id="phName">${EX.name||'Sahabat Uni'}</span>! 🦄</h3>
+      <p>Ketuk salah satu <b>nomor soal</b> di sebelah kiri untuk mulai. Stopwatch ⏱ akan berjalan sampai kamu berhasil menjawab. Semangat! 🌟</p></div>`;
+  }else renderQ();
+}
+
+function openQ(i){
+  EX.st.forEach(s=>s.run=false);
+  EX.open=i;
+  if(!EX.st[i].solved)EX.st[i].run=true;
+  renderExam();
+}
+
+function fbHTML(i){
+  const q=QS[i],st=EX.st[i];
+  if(st.solved){
+    const ic=st.help?'<svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-bulb"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-check"/></svg>';
+    const title=st.help?'Ini pembahasannya — sekarang kamu tahu caranya! 💡':(st.att===0?'Hebat! Tepat sekali pada percobaan pertama! 🌟':'Hebat! Akhirnya berhasil — kamu tidak menyerah! 💪');
+    return `<span class="fic">${ic}</span><div><b>${title}</b><p><b>Pembahasan:</b> ${q.why}</p><p class="ftime">⏱ Waktu pengerjaan: <b>${fmt(st.time)}</b> • Percobaan: <b>${st.att+1}x</b>${st.help?' (dibantu pembahasan)':''}</p></div>`;
+  }
+  if(st.att>0)return `<span class="fic"><svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-x"/></svg></span>
+    <div><b>Belum tepat. Coba lagi ya — kamu pasti bisa! 💪</b><p>Waktu terus berjalan ⏱. Pikirkan lagi polanya, atau buka Pembahasan bila benar-benar buntu.</p></div>`;
+  return '';
+}
+
+function renderQ(){
+  const i=EX.open,q=QS[i],st=EX.st[i],L=['A','B','C','D'];
+  $('#qPanel').innerHTML=`
+    <div class="qtop">
+      <span class="qnum">Soal ${i+1}</span>
+      <span class="qtag">${q.tag}</span>
+      <span class="sw ${st.run?'on':''}"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-clock"/></svg><b id="swT">${fmt(st.time)}</b></span>
+    </div>
+    <p class="qtext">${q.q}</p>
+    ${q.viz?vizHTML(q.viz):seqHTML(q.seq)}
+    <div class="opts">
+      ${q.opts.map((o,pos)=>{
+        let cls='opt';
+        if(st.solved&&pos===q.a)cls+=' correct';
+        else if(st.wrong.includes(pos))cls+=' wrong';
+        else if(!st.solved&&st.picked===pos)cls+=' sel';
+        const dis=st.solved||st.wrong.includes(pos);
+        return `<button class="${cls}" data-p="${pos}" ${dis?'disabled':''}><span class="abc">${L[pos]}</span>${o}</button>`;
+      }).join('')}
+    </div>
+    <div class="fb ${st.solved?'show '+(st.help?'warn':'ok'):(st.att>0?'show no':'')}" id="qFb">${fbHTML(i)}</div>
+    <div class="qnav" id="qNav"></div>`;
+  const panel=$('#qPanel'),nav=$('#qNav');
+  if(!st.solved){
+    panel.querySelectorAll('.opt:not([disabled])').forEach(b=>b.onclick=()=>{
+      panel.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');st.picked=+b.dataset.p;sfx('click');
+      const c=$('#btnCheck');if(c)c.disabled=false;
+    });
+    nav.innerHTML=`<button class="btn pink big" id="btnCheck" ${st.picked==null?'disabled':''}>✅ Cek Jawaban</button>`
+      +(st.att>0?`<button class="btn ghost" id="btnReveal">💡 Lihat Pembahasan</button>`:'');
+    $('#btnCheck').onclick=checkAns;
+    const rv=$('#btnReveal');if(rv)rv.onclick=()=>{finishQ(i,true)};
+  }else{
+    nav.innerHTML=done()>=40
+      ?`<button class="btn pink big" id="btnNext">Lihat Hasil 🏁</button>`
+      :`<button class="btn mint" id="btnNext">Soal Berikutnya <svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-right"/></svg></button>`;
+    $('#btnNext').onclick=nextQ;
+  }
+}
+
+function checkAns(){
+  const i=EX.open,q=QS[i],st=EX.st[i];
+  if(st.picked==null){toast('Pilih dulu jawabanmu ya! 💕');return}
+  if(st.picked===q.a){
+    const first=st.att===0;
+    finishQ(i,false);
+    if(first){sfx('great')}else{sfx('good')}
+  }else{
+    st.att++;st.wrong.push(st.picked);st.picked=null;
+    sfx('wrong');
+    const p=$('#qPanel');p.classList.add('shake');setTimeout(()=>p.classList.remove('shake'),450);
+    renderExam();
+  }
+}
+
+function finishQ(i,help){
+  const st=EX.st[i];
+  if(st.solved)return;
+  st.solved=true;st.help=help;st.run=false;
+  if(!help&&st.att===0)st.first=true;
+  if(help)sfx('sparkle');
+  const el=$('#qPanel .opt.correct');if(el)burstAt(el,26);
+  renderExam();
+}
+
+function nextQ(){
+  if(done()>=40){doFinish();return}
+  let j=(EX.open+1)%40,guard=0;
+  while(EX.st[j].solved&&guard<40){j=(j+1)%40;guard++}
+  sfx('click');openQ(j);
+}
+
+function doFinish(){
+  EX.st.forEach(s=>s.run=false);
+  EX.finished=true;
+  sfx('fanfare');
+  renderResults();go(6);
+}
+ $('#btnFinish').onclick=()=>{
+  const belum=40-done();
+  if(belum>0)toast(`Masih ada ${belum} soal belum selesai — hasil dihitung dari yang sudah dijawab ya!`,3000);
+  sfx('click');doFinish();
+};
+
+function stats(){
+  const solved=EX.st.filter(s=>s.solved);
+  const times=solved.map(s=>s.time);
+  const total=EX.st.reduce((a,s)=>a+s.time,0);
+  return{done:solved.length,first:solved.filter(s=>s.first).length,
+    helped:solved.filter(s=>s.help).length,total,
+    avg:solved.length?Math.round(total/solved.length):0,
+    min:times.length?Math.min(...times):0,max:times.length?Math.max(...times):0};
+}
+
+function renderResults(){
+  const s=stats(),pct=Math.round(s.done/40*100);
+  const stars=pct>=90?3:pct>=70?2:pct>=50?1:0;
+  const msg=s.done===0?'Belum ada soal yang diselesaikan — yuk mulai kerjakan soalnya dulu! 💕'
+    :pct>=90?'ISTIMEWA! Kamu bintang kelas pola bilangan! Uni sangat bangga! 🦄💖'
+    :pct>=70?'Hebat sekali! Pemahamanmu tentang pola sudah kuat banget! 🌟'
+    :pct>=50?'Bagus! Terus berlatih, kamu pasti makin jago! 💪'
+    :'Jangan menyerah ya! Baca lagi review materinya lalu coba lagi — Uni percaya kamu bisa! 🦄';
+  $('#resBox').innerHTML=`
+    <div class="card resultbox up" style="--d:.05s">
+      <span class="tag"><span class="dot"></span>HASIL LATIHAN • ${EX.name?EX.name.toUpperCase():'SISWA'}</span>
+      <div class="stars">${[0,1,2].map(i=>`<svg class="icf ${i<stars?'on':''}" viewBox="0 0 24 24"><use href="#i-star"/></svg>`).join('')}</div>
+      <h2 style="font-size:2.4rem;margin:.1em 0">Skor: ${s.done} / 40 <span style="font-size:1.2rem">(${pct}%)</span></h2>
+      <p class="msg ${pct>=50?'good':'bad'}" style="margin-bottom:6px">${msg}</p>
+      ${!EX.finished&&s.done<40?`<p style="font-size:.85rem;opacity:.7;font-weight:800">⏳ Ini rekap sementara — kamu belum menekan Finish Exam.</p>`:''}
+      <div class="statrow">
+        <span class="scorechip">⏱ Total waktu: <b>${fmt(s.total)}</b></span>
+        <span class="scorechip">📊 Rata-rata / soal: <b>${s.done?fmt(s.avg):'—'}</b></span>
+        <span class="scorechip">⚡ Tercepat: <b>${s.done?fmt(s.min):'—'}</b></span>
+        <span class="scorechip">🎯 Tepat sekali coba: <b>${s.first}</b></span>
+        <span class="scorechip">💡 Terbantu pembahasan: <b>${s.helped}</b></span>
+      </div>
+      <p style="font-family:'Fredoka';margin-top:4px">Rekap per soal (arahkan kursor untuk lihat waktu):</p>
+      <div class="recap">
+        ${EX.st.map((st,i)=>`<div class="rcell ${st.solved?(st.help?'help':'ok'):'un'}" title="Soal ${i+1}: ${st.solved?`selesai ${fmt(st.time)} (${st.att+1}x percobaan${st.help?', via pembahasan':''})`:'belum selesai'}">${i+1}<small>${st.solved?fmt(st.time):'—'}</small></div>`).join('')}
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:14px">
+        ${s.done<40?`<button class="btn mint" id="rBack">Lanjutkan Soal</button>`:''}
+        <button class="btn ghost" id="rRetry"><svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-redo"/></svg> Ulangi Ujian</button>
+        <button class="btn pink big" id="rRefl">Lanjut ke Refleksi <svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-right"/></svg></button>
+      </div>
+    </div>`;
+  if(pct>=70){rain(100)}
+  const b=$('#rBack');if(b)b.onclick=()=>{sfx('click');go(5)};
+  $('#rRetry').onclick=()=>{
+    sfx('pop');
+    EX.st=QS.map(()=>({solved:false,help:false,first:false,att:0,picked:null,wrong:[],time:0,run:false}));
+    EX.open=-1;EX.finished=false;renderExam();go(5);
+  };
+  $('#rRefl').onclick=()=>{sfx('pop');go(7)};
+}
+
+/* ================= REFLEKSI ================= */
+let mood=null;
+ $$('#moodRow .mood').forEach(m=>m.onclick=()=>{
+  $$('#moodRow .mood').forEach(x=>x.classList.remove('sel'));
+  m.classList.add('sel');mood=m.dataset.m;sfx('pop');
+});
+ $$('#reflChips .wchip').forEach(c=>c.onclick=()=>{c.classList.toggle('sel');sfx('click')});
+ $('#btnRefl').onclick=()=>{
+  if(!mood){toast('Pilih dulu perasaanmu ya! 💕');sfx('wrong');return}
+  const chips=$$('#reflChips .wchip.sel').map(c=>c.textContent);
+  const catatan=$('#reflText').value.trim();
+  $('#reflBox').innerHTML=`
+    <div class="card resultbox up" style="--d:.05s">
+      <svg viewBox="0 0 220 230" style="width:140px;height:140px;margin:0 auto 6px;display:block" class="bob"><use href="#uni"/></svg>
+      <h2 style="font-size:1.6rem">Terima kasih sudah berefleksi${EX.name?', '+EX.name:''}! 💕</h2>
+      <p style="font-weight:800;opacity:.85;margin-top:8px;line-height:1.6">
+        Perasaanmu: <b>${mood}</b>.
+        ${catatan?`<br>Catatanku: <b>“${catatan}”</b>`:''}
+        ${chips.length?`<br>Ingin berlatih lagi: <b>${chips.join(', ')}</b>.`:''}
+        <br>Pertahankan semangatmu, ya! 🌟
+      </p>
+    </div>`;
+  rain(70);sfx('great');
+};
+
+/* ================= PENUTUP ================= */
+ $('#btnRestart').onclick=()=>{sfx('pop');go(0)};
+ $('#btnFx').onclick=function(){rain(120);sfx('fanfare');burstAt(this,30)};
+
+/* init */
+go(0);
+})();
+</script>
+</body>
+</html>
