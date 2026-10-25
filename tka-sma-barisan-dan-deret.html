@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Barisan dan Deret — Persiapan TKA SMA | Slide Interaktif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#047857;--primary-2:#10b981;--primary-soft:#ecfdf5;--primary-line:#a7f3d0;
+  --accent:#d97706;--accent-soft:#fffbeb;
+  --ink:#134e4a;--muted:#628b7d;--line:#d9ece3;
+  --ok:#16a34a;--ok-bg:#f0fdf4;--bad:#dc2626;--bad-bg:#fef2f2;--warn:#b45309;
+  --card:#fff;--radius:18px;
+  --shadow:0 12px 32px rgba(4,120,87,.10),0 2px 8px rgba(19,78,74,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:'Poppins',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:#f7fcf9;color:var(--ink);overflow:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+ radial-gradient(680px 420px at 8% -6%,rgba(4,120,87,.12),transparent 60%),
+ radial-gradient(620px 420px at 100% 0%,rgba(217,119,6,.10),transparent 55%),
+ radial-gradient(720px 520px at 50% 115%,rgba(13,148,136,.10),transparent 60%)}
+button{font-family:inherit;color:inherit}
+h1,h2,h3,h4{line-height:1.25}
+sup{line-height:0}
+
+/* ---------- TOP BAR ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;z-index:60;display:flex;align-items:center;gap:16px;padding:0 18px;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;white-space:nowrap}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;display:grid;place-items:center;font-size:.9rem;font-weight:800;box-shadow:0 4px 10px rgba(4,120,87,.3)}
+.brand small{display:block;color:var(--muted);font-weight:600;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase}
+.progress{flex:1;height:6px;background:#d6efe4;border-radius:99px;overflow:hidden}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--primary-2),var(--accent));border-radius:99px;transition:width .45s ease}
+.topchip{background:var(--primary-soft);border:1px solid var(--primary-line);color:var(--primary);font-weight:700;font-size:.76rem;padding:6px 14px;border-radius:99px;white-space:nowrap}
+
+/* ---------- BOTTOM BAR ---------- */
+.bottombar{position:fixed;left:0;right:0;bottom:0;height:64px;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 18px;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+.bb-left,.bb-right{display:flex;align-items:center;gap:10px}
+.iconbtn{width:40px;height:40px;border-radius:12px;border:1.4px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;transition:.18s}
+.iconbtn:hover{border-color:var(--primary);color:var(--primary)}
+.navbtn{width:44px;height:44px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;cursor:pointer;display:grid;place-items:center;transition:.2s;box-shadow:0 6px 14px rgba(4,120,87,.25)}
+.navbtn:hover{transform:translateY(-1px)}
+.navbtn:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none}
+.counter{font-weight:700;color:var(--muted);font-size:.88rem;min-width:62px;text-align:center}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.dot{width:9px;height:9px;border-radius:50%;background:#c9ecdc;border:none;cursor:pointer;transition:.2s;padding:0}
+.dot.on{background:var(--primary);transform:scale(1.3)}
+.dot:hover{background:var(--primary-2)}
+
+/* ---------- SLIDES ---------- */
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:56px 0 64px;opacity:0;visibility:hidden;transform:translateY(26px);transition:opacity .45s ease,transform .45s ease,visibility .45s;overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.slide-inner{width:min(1120px,94%);margin:0 auto;height:100%;display:flex;flex-direction:column;min-height:0}
+.slide-body{flex:1;min-height:0;overflow-y:auto;padding:14px 6px 42px}
+.slide-body::-webkit-scrollbar{width:10px}
+.slide-body::-webkit-scrollbar-thumb{background:#bfe3d6;border-radius:99px;border:3px solid transparent;background-clip:content-box}
+.titlebar{padding:6px 0 10px}
+.kicker{display:inline-flex;align-items:center;gap:8px;background:var(--primary-soft);color:var(--primary);font-weight:700;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;padding:6px 14px;border-radius:99px;border:1px solid var(--primary-line)}
+.slide-title{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;letter-spacing:-.01em;margin-top:10px}
+.slide-sub{color:var(--muted);margin-top:6px;font-size:.95rem;line-height:1.65;max-width:80ch}
+
+/* ---------- COVER ---------- */
+.slide.cover .slide-body{display:flex;align-items:center;justify-content:center}
+.cover-box{position:relative;z-index:2;text-align:center;max-width:880px;margin:0 auto;padding:20px 0}
+.cover-title{font-size:clamp(2.4rem,5.6vw,4.1rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-top:16px}
+.cover-title .grad{background:linear-gradient(90deg,var(--primary),#0d9488 45%,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover-sub{color:var(--muted);font-size:1.02rem;line-height:1.75;margin:18px auto 0;max-width:68ch}
+.cover-chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-weight:600;font-size:.84rem;box-shadow:0 2px 6px rgba(19,78,74,.05)}
+.chip.link{cursor:pointer;border-color:var(--primary-line);color:var(--primary)}
+.chip.link:hover{background:var(--primary-soft)}
+.cover-actions{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cover-foot{margin-top:24px;color:var(--muted);font-size:.8rem}
+.float-sym{position:absolute;font-weight:800;color:rgba(4,120,87,.11);font-size:2.2rem;animation:floaty 7s ease-in-out infinite;user-select:none;pointer-events:none;z-index:1}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-20px) rotate(7deg)}}
+
+/* ---------- BUTTONS ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-weight:700;font-size:.92rem;padding:12px 22px;border-radius:14px;transition:.2s;border:1.6px solid transparent}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;box-shadow:0 8px 20px rgba(4,120,87,.28)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(4,120,87,.34)}
+.btn-ghost{background:#fff;color:var(--primary);border-color:var(--primary-line)}
+.btn-ghost:hover{background:var(--primary-soft)}
+.btn-check{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border:none;border-radius:12px;padding:10px 20px;font-weight:700;font-size:.88rem;cursor:pointer;transition:.2s;box-shadow:0 6px 16px rgba(4,120,87,.25)}
+.btn-check:hover{transform:translateY(-1px)}
+.btn-check:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.stepbtn{background:var(--primary-soft);color:var(--primary);border:1px solid var(--primary-line);border-radius:10px;padding:8px 14px;font-weight:700;font-size:.84rem;cursor:pointer;transition:.18s}
+.stepbtn:hover{background:#d1fae5}
+.stepbtn:disabled{opacity:.45;cursor:default}
+
+/* ---------- CARDS & CONTENT ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 22px}
+.card h3{font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:9px}
+.h3dot{width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,var(--primary),var(--accent));display:inline-block;flex:none}
+.card p{font-size:.93rem;line-height:1.68;color:#1f4d3f}
+.card ol{margin:8px 0 0 20px;font-size:.93rem;line-height:1.75;color:#1f4d3f}
+.formula{background:linear-gradient(135deg,#ecfdf5,#fffbeb);border:1.4px dashed var(--primary-line);border-radius:14px;padding:14px 18px;font-size:1rem;line-height:1.9}
+.formula b{color:var(--primary)}
+.formula .big{font-size:1.3rem;font-weight:800;color:var(--primary)}
+.note{background:var(--accent-soft);border:1px solid #fde68a;border-radius:14px;padding:14px 17px;font-size:.92rem;line-height:1.68;margin-top:16px}
+.note b{color:var(--accent)}
+.danger{background:var(--bad-bg);border:1px solid #fecaca;border-radius:14px;padding:14px 17px;font-size:.92rem;line-height:1.68;margin-top:16px}
+.danger b{color:var(--bad)}
+.mathline{font-size:1.06rem;font-weight:600;line-height:2.05;margin:4px 0}
+.mtable{width:100%;border-collapse:collapse;margin-top:12px;font-size:.9rem}
+.mtable th,.mtable td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+.mtable th{background:var(--primary-soft);color:var(--primary);font-weight:700}
+.mtable td:first-child{font-weight:700;text-align:left;background:#fffdfb}
+.mcap{font-size:.78rem;color:var(--muted);margin-top:6px}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:-0.6em;line-height:1.18;margin:0 3px;font-weight:700}
+.frac>span{display:block;padding:0 6px;font-size:.9em}
+.frac>span:last-child{border-top:1.7px solid currentColor}
+.instruksi{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#ecfdf5,#fffbeb);border:1px solid var(--primary-line);border-radius:14px;padding:14px 17px;font-size:.9rem;line-height:1.6;margin-top:16px;flex-wrap:wrap}
+.topic-chip{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);border:1px solid #fde68a;color:var(--warn);border-radius:99px;padding:7px 15px;font-weight:700;font-size:.84rem;white-space:nowrap}
+
+/* ---------- PETA MATERI ---------- */
+.peta-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:16px}
+.peta-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;transition:.2s;box-shadow:0 2px 8px rgba(19,78,74,.05);display:flex;gap:12px;align-items:flex-start}
+.peta-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--primary-line)}
+.peta-num{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem;flex:none}
+.peta-card h4{font-size:.97rem}
+.peta-card p{font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.55}
+
+/* ---------- DEMO INTERAKTIF ---------- */
+.demo-box{background:linear-gradient(135deg,#f2fbf7,#fffdf3);border:1.4px dashed var(--primary-line);border-radius:16px;padding:16px;margin-top:16px}
+.demo-tag{font-weight:800;font-size:.78rem;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.demo-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 4px}
+.chips-row{display:flex;gap:9px;flex-wrap:wrap;margin:8px 0}
+.gbtn{border:1.6px solid var(--line);background:#fff;border-radius:11px;padding:8px 15px;font-weight:700;cursor:pointer;font-size:.85rem;transition:.16s;color:var(--ink)}
+.gbtn:hover{border-color:var(--primary);color:var(--primary)}
+.gbtn.on{border-color:var(--primary);background:var(--primary-soft);color:var(--primary)}
+.readout{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 15px;font-size:.9rem;line-height:1.65;margin-top:12px}
+.readout b{color:var(--primary)}
+.tchips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.tchip{background:#fff;border:1.4px solid var(--line);border-radius:12px;padding:7px 11px;text-align:center;min-width:56px}
+.tchip small{display:block;font-size:.62rem;color:var(--muted);font-weight:700;letter-spacing:.05em}
+.tchip b{font-size:1.02rem;color:var(--ink)}
+.tchip.hl{border-color:var(--accent);background:var(--accent-soft)}
+.tchip.hl b{color:var(--accent)}
+.slrow{display:flex;align-items:center;gap:12px;margin:8px 0}
+.slrow label{flex:0 0 240px;font-size:.86rem;font-weight:600;color:#1f4d3f}
+.slrow input[type=range]{flex:1;accent-color:var(--primary)}
+.slval{flex:0 0 62px;text-align:center;font-weight:800;color:var(--primary)}
+.steps .step{display:flex;gap:12px;opacity:0;transform:translateY(10px);margin:12px 0;pointer-events:none}
+.steps .step.show{opacity:1;transform:none;pointer-events:auto;animation:fadeUp .4s ease}
+.step-n{flex:0 0 32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.step-b{flex:1;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 15px}
+.step-b .st{font-weight:700;font-size:.9rem}
+.step-b .sm{font-size:1.08rem;font-weight:700;color:var(--primary);margin:5px 0;line-height:1.7}
+.step-b .sd{font-size:.84rem;color:var(--muted);line-height:1.6}
+.verify{background:var(--ok-bg);border:1px solid #bbf7d0;border-radius:12px;padding:12px 16px;font-size:.9rem;line-height:1.7;margin-top:12px}
+.verify .exp-title{color:var(--ok)}
+.prob{background:#fff;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:13px 16px;font-size:.93rem;line-height:1.7;margin:12px 0}
+.prob b{color:var(--warn)}
+
+/* ---------- SOAL ---------- */
+.qlist{display:grid;gap:16px;margin-top:16px}
+.qcard{background:#fff;border:1px solid var(--line);border-left:5px solid var(--primary);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;transition:border-color .3s}
+.qcard.ok{border-left-color:var(--ok)}
+.qcard.bad{border-left-color:var(--bad)}
+.qmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.qnum{font-weight:800;color:var(--primary);font-size:.83rem;letter-spacing:.05em;text-transform:uppercase}
+.qtype{border-radius:99px;padding:3px 12px;font-size:.73rem;font-weight:700}
+.t-pg{background:#d1fae5;color:#047857}
+.t-bs{background:#e0f2fe;color:#0369a1}
+.t-pgk{background:#fef3c7;color:#92400e}
+.qhint{font-size:.72rem;color:var(--muted);background:#f1f5f9;border-radius:99px;padding:3px 10px;font-weight:600}
+.qtext{font-size:.99rem;line-height:1.7;margin-bottom:4px}
+.opts{display:grid;gap:10px;margin:14px 0 4px}
+.opts.locked{pointer-events:none}
+.opt{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1.8px solid var(--line);border-radius:13px;cursor:pointer;transition:.16s;background:#fff;font-size:.96rem;line-height:1.55}
+.opt:hover{border-color:#34d399;background:#f2fbf7}
+.opt.sel{border-color:var(--primary);background:var(--primary-soft)}
+.opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt input{accent-color:var(--primary);width:17px;height:17px;flex:none}
+.okey{min-width:26px;height:26px;border-radius:8px;background:var(--primary-soft);color:var(--primary);font-weight:800;display:grid;place-items:center;font-size:.76rem;border:1px solid var(--primary-line)}
+.opt.correct .okey{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong .okey{background:var(--bad);border-color:var(--bad);color:#fff}
+.opts.bs .opt{justify-content:center;font-weight:700;padding:13px}
+.qactions{margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fb{display:none;margin-top:12px;padding:11px 15px;border-radius:12px;font-weight:700;font-size:.92rem}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);color:var(--ok);border:1px solid #bbf7d0}
+.fb.bad{background:var(--bad-bg);color:var(--bad);border:1px solid #fecaca}
+.fb.warn{background:var(--accent-soft);color:var(--warn);border:1px solid #fde68a}
+.pembahasan{display:none;margin-top:12px;background:#fffdfb;border:1.4px dashed #b9e5d3;border-radius:13px;padding:14px 16px;font-size:.93rem;line-height:1.75}
+.pembahasan.show{display:block;animation:fadeUp .35s ease}
+.exp-title{font-weight:800;color:var(--primary);font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- GRAFIK ---------- */
+.gwrap{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;justify-content:center;box-shadow:var(--shadow);margin-top:12px}
+.gwrap svg{display:block;max-width:100%;height:auto}
+.gcap{font-size:.8rem;color:var(--muted);text-align:center;margin-top:8px;line-height:1.55}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:10px;justify-content:center}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-weight:600}
+.lg-line{width:24px;height:0;border-top:3px solid;display:inline-block;border-radius:2px}
+.lg-line.dash{border-top-style:dashed}
+
+/* ---------- HASIL ---------- */
+.rwrap{display:grid;grid-template-columns:290px 1fr;gap:18px;margin-top:16px}
+.scorecard{text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.score-label{font-size:.76rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.score-big{font-size:3.4rem;font-weight:800;line-height:1.15;background:linear-gradient(90deg,var(--primary),#0d9488);-webkit-background-clip:text;background-clip:text;color:transparent}
+.score-sub{color:var(--muted);font-size:.88rem;margin-top:8px}
+.rbtns{display:flex;flex-direction:column;gap:10px;margin-top:18px;width:100%}
+.namebox{display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.namebox input{flex:1;min-width:200px;padding:11px 14px;border:1.6px solid var(--line);border-radius:12px;font-family:inherit;font-size:.95rem;outline:none;transition:.2s}
+.namebox input:focus{border-color:var(--primary)}
+.rtable-wrap{overflow-x:auto;border-radius:var(--radius)}
+.rtable{width:100%;border-collapse:collapse;background:#fff;box-shadow:var(--shadow);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;min-width:560px}
+.rtable th{background:var(--primary-soft);color:var(--primary);text-align:left;font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;padding:12px 14px}
+.rtable td{padding:12px 14px;border-top:1px solid var(--line);font-size:.93rem;vertical-align:middle;line-height:1.5}
+.badge{padding:4px 12px;border-radius:99px;font-size:.75rem;font-weight:700;white-space:nowrap;display:inline-block}
+.badge.done{background:var(--ok-bg);color:var(--ok)}
+.badge.part{background:var(--accent-soft);color:var(--warn)}
+.badge.none{background:#f1f5f9;color:var(--muted)}
+.badge.focus{background:var(--primary-soft);color:var(--primary);border:1px solid var(--primary-line);font-size:.68rem;margin-top:4px}
+.rbar{height:10px;background:#d6efe4;border-radius:99px;min-width:110px;overflow:hidden;display:inline-block;vertical-align:middle}
+.rbar i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-2));border-radius:99px;transition:width .7s ease}
+.rpct{font-size:.8rem;color:var(--muted);font-weight:700;margin-left:8px}
+.rnote{color:var(--muted);font-size:.84rem;line-height:1.6;margin-top:12px}
+.confetti{position:fixed;top:-16px;width:9px;height:14px;z-index:300;pointer-events:none;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(112vh) rotate(680deg);opacity:.85}}
+
+/* ---------- KESIMPULAN ---------- */
+.closing{background:linear-gradient(135deg,#065f46,var(--primary));color:#fff;border:none}
+.closing h3{color:#fff}
+.closing p{color:#d1fae5}
+.closing .btn-ghost{background:#fff}
+
+/* ---------- MENU & TOAST ---------- */
+.menu{position:fixed;inset:0;z-index:120;background:rgba(6,59,43,.5);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:20px}
+.menu.open{display:flex}
+.menu-panel{background:#fff;border-radius:22px;box-shadow:0 30px 80px rgba(6,59,43,.35);width:min(600px,94vw);max-height:82vh;overflow:auto;padding:22px 20px}
+.menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 6px}
+.menu-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;font-weight:600;font-size:.93rem}
+.menu-item:hover{background:var(--primary-soft);color:var(--primary)}
+.mi-num{width:34px;height:34px;border-radius:10px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-size:.78rem;font-weight:800;flex:none;border:1px solid var(--primary-line)}
+.menu-item.cur .mi-num{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;border-color:transparent}
+.menu-item.cur{color:var(--primary)}
+.toast{position:fixed;left:50%;bottom:84px;transform:translate(-50%,20px);background:#065f46;color:#fff;padding:12px 20px;border-radius:14px;font-weight:600;font-size:.88rem;opacity:0;pointer-events:none;transition:.35s;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,.25);max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}.rwrap{grid-template-columns:1fr}}
+@media(max-width:720px){
+  .dots{display:none}
+  .topchip{display:none}
+  .card{padding:16px}
+  .slide{inset:52px 0 60px}
+  .topbar{height:52px;padding:0 12px;gap:10px}
+  .bottombar{padding:0 10px;height:60px}
+  .brand small{display:none}
+  .cover-sub{font-size:.94rem}
+  .slrow label{flex:0 0 150px;font-size:.8rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">&Sigma;</span>
+    <span>TKA SMA<small>Matematika &middot; Barisan &amp; Deret</small></span>
+  </div>
+  <div class="progress"><div id="progress"></div></div>
+  <span class="topchip">Materi Interaktif</span>
+</header>
+
+<!-- ===== BOTTOM BAR ===== -->
+<footer class="bottombar">
+  <div class="bb-left">
+    <button class="iconbtn" data-menu aria-label="Daftar slide">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <button class="navbtn" id="btnPrev" data-nav="prev" aria-label="Slide sebelumnya">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <span class="counter" id="counter">1 / 29</span>
+    <button class="navbtn" id="btnNext" data-nav="next" aria-label="Slide berikutnya">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+  <div class="dots" id="dots"></div>
+  <div class="bb-right">
+    <button class="iconbtn" data-fullscreen aria-label="Layar penuh">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+    </button>
+  </div>
+</footer>
+
+<!-- ===== MENU OVERLAY ===== -->
+<div class="menu" id="menu">
+  <div class="menu-panel">
+    <div class="menu-head">
+      <b>Daftar Slide</b>
+      <button class="iconbtn" data-menu-close aria-label="Tutup">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="menuList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<main class="deck">
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide cover active" data-title="Cover">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <span class="float-sym" style="top:10%;left:5%;animation-delay:0s">U<sub>n</sub> = a + (n&minus;1)b</span>
+      <span class="float-sym" style="top:20%;right:7%;animation-delay:1.2s;font-size:2.6rem">U<sub>n</sub> = a&middot;r<sup>n&minus;1</sup></span>
+      <span class="float-sym" style="bottom:16%;left:9%;animation-delay:2.1s;font-size:1.6rem">S<sub>n</sub> = n/2 (a + U<sub>n</sub>)</span>
+      <span class="float-sym" style="bottom:26%;right:8%;animation-delay:.7s;font-size:1.7rem">S<sub>&infin;</sub> = a/(1&minus;r)</span>
+      <span class="float-sym" style="top:46%;left:3%;animation-delay:1.8s;font-size:1.6rem">1, 4, 9, 16, 25, &hellip;</span>
+      <span class="float-sym" style="top:58%;right:4%;animation-delay:2.6s;font-size:1.5rem">2, 6, 18, 54, &hellip;</span>
+      <span class="float-sym" style="top:6%;left:45%;animation-delay:3s;font-size:1.5rem">1, 1, 2, 3, 5, 8, &hellip;</span>
+      <span class="float-sym" style="bottom:6%;left:47%;animation-delay:1.5s;font-size:1.5rem">r = U<sub>n+1</sub> / U<sub>n</sub></span>
+      <div class="cover-box">
+        <span class="kicker">Persiapan TKA SMA &middot; Matematika</span>
+        <h1 class="cover-title">Barisan &amp; <span class="grad">Deret</span></h1>
+        <p class="cover-sub">Dari pola bilangan sampai soal HOTS kehidupan sehari-hari: jenis-jenis pola, barisan aritmatika dan geometri beserta sifat-sifatnya, menentukan rumus suku ke-n, deret aritmatika dan geometri hingga deret tak hingga, lalu menaklukkan soal MPI (Masalah Penalaran Informasi) dan HOTS berbasis data &mdash; menabung, bola memantul, bakteri, bonus, dan banyak lagi. Dilengkapi Penjelajah Pola, lab barisan interaktif, demo Gauss, demo konvergensi, dan demo bola memantul.</p>
+        <div class="cover-chips">
+          <span class="chip">29 Slide Materi</span>
+          <span class="chip">80 Soal Interaktif</span>
+          <span class="chip link" data-goto="3">Penjelajah Pola</span>
+          <span class="chip link" data-goto="6">Lab Aritmatika</span>
+          <span class="chip link" data-goto="9">Lab Geometri</span>
+          <span class="chip link" data-goto="15">Demo Gauss</span>
+          <span class="chip link" data-goto="18">Demo Konvergensi</span>
+          <span class="chip link" data-goto="25">Demo Bola Memantul</span>
+        </div>
+        <div class="cover-actions">
+          <button class="btn btn-primary" data-goto="1">Mulai Belajar
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <button class="btn btn-ghost" data-menu>Daftar Slide</button>
+        </div>
+        <div class="cover-foot">Navigasi: panah kiri/kanan &middot; geser di layar sentuh &middot; tombol menu di kiri bawah</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: PETA MATERI ============ -->
+<section class="slide" data-title="Peta Materi">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Peta Materi</span>
+        <h2 class="slide-title">Apa yang Akan Kamu Pelajari?</h2>
+        <p class="slide-sub">Alur lengkap sesuai permintaan: mulai dari pola bilangan, barisan aritmatika, barisan geometri, menentukan rumus suku ke-n barisan aritmatika, deret aritmatika, deret geometri, MPI barisan dan deret, hingga soal HOTS pada permasalahan kehidupan sehari-hari. Setiap materi ditutup dengan <b>10 latihan soal interaktif</b> berpembahasan &mdash; total 80 soal. Klik kartu untuk melompat ke materinya.</p>
+      </div>
+      <div class="peta-grid">
+        <div class="peta-card" data-goto="2">
+          <span class="peta-num">1</span>
+          <div><h4>Pola Bilangan</h4><p>Pengertian dan jenis-jenis pola (naik, turun, bergantian, kuadrat, segitiga, Fibonacci), pola-pola terkenal beserta rumusnya, cara sistematis menemukan pola, plus demo Penjelajah Pola.</p></div>
+        </div>
+        <div class="peta-card" data-goto="5">
+          <span class="peta-num">2</span>
+          <div><h4>Barisan Aritmatika</h4><p>Konsep beda tetap, rumus U<sub>n</sub> = a + (n&minus;1)b, sifat suku tengah dan rata-rata, menyisipkan suku, serta lab slider a &amp; b yang menggambar barisan secara langsung.</p></div>
+        </div>
+        <div class="peta-card" data-goto="8">
+          <span class="peta-num">3</span>
+          <div><h4>Barisan Geometri</h4><p>Konsep rasio tetap, U<sub>n</sub> = a&middot;r<sup>n&minus;1</sup>, perilaku r &gt; 1, 0 &lt; r &lt; 1, dan r negatif, suku tengah geometrik, menyisipkan suku, plus lab slider a &amp; r.</p></div>
+        </div>
+        <div class="peta-card" data-goto="11">
+          <span class="peta-num">4</span>
+          <div><h4>Rumus Suku ke-n</h4><p>Menurunkan U<sub>n</sub> dari definisi, metode dua suku diketahui (eliminasi&ndash;substitusi), bentuk U<sub>n</sub> = An + B, verifikasi jawaban, dan lab rumus interaktif.</p></div>
+        </div>
+        <div class="peta-card" data-goto="14">
+          <span class="peta-num">5</span>
+          <div><h4>Deret Aritmatika</h4><p>Definisi deret, derivasi rumus S<sub>n</sub> dengan trik Gauss yang legendaris, dua bentuk rumus, hubungan U<sub>n</sub> = S<sub>n</sub> &minus; S<sub>n&minus;1</sub>, dan demo penjumlahan Gauss.</p></div>
+        </div>
+        <div class="peta-card" data-goto="17">
+          <span class="peta-num">6</span>
+          <div><h4>Deret Geometri</h4><p>Rumus S<sub>n</sub> dan derivasinya, kasus r = 1, deret geometri tak hingga S<sub>&infin;</sub> = a/(1&minus;r) dengan syarat |r| &lt; 1, plus demo konvergensi yang memvisualkan jumlah yang "berhenti".</p></div>
+        </div>
+        <div class="peta-card" data-goto="20">
+          <span class="peta-num">7</span>
+          <div><h4>MPI Barisan &amp; Deret</h4><p>Masalah Penalaran Informasi gaya TKA/AKM: strategi 5 langkah membaca tabel, grafik, dan teks; kamus kata kunci untuk memilih model aritmatika atau geometri; dua contoh terbimbing.</p></div>
+        </div>
+        <div class="peta-card" data-goto="23">
+          <span class="peta-num">8</span>
+          <div><h4>HOTS Sehari-hari</h4><p>Ciri soal HOTS, strategi 6 langkah pemodelan, dua studi kasus lengkap (menabung sepeda listrik &amp; bola memantul), kesalahan umum, plus demo pantulan bola interaktif.</p></div>
+        </div>
+      </div>
+      <div class="note"><b>Alur belajar:</b> baca materi &rarr; coba demo/lab interaktifnya &rarr; kerjakan <b>10 latihan soal</b> di akhir setiap materi &rarr; cek rekap di slide <b>Hasil Pengerjaan Siswa</b>. Semua jawabanmu tersimpan otomatis di browser.</div>
+      <div class="chips-row" style="justify-content:center">
+        <span class="chip link" data-goto="4">Latihan 1</span>
+        <span class="chip link" data-goto="7">Latihan 2</span>
+        <span class="chip link" data-goto="10">Latihan 3</span>
+        <span class="chip link" data-goto="13">Latihan 4</span>
+        <span class="chip link" data-goto="16">Latihan 5</span>
+        <span class="chip link" data-goto="19">Latihan 6</span>
+        <span class="chip link" data-goto="22">Latihan 7 (MPI)</span>
+        <span class="chip link" data-goto="26">Latihan 8 (HOTS)</span>
+        <span class="chip link" data-goto="27">Hasil</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: M1A - POLA BILANGAN ============ -->
+<section class="slide" data-title="M1 &middot; Pengertian &amp; Jenis Pola">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 1 &middot; Pola Bilangan</span>
+        <h2 class="slide-title">Pengertian dan Jenis-Jenis Pola Bilangan</h2>
+        <p class="slide-sub">Semua materi barisan dan deret berangkat dari satu kemampuan dasar: <b>mengenali pola</b>. Sebelum bicara rumus, latih dulu mata dan logikamu membaca aturan yang tersembunyi di balik deretan angka.</p>
+      </div>
+      <div class="formula" style="text-align:center">
+        <span class="big">Pola bilangan</span> = susunan bilangan yang disusun mengikuti <b>aturan (kaedah) tertentu</b>, baik melalui penjumlahan, pengurangan, perkalian, pembagian, maupun gabungan operasi-operasi tersebut.<br>
+        <small>barisan bilangan adalah "pola bilangan yang diberi nomor kursi": U<sub>1</sub>, U<sub>2</sub>, U<sub>3</sub>, &hellip;, U<sub>n</sub></small>
+      </div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h3><span class="h3dot"></span>1 &middot; Pola Naik (Bertambah)</h3>
+          <p>Suku-sukunya terus membesar karena <b>selisih atau rasio positif</b>. Contoh: 2, 5, 8, 11, &hellip; (bertambah 3) dan 3, 6, 12, 24, &hellip; (jadi 2 kali lipat). Ini pola paling sering muncul, baik sebagai soal "lengkapi barisan" maupun sebagai pintu masuk ke barisan aritmatika dan geometri.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>2 &middot; Pola Turun (Berkurang)</h3>
+          <p>Suku-sukunya terus mengecil. Contoh: 30, 25, 20, 15, &hellip; (berkurang 5) dan 80, 40, 20, 10, &hellip; (setengahnya terus). Pola turun sering menyamar di soal kehidupan sehari-hari: sisa baterai, angsuran yang menurun, atau air yang berkurang secara teratur.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>3 &middot; Pola Bergantian (Dua-Selang)</h3>
+          <p><b>Dua pola berbeda diselingi</b> dalam satu barisan. Contoh: 2, 9, 4, 11, 6, 13, &hellip; &mdash; suku pada posisi ganjil naik 2 (2, 4, 6, &hellip;) dan posisi genap naik 2 (9, 11, 13, &hellip;). Triknya: pisahkan dulu suku posisi ganjil dan genap, lalu analisis masing-masing.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>4 &middot; Pola Kuadrat (Derajat Dua)</h3>
+          <p>Selisih antarsukunya <b>tidak tetap, tetapi selisihnya sendiri berubah teratur</b>. Contoh: 2, 6, 12, 20, 30, &hellip; dengan selisih 4, 6, 8, 10 (naik 2 terus). Pola seperti ini biasanya punya rumus bentuk U<sub>n</sub> = An&sup2; + Bn + C.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>5 &middot; Pola Segitiga &amp; Persegi</h3>
+          <p><b>Bilangan segitiga</b> 1, 3, 6, 10, 15, &hellip; adalah jumlah bilangan asli berurutan (banyak bola yang bisa disusun jadi segitiga), rumusnya n(n+1)/2. <b>Bilangan persegi</b> 1, 4, 9, 16, 25, &hellip; adalah hasil kuadrat: n&sup2;. Keduanya sering dipakai sebagai pola figur pada soal TKA.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>6 &middot; Pola Fibonacci</h3>
+          <p>Setiap suku adalah <b>jumlah dua suku sebelumnya</b>: 1, 1, 2, 3, 5, 8, 13, &hellip; Aturannya ditulis U<sub>n</sub> = U<sub>n&minus;1</sub> + U<sub>n&minus;2</sub>. Pola ini muncul di alam (kelopak bunga, spiral kerang) dan sering dijadikan soal "suku berikutnya" yang mengecoh siswa yang hanya mencari selisih.</p>
+        </div>
+      </div>
+      <div class="note"><b>Mengapa materi ini penting?</b> Barisan aritmatika dan geometri hanyalah dua pola paling teratur dari sekian banyak pola. Kalau kamu terbiasa menguji "selisih &rarr; rasio &rarr; selisih dari selisih &rarr; pola dua-selang &rarr; penjumlahan dua suku", hampir semua soal pola bilangan TKA bisa dipecahkan dengan sistematis &mdash; bukan menebak-nebak.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4: M1B - POLA TERKENAL + DEMO ============ -->
+<section class="slide" data-title="M1 &middot; Pola Terkenal + Demo">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 1 &middot; Pola Terkenal &amp; Cara Menemukannya</span>
+        <h2 class="slide-title">Pola-Pola Terkenal dan Strategi Menemukan Aturannya</h2>
+        <p class="slide-sub">Beberapa pola muncul sangat sering sehingga wajib dihafal "wajahnya". Setelah itu, pakai checklist lima langkah untuk pola yang belum pernah kamu lihat.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Pola Wajib Hafal</h3>
+          <table class="mtable">
+            <tr><th>Pola</th><th>Contoh</th><th>Rumus U<sub>n</sub></th></tr>
+            <tr><td>Bilangan ganjil</td><td>1, 3, 5, 7, &hellip;</td><td>U<sub>n</sub> = 2n &minus; 1</td></tr>
+            <tr><td>Bilangan genap</td><td>2, 4, 6, 8, &hellip;</td><td>U<sub>n</sub> = 2n</td></tr>
+            <tr><td>Bilangan kuadrat</td><td>1, 4, 9, 16, &hellip;</td><td>U<sub>n</sub> = n&sup2;</td></tr>
+            <tr><td>Bilangan segitiga</td><td>1, 3, 6, 10, &hellip;</td><td>U<sub>n</sub> = n(n+1)/2</td></tr>
+            <tr><td>Fibonacci</td><td>1, 1, 2, 3, 5, 8, &hellip;</td><td>U<sub>n</sub> = U<sub>n&minus;1</sub> + U<sub>n&minus;2</sub></td></tr>
+            <tr><td>Aritmatika (a, b)</td><td>3, 7, 11, 15, &hellip;</td><td>U<sub>n</sub> = a + (n&minus;1)b</td></tr>
+            <tr><td>Geometri (a, r)</td><td>2, 4, 8, 16, &hellip;</td><td>U<sub>n</sub> = a&middot;r<sup>n&minus;1</sup></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Checklist Menemukan Pola Baru</h3>
+          <ol>
+            <li><b>Cek selisih</b> dua suku berurutan. Tetap? Itu pola aritmatika.</li>
+            <li><b>Cek rasio</b> (bagi suku dengan suku di depannya). Tetap? Itu pola geometri.</li>
+            <li>Selisih tidak tetap? <b>Cek selisih dari selisihnya</b>. Naik/menurun teratur? Pola derajat dua (U<sub>n</sub> = An&sup2; + Bn + C).</li>
+            <li>Masih buntu? <b>Pisahkan posisi ganjil dan genap</b> &mdash; mungkin pola dua-selang.</li>
+            <li>Terakhir, cek <b>jumlah dua suku sebelumnya</b> (Fibonacci) atau kombinasi operasi (&times;2 lalu +1, misalnya).</li>
+          </ol>
+          <div class="note" style="margin-top:12px"><b>Contoh derajat dua:</b> 2, 6, 12, 20, 30, &hellip; Selisihnya 4, 6, 8, 10 &rarr; naik 2 teratur. Dengan metode A, B, C diperoleh <b>U<sub>n</sub> = n&sup2; + n</b>. Uji: n = 4 &rarr; 16 + 4 = 20 &check;</div>
+        </div>
+      </div>
+      <div class="demo-box">
+        <div class="demo-tag">Demo Interaktif &middot; Penjelajah Pola</div>
+        <div class="chips-row">
+          <button class="gbtn on" data-pol="0">Ganjil</button>
+          <button class="gbtn" data-pol="1">Genap</button>
+          <button class="gbtn" data-pol="2">Kuadrat</button>
+          <button class="gbtn" data-pol="3">Segitiga</button>
+          <button class="gbtn" data-pol="4">Fibonacci</button>
+          <button class="gbtn" data-pol="5">Aritmatika</button>
+          <button class="gbtn" data-pol="6">Geometri</button>
+        </div>
+        <div class="tchips" id="polChips"></div>
+        <div class="readout" id="polInfo"></div>
+        <div class="demo-bar"><button class="stepbtn" data-polnext>Tebak dulu, lalu lihat suku ke-9</button></div>
+      </div>
+      <div class="gcap" style="margin-top:8px">Pilih pola, amati delapan suku pertamanya, tebak sendiri suku ke-9, lalu periksa. Perhatikan: barisan aritmatika dan geometri hanyalah dua "tamu" di antara banyak pola.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5: LATIHAN 1 ============ -->
+<section class="slide" data-title="Latihan 1 &middot; Pola Bilangan">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Latihan &middot; Materi 1</span>
+        <h2 class="slide-title">Latihan 1 &mdash; Pola Bilangan</h2>
+        <p class="slide-sub">10 soal campuran: pilihan ganda, benar/salah, dan PG kompleks. Pilih jawaban, klik <b>Cek Jawaban</b>, lalu pelajari pembahasannya. Jawaban terkunci setelah dicek &mdash; skormu tercatat di slide Hasil.</p>
+      </div>
+      <div class="instruksi"><span class="topic-chip" data-topic="bd-pol">0/10 terjawab</span><span>Kerjakan berurutan. Pembahasan muncul setelah jawaban dicek dan tidak bisa diubah lagi.</span></div>
+      <div class="qlist" id="q-pol"></div>
+    </div>
+  </div>
+</section>
+<!-- ============ SLIDE 6: M2A - BARISAN ARITMATIKA ============ -->
+<section class="slide" data-title="M2 &middot; Konsep Barisan Aritmatika">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 2 &middot; Barisan Aritmatika</span>
+        <h2 class="slide-title">Barisan Aritmatika: Selisih yang Setia</h2>
+        <p class="slide-sub">Barisan aritmatika adalah barisan yang <b>selisih setiap dua suku berurutan selalu tetap</b>. Selisih tetap itu disebut <b>beda (b)</b>, dan suku pertamanya disebut <b>a</b>. Dua angka a dan b inilah "DNA" seluruh barisannya.</p>
+      </div>
+      <div class="formula" style="text-align:center">
+        <span class="big">U<sub>n</sub> = a + (n &minus; 1) b</span><br>
+        <small>syarat: U<sub>n+1</sub> &minus; U<sub>n</sub> = b untuk semua n &nbsp;&middot;&nbsp; a = suku pertama, b = beda</small>
+      </div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h3><span class="h3dot"></span>Kenali Bedanya (b)</h3>
+          <p>Cara tercepat: <b>b = U<sub>n+1</sub> &minus; U<sub>n</sub></b>. Untuk suku yang tidak berurutan, pakai <b>b = (U<sub>m</sub> &minus; U<sub>n</sub>)/(m &minus; n)</b>. Contoh: jika U<sub>3</sub> = 11 dan U<sub>7</sub> = 23, maka b = (23 &minus; 11)/(7 &minus; 3) = 3. Perhatikan pembaginya adalah <b>selisih nomor suku</b>, bukan banyak suku.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Sifat Suku Tengah (Rata-rata)</h3>
+          <p>Tiga suku berurutan pada barisan aritmatika selalu memenuhi <b>y = (x + z)/2</b>: suku tengah adalah rata-rata tetangganya. Contoh: 4, 9, 14 &rarr; 9 = (4 + 14)/2. Sifat ini juga mempercepat soal seperti "U<sub>2</sub> = 9 dan U<sub>6</sub> = 25, tentukan U<sub>4</sub>" tanpa mencari a dan b dulu.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Lompat Antar-Suku</h3>
+          <p>Pindah k suku langkah berarti menambah k&middot;b: <b>U<sub>m</sub> = U<sub>n</sub> + (m &minus; n) b</b>. Contoh: pada barisan dengan b = 4, jika U<sub>5</sub> = 21 maka U<sub>9</sub> = 21 + (9 &minus; 5)&middot;4 = 37. Grafik titik (n, U<sub>n</sub>) selalu terletak pada <b>satu garis lurus</b> &mdash; bukti U<sub>n</sub> adalah fungsi linear dari n.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Menyisipkan Suku</h3>
+          <p>Menyisipkan k bilangan di antara dua ujung membuat banyak suku menjadi (k + 2), sehingga <b>b<sub>baru</sub> = (U<sub>akhir</sub> &minus; U<sub>awal</sub>)/(k + 1)</b>. Contoh: sisipkan 3 bilangan antara 6 dan 18 &rarr; b = (18 &minus; 6)/4 = 3, barisannya 6, <b>9, 12, 15</b>, 18. Bedakan pembagi (k + 1) dengan banyak bilangan yang disisipkan!</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3><span class="h3dot"></span>Contoh Terbimbing</h3>
+        <p><b>Soal:</b> Barisan 7, 11, 15, 19, &hellip; Tentukan suku ke-20.</p>
+        <div class="mathline">b = U<sub>2</sub> &minus; U<sub>1</sub> = 11 &minus; 7 = 4 &nbsp;&rarr;&nbsp; a = 7</div>
+        <div class="mathline">U<sub>20</sub> = 7 + (20 &minus; 1)&middot;4 = 7 + 76 = <b style="color:var(--primary)">83</b></div>
+        <p style="margin-top:8px">Selalu tulis a dan b lebih dulu sebelum menyubstitusi ke rumus &mdash; kesalahan paling umum di soal TKA adalah salah menghitung (n &minus; 1), bukan salah rumusnya. Ingat: dari U<sub>1</sub> ke U<sub>20</sub> hanya ada <b>19 langkah</b> loncatan.</p>
+      </div>
+      <div class="note"><b>Arah barisan:</b> b &gt; 0 barisan menaik (7, 11, 15, &hellip;), b &lt; 0 barisan menurun (20, 16, 12, &hellip;, bisa bernilai negatif), dan b = 0 barisan konstan (5, 5, 5, &hellip;). Jangan kira barisan aritmatika selalu naik!</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7: M2B - LAB ARITMATIKA ============ -->
+<section class="slide" data-title="M2 &middot; Contoh + Lab Aritmatika">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 2 &middot; Contoh &amp; Lab Interaktif</span>
+        <h2 class="slide-title">Contoh Bertingkat dan Laboratorium Barisan Aritmatika</h2>
+        <p class="slide-sub">Satu contoh dua-suku, satu contoh menyisipkan, lalu mainkan slider a dan b untuk melihat langsung bagaimana "DNA" barisan mengubah wujudnya.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh: Dari Dua Suku</h3>
+          <p><b>Soal:</b> Barisan aritmatika dengan U<sub>4</sub> = 17 dan U<sub>9</sub> = 32. Tentukan rumus suku ke-n dan U<sub>30</sub>.</p>
+          <div class="mathline">b = (U<sub>9</sub> &minus; U<sub>4</sub>)/(9 &minus; 4) = (32 &minus; 17)/5 = <b>3</b></div>
+          <div class="mathline">a = U<sub>4</sub> &minus; 3b = 17 &minus; 9 = <b>8</b></div>
+          <div class="mathline">U<sub>n</sub> = 8 + (n &minus; 1)&middot;3 = <b style="color:var(--primary)">3n + 5</b> &nbsp;&rarr;&nbsp; U<sub>30</sub> = 3(30) + 5 = <b style="color:var(--primary)">95</b></div>
+          <p style="margin-top:8px">Selalu verifikasi: 3(4) + 5 = 17 &check; dan 3(9) + 5 = 32 &check;. Verifikasi dua suku hanya butuh 10 detik tetapi menyelamatkan seluruh soal.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh: Menyisipkan Suku</h3>
+          <p><b>Soal:</b> Antara 8 dan 38 disisipkan 5 bilangan sehingga terbentuk barisan aritmatika. Tentukan barisan baru dan suku ke-3 hasil sisipan.</p>
+          <div class="mathline">Banyak suku jadi 5 + 2 = 7 &rarr; b = (38 &minus; 8)/(7 &minus; 1) = <b>5</b></div>
+          <div class="mathline">Barisan: 8, 13, 18, 23, 28, 33, 38</div>
+          <div class="mathline">U<sub>3</sub> = 8 + 2&middot;5 = <b style="color:var(--primary)">18</b></div>
+          <p style="margin-top:8px">Jebakan klasik: membagi dengan 5 (banyak bilangan sisipan) padahal seharusnya 6 (banyak langkah loncatan). Selalu gambar dulu posisi suku ujungnya sebelum menghitung.</p>
+        </div>
+      </div>
+      <div class="demo-box">
+        <div class="demo-tag">Lab Interaktif &middot; Laboratorium Barisan Aritmatika</div>
+        <div class="slrow"><label>Suku pertama a</label><input type="range" id="la" min="1" max="20" value="5"><span class="slval" id="lav">5</span></div>
+        <div class="slrow"><label>Beda b (boleh negatif)</label><input type="range" id="lb" min="-5" max="10" value="3"><span class="slval" id="lbv">3</span></div>
+        <div class="gwrap" id="chartA"></div>
+        <div class="readout" id="noteA"></div>
+      </div>
+      <div class="gcap">Grafik batang U<sub>1</sub> sampai U<sub>10</sub>. Perhatikan: dengan b positif batang naik teratur, b negatif batang turun &mdash; dan "puncak tangganya" selalu lurus karena aritmatika adalah fungsi linear dari n.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8: LATIHAN 2 ============ -->
+<section class="slide" data-title="Latihan 2 &middot; Barisan Aritmatika">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Latihan &middot; Materi 2</span>
+        <h2 class="slide-title">Latihan 2 &mdash; Barisan Aritmatika</h2>
+        <p class="slide-sub">10 soal tentang beda, rumus suku ke-n, sifat suku tengah, dan menyisipkan suku. Kerjakan dengan langkah: tentukan a, tentukan b, baru substitusi.</p>
+      </div>
+      <div class="instruksi"><span class="topic-chip" data-topic="bd-arit">0/10 terjawab</span><span>Gunakan kertas coretan. Cek jawaban untuk melihat pembahasan lengkap.</span></div>
+      <div class="qlist" id="q-arit"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9: M3A - BARISAN GEOMETRI ============ -->
+<section class="slide" data-title="M3 &middot; Konsep Barisan Geometri">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 3 &middot; Barisan Geometri</span>
+        <h2 class="slide-title">Barisan Geometri: Perbandingan yang Setia</h2>
+        <p class="slide-sub">Jika aritmatika bermain dengan <b>selisih</b>, geometri bermain dengan <b>perbandingan</b>. Barisan geometri adalah barisan yang <b>rasio setiap dua suku berurutan selalu tetap</b>, dilambangkan r.</p>
+      </div>
+      <div class="formula" style="text-align:center">
+        <span class="big">U<sub>n</sub> = a &middot; r<sup>n&minus;1</sup></span><br>
+        <small>syarat: U<sub>n+1</sub> / U<sub>n</sub> = r untuk semua n (U<sub>n</sub> &ne; 0) &nbsp;&middot;&nbsp; a = suku pertama, r = rasio</small>
+      </div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h3><span class="h3dot"></span>Wajah Rasio (r)</h3>
+          <p><b>r &gt; 1</b>: barisan membesar cepat (2, 6, 18, 54, &hellip;). <b>0 &lt; r &lt; 1</b>: menurun mendekati nol (48, 24, 12, &hellip;). <b>r = 1</b>: konstan (5, 5, 5, &hellip;). <b>r &lt; 0</b>: suku-suku <b>berselang-seling tanda</b> (2, &minus;6, 18, &minus;54, &hellip;). Wajah r inilah yang menentukan perilaku seluruh barisan &mdash; termasuk perilaku deretnya di Materi 6.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Rasio dari Dua Suku</h3>
+          <p>Jika yang diketahui bukan dua suku berurutan, gunakan <b>r = (U<sub>m</sub>/U<sub>n</sub>)<sup>1/(m&minus;n)</sup></b>. Contoh: U<sub>3</sub> = 12 dan U<sub>5</sub> = 108 &rarr; r&sup2; = 108/12 = 9 &rarr; r = 3. Pangkatnya adalah <b>selisih nomor suku</b>. Untuk r negatif, jangan lupa kemungkinan tanda &mdash; baca syarat soal dengan teliti.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Suku Tengah Geometrik</h3>
+          <p>Tiga suku berurutan geometri memenuhi <b>y&sup2; = x&middot;z</b> (rata-rata geometrik). Contoh: suku tengah antara 4 dan 64 adalah &radic;(4&middot;64) = &radic;256 = 16, membentuk 4, 16, 64 dengan r = 4. Sifat lanjutan: U<sub>m</sub>&middot;U<sub>n</sub> = U<sub>p</sub>&middot;U<sub>q</sub> jika m + n = p + q &mdash; misalnya U<sub>2</sub>&middot;U<sub>6</sub> = U<sub>3</sub>&middot;U<sub>5</sub> = U<sub>4</sub>&sup2;.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Menyisipkan Suku</h3>
+          <p>Menyisipkan k bilangan di antara dua ujung: <b>r = (U<sub>akhir</sub>/U<sub>awal</sub>)<sup>1/(k+1)</sup></b>. Contoh: sisipkan 3 bilangan antara 2 dan 162 &rarr; r&sup4; = 81 &rarr; r = 3, barisannya 2, <b>6, 18, 54</b>, 162. Lagi-lagi pembaginya (k + 1) adalah banyak langkah loncatan, bukan banyak bilangan sisipan.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3><span class="h3dot"></span>Contoh Terbimbing</h3>
+        <p><b>Soal:</b> Barisan 3, 6, 12, 24, &hellip; Tentukan suku ke-10.</p>
+        <div class="mathline">r = 6/3 = 2 &nbsp;&rarr;&nbsp; a = 3</div>
+        <div class="mathline">U<sub>10</sub> = 3 &middot; 2<sup>9</sup> = 3 &middot; 512 = <b style="color:var(--primary)">1.536</b></div>
+        <p style="margin-top:8px">Perhatikan pangkatnya <b>n &minus; 1 = 9</b>, bukan 10. Uji cepat untuk mengecek pemahaman: U<sub>1</sub> = 3&middot;2&sup0; = 3 &check;, U<sub>2</sub> = 3&middot;2&sup1; = 6 &check;. Pangkat n &minus; 1 membuat suku pertama tetap a.</p>
+      </div>
+      <div class="note"><b>Di mana geometri muncul di kehidupan?</b> Bunga majemuk (tabungan menjadi 1,05&times; tiap tahun), pertumbuhan bakteri (menjadi 2&times; tiap 20 menit), penyusutan nilai barang (menjadi 0,9&times; tiap tahun), dan pantulan bola. Semua itu akan kembali muncul di deret geometri dan soal HOTS.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10: M3B - LAB GEOMETRI ============ -->
+<section class="slide" data-title="M3 &middot; Contoh + Lab Geometri">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 3 &middot; Contoh &amp; Lab Interaktif</span>
+        <h2 class="slide-title">Contoh Bertingkat dan Laboratorium Barisan Geometri</h2>
+        <p class="slide-sub">Geser r dan rasakan bedanya dengan aritmatika: perubahan r kecil bisa mengubah "explosiveness" barisan secara drastis.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh: Dari Dua Suku</h3>
+          <p><b>Soal:</b> Barisan geometri dengan U<sub>2</sub> = 6 dan U<sub>5</sub> = 48. Tentukan rumus suku ke-n dan U<sub>9</sub>.</p>
+          <div class="mathline">r&sup3; = U<sub>5</sub>/U<sub>2</sub> = 48/6 = 8 &rarr; r = <b>2</b></div>
+          <div class="mathline">a = U<sub>2</sub>/r = 6/2 = <b>3</b></div>
+          <div class="mathline">U<sub>n</sub> = 3 &middot; 2<sup>n&minus;1</sup> &nbsp;&rarr;&nbsp; U<sub>9</sub> = 3 &middot; 2<sup>8</sup> = <b style="color:var(--primary)">768</b></div>
+          <p style="margin-top:8px">Verifikasi: 3&middot;2&sup1; = 6 &check; dan 3&middot;2&#8308; = 48 &check;. Teknik "pangkat = selisih nomor suku" bekerja karena setiap loncatan satu suku mengalikan dengan r sekali lagi.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh: Menyisipkan Suku</h3>
+          <p><b>Soal:</b> Antara 3 dan 24 disisipkan 2 bilangan sehingga terbentuk barisan geometri. Tentukan barisan barunya.</p>
+          <div class="mathline">Banyak suku jadi 4 &rarr; r&sup3; = 24/3 = 8 &rarr; r = <b>2</b></div>
+          <div class="mathline">Barisan: 3, <b style="color:var(--primary)">6, 12</b>, 24</div>
+          <p style="margin-top:8px">Cek: 3 &times; 2 = 6, 6 &times; 2 = 12, 12 &times; 2 = 24 &check;. Bandingkan dengan versi aritmatika: sisip 2 bilangan antara 3 dan 24 akan memberi 3, 10, 17, 24 &mdash; "jarak" yang sama, tetapi modelnya berbeda.</p>
+        </div>
+      </div>
+      <div class="demo-box">
+        <div class="demo-tag">Lab Interaktif &middot; Laboratorium Barisan Geometri</div>
+        <div class="slrow"><label>Suku pertama a</label><input type="range" id="lga" min="1" max="10" value="2"><span class="slval" id="lgav">2</span></div>
+        <div class="slrow"><label>Rasio r (boleh negatif)</label><input type="range" id="lgr" min="-3" max="3" step="0.5" value="2"><span class="slval" id="lgrv">2</span></div>
+        <div class="gwrap" id="chartG"></div>
+        <div class="readout" id="noteG"></div>
+      </div>
+      <div class="gcap">Grafik batang U<sub>1</sub> sampai U<sub>8</sub>. Coba r = 3 (meledak), r = 0,5 (merunduk ke 0), r = &minus;2 (berselang-seling), dan r = 1 (datar) untuk merasakan keempat wajah rasio.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 11: LATIHAN 3 ============ -->
+<section class="slide" data-title="Latihan 3 &middot; Barisan Geometri">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Latihan &middot; Materi 3</span>
+        <h2 class="slide-title">Latihan 3 &mdash; Barisan Geometri</h2>
+        <p class="slide-sub">10 soal tentang rasio, rumus suku ke-n, suku tengah geometrik, dan menyisipkan suku. Ingat: pangkatnya selalu (n &minus; 1) atau selisih nomor suku.</p>
+      </div>
+      <div class="instruksi"><span class="topic-chip" data-topic="bd-geo">0/10 terjawab</span><span>Waspadai jebakan tanda r negatif dan jebakan pangkat n&minus;1.</span></div>
+      <div class="qlist" id="q-geo"></div>
+    </div>
+  </div>
+</section>
+<!-- ============ SLIDE 12: M4A - RUMUS SUKU KE-N ============ -->
+<section class="slide" data-title="M4 &middot; Menentukan Rumus Suku ke-n">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 4 &middot; Menentukan Rumus Suku ke-n</span>
+        <h2 class="slide-title">Menentukan Rumus Suku ke-n Barisan Aritmatika</h2>
+        <p class="slide-sub">Rumus U<sub>n</sub> = a + (n &minus; 1)b bukan hafalan buta &mdash; ia bisa <b>diturunkan</b> dari definisi barisan. Setelah paham asal-usulnya, kamu juga bisa <b>membangun rumus</b> dari data dua suku yang diketahui.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Derivasi: Dari Definisi ke Rumus</h3>
+          <p>Tulis suku-suku awal dengan a dan b:</p>
+          <div class="mathline">U<sub>1</sub> = a</div>
+          <div class="mathline">U<sub>2</sub> = a + b</div>
+          <div class="mathline">U<sub>3</sub> = a + 2b &nbsp;&rarr;&nbsp; U<sub>4</sub> = a + 3b &nbsp;&rarr;&nbsp; &hellip;</div>
+          <p style="margin-top:6px">Pola jelas: setiap naik satu suku, bertambah satu b. Pada suku ke-n, b muncul <b>(n &minus; 1) kali</b>, sehingga:</p>
+          <div class="formula"><span class="big">U<sub>n</sub> = a + (n &minus; 1) b</span></div>
+          <p>Pemahaman ini menjelaskan mengapa pangkatnya (n &minus; 1): dari U<sub>1</sub> ke U<sub>n</sub> hanya ada n &minus; 1 langkah loncatan.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Metode Dua Suku Diketahui</h3>
+          <p>Jika diketahui dua suku, misalnya U<sub>m</sub> dan U<sub>n</sub>:</p>
+          <ol>
+            <li>Tulis dua persamaan: U<sub>m</sub> = a + (m &minus; 1)b dan U<sub>n</sub> = a + (n &minus; 1)b.</li>
+            <li><b>Eliminasi</b> a: b = (U<sub>n</sub> &minus; U<sub>m</sub>)/(n &minus; m).</li>
+            <li><b>Substitusi</b> kembali untuk mendapat a.</li>
+            <li>Susun U<sub>n</sub> = a + (n &minus; 1)b dan <b>rapikan</b> ke bentuk bn + c.</li>
+            <li><b>Verifikasi</b> dengan kedua suku yang diketahui.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h3><span class="h3dot"></span>Bentuk U<sub>n</sub> = An + B</h3>
+          <p>Karena U<sub>n</sub> = bn + (a &minus; b), setiap barisan aritmatika punya rumus bentuk <b>U<sub>n</sub> = An + B</b> dengan <b>A = beda</b> dan B = a &minus; A. Cara cepat: U<sub>1</sub> = A + B dan U<sub>2</sub> = 2A + B. Contoh: jika U<sub>n</sub> = 4n + 1 maka bedanya 4, suku pertamanya 5, dan barisannya 5, 9, 13, 17, &hellip;</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Padanannya di Geometri</h3>
+          <p>Strategi yang sama bekerja untuk barisan geometri: dari dua suku U<sub>m</sub> dan U<sub>n</sub>, gunakan <b>r<sup>n&minus;m</sup> = U<sub>n</sub>/U<sub>m</sub></b>, lalu a = U<sub>m</sub>/r<sup>m&minus;1</sup>. Contoh di Materi 3: U<sub>2</sub> = 6, U<sub>5</sub> = 48 &rarr; r&sup3; = 8 &rarr; r = 2, a = 3. Satu pola pikir, dua rumus.</p>
+        </div>
+      </div>
+      <div class="note"><b>Kunci soal TKA:</b> setelah menemukan rumus, <b>selalu verifikasi dengan suku yang diketahui</b> sebelum menjawab. Satu menit verifikasi menghindarkan kamu dari jebakan tanda yang sangat umum: a = 6 dan b = &minus;2 memberi U<sub>n</sub> = &minus;2n + 8, bukan &minus;2n &minus; 8.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 13: M4B - LAB RUMUS ============ -->
+<section class="slide" data-title="M4 &middot; Contoh + Lab Rumus">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 4 &middot; Contoh &amp; Lab Interaktif</span>
+        <h2 class="slide-title">Contoh Bertingkat dan Laboratorium Rumus Suku ke-n</h2>
+        <p class="slide-sub">Dua contoh dari dua dunia berbeda &mdash; angka murni dan pola figur &mdash; lalu lab rumus yang memperlihatkan garis lurus di balik setiap barisan aritmatika.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh 1: Dua Suku Angka</h3>
+          <p><b>Soal:</b> Barisan aritmatika dengan U<sub>3</sub> = 10 dan U<sub>8</sub> = 25. Tentukan rumus suku ke-n dan U<sub>15</sub>.</p>
+          <div class="mathline">b = (25 &minus; 10)/(8 &minus; 3) = 15/5 = <b>3</b></div>
+          <div class="mathline">a = U<sub>3</sub> &minus; 2b = 10 &minus; 6 = <b>4</b></div>
+          <div class="mathline">U<sub>n</sub> = 4 + (n &minus; 1)3 = <b style="color:var(--primary)">3n + 1</b> &nbsp;&rarr;&nbsp; U<sub>15</sub> = 46</div>
+          <p style="margin-top:8px">Verifikasi: 3(3) + 1 = 10 &check; dan 3(8) + 1 = 25 &check;. Bentuk 3n + 1 langsung memberi tahu bedanya 3 (koefisien n) dan suku pertamanya 4.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh 2: Dari Pola Figur</h3>
+          <p><b>Soal:</b> Pola bangun dari korek api: banyak korek pada bangun ke-1, ke-2, ke-3 berturut-turut 3, 5, 7, &hellip; Tentukan rumus banyak korek pada bangun ke-n dan banyak korek bangun ke-20.</p>
+          <div class="mathline">a = 3, b = 2 (setiap bangun butuh 2 korek tambahan)</div>
+          <div class="mathline">U<sub>n</sub> = 3 + (n &minus; 1)2 = <b style="color:var(--primary)">2n + 1</b> &nbsp;&rarr;&nbsp; U<sub>20</sub> = 41</div>
+          <p style="margin-top:8px">Soal pola figur hanyalah soal barisan yang "berdandan" sebagai gambar. Tugasnya: mengubah gambar menjadi deretan angka dulu, barulah mencari rumusnya.</p>
+        </div>
+      </div>
+      <div class="demo-box">
+        <div class="demo-tag">Lab Interaktif &middot; Laboratorium Rumus Suku ke-n</div>
+        <div class="slrow"><label>Suku pertama a</label><input type="range" id="lra" min="0" max="12" value="4"><span class="slval" id="lrav">4</span></div>
+        <div class="slrow"><label>Beda b (boleh negatif)</label><input type="range" id="lrb" min="-4" max="8" value="3"><span class="slval" id="lrbv">3</span></div>
+        <div class="formula" id="formulaR" style="margin-top:10px"></div>
+        <div class="tchips" id="chipsR"></div>
+        <div class="gwrap" id="chartR"></div>
+        <div class="readout" id="noteR"></div>
+      </div>
+      <div class="gcap">Grafik titik (n, U<sub>n</sub>). Apa pun a dan b, titik-titiknya selalu <b>segaris</b> &mdash; gradien garis itu adalah b, dan potong sumbu vertikalnya adalah a &minus; b. Itulah makna "barisan aritmatika = fungsi linear dari n".</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 14: LATIHAN 4 ============ -->
+<section class="slide" data-title="Latihan 4 &middot; Rumus Suku ke-n">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Latihan &middot; Materi 4</span>
+        <h2 class="slide-title">Latihan 4 &mdash; Menentukan Rumus Suku ke-n</h2>
+        <p class="slide-sub">10 soal tentang membangun dan membaca rumus suku ke-n: dari dua suku, dari bentuk An + B, hingga dari pola figur. Selalu verifikasi jawabanmu dengan suku yang diketahui.</p>
+      </div>
+      <div class="instruksi"><span class="topic-chip" data-topic="bd-rum">0/10 terjawab</span><span>Tulis rumus dulu di kertas, substitusi, lalu pilih jawaban.</span></div>
+      <div class="qlist" id="q-rum"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 15: M5A - DERET ARITMATIKA ============ -->
+<section class="slide" data-title="M5 &middot; Konsep Deret Aritmatika">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 5 &middot; Deret Aritmatika</span>
+        <h2 class="slide-title">Deret Aritmatika: Menjumlahkan Barisan</h2>
+        <p class="slide-sub"><b>Deret</b> adalah penjumlahan suku-suku barisan. Jika barisannya 2, 5, 8, 11, &hellip; maka deretnya 2 + 5 + 8 + 11 + &hellip;. Jumlah n suku pertama dilambangkan S<sub>n</sub>.</p>
+      </div>
+      <div class="formula" style="text-align:center">
+        <span class="big">S<sub>n</sub> = n/2 (2a + (n &minus; 1) b) = n/2 (a + U<sub>n</sub>)</span><br>
+        <small>bentuk pertama memakai a dan b; bentuk kedua memakai suku ujung a dan U<sub>n</sub> &mdash; pilih yang datanya tersedia</small>
+      </div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h3><span class="h3dot"></span>Derivasi ala Gauss</h3>
+          <p>Kisah legendaris: Gauss kecil menjumlah 1 + 2 + &hellip; + 100 dalam sekejap. Triknya: tulis deret maju dan mundur, lalu jumlahkan.</p>
+          <div class="mathline">S = a + (a+b) + &hellip; + (a+(n&minus;1)b)</div>
+          <div class="mathline">S = (a+(n&minus;1)b) + &hellip; + (a+b) + a</div>
+          <div class="mathline">2S = n &times; (2a + (n&minus;1)b) &rarr; S = n/2 (2a + (n&minus;1)b)</div>
+          <p>Setiap kolom penjumlahan memberi nilai yang sama, yaitu a + U<sub>n</sub> &mdash; inilah asal bentuk kedua rumusnya.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh Terbimbing</h3>
+          <p><b>Soal:</b> Hitung 2 + 5 + 8 + &hellip; + 30.</p>
+          <div class="mathline">a = 2, b = 3; suku terakhir 30</div>
+          <div class="mathline">n = (30 &minus; 2)/3 + 1 = <b>10</b> suku</div>
+          <div class="mathline">S<sub>10</sub> = 10/2 (2 + 30) = 5 &times; 32 = <b style="color:var(--primary)">160</b></div>
+          <p style="margin-top:8px">Langkah "cari n dulu" hampir selalu diperlukan ketika soal memberi <b>suku terakhir</b>, bukan banyak suku. Rumus konversinya: n = (U<sub>n</sub> &minus; a)/b + 1.</p>
+        </div>
+      </div>
+      <div class="note"><b>Hubungan penting:</b> untuk n &ge; 2 berlaku <b>U<sub>n</sub> = S<sub>n</sub> &minus; S<sub>n&minus;1</sub></b> &mdash; suku ke-n adalah selisih dua jumlah berurutan. Sifat ini menjadi senjata utama soal "diketahui rumus S<sub>n</sub>, tentukan U<sub>n</sub>" yang dibahas di slide berikutnya.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 16: M5B - DEMO GAUSS ============ -->
+<section class="slide" data-title="M5 &middot; U_n dari S_n + Demo Gauss">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 5 &middot; Aplikasi &amp; Demo Interaktif</span>
+        <h2 class="slide-title">U<sub>n</sub> dari S<sub>n</sub>, Aplikasi Kursi, dan Demo Trik Gauss</h2>
+        <p class="slide-sub">Dua teknik penting untuk soal "S<sub>n</sub> diketahui", satu aplikasi klasik, lalu saksikan pasangan Gauss bekerja secara langsung.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Teknik: U<sub>n</sub> = S<sub>n</sub> &minus; S<sub>n&minus;1</sub></h3>
+          <p><b>Contoh:</b> Deret dengan S<sub>n</sub> = 2n&sup2; + n. Tentukan U<sub>4</sub>.</p>
+          <div class="mathline">S<sub>4</sub> = 2(16) + 4 = 36; &nbsp; S<sub>3</sub> = 2(9) + 3 = 21</div>
+          <div class="mathline">U<sub>4</sub> = 36 &minus; 21 = <b style="color:var(--primary)">15</b></div>
+          <p style="margin-top:8px">Cek independen: barisannya 3, 7, 11, 15, &hellip; (U<sub>n</sub> = 4n &minus; 1) &mdash; cocok! Untuk U<sub>1</sub>, gunakan langsung U<sub>1</sub> = S<sub>1</sub> = 3.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Teknik: Dua Persamaan Sn</h3>
+          <p><b>Contoh:</b> S<sub>8</sub> = 96 dan U<sub>1</sub> = 5. Tentukan b.</p>
+          <div class="mathline">96 = 8/2 (2&middot;5 + 7b) = 4(10 + 7b)</div>
+          <div class="mathline">10 + 7b = 24 &rarr; b = <b style="color:var(--primary)">2</b></div>
+          <p style="margin-top:8px">Pola soal deret yang sering muncul: satu informasi jumlah (S<sub>n</sub>) dan satu informasi suku (a atau U<sub>n</sub>), diminta saling melengkapi. Selalu mulai dengan menuliskan rumus S<sub>n</sub> lalu masukkan data yang diketahui.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3><span class="h3dot"></span>Aplikasi Klasik: Kursi Auditorium</h3>
+        <p>Baris pertama sebuah aula berisi 18 kursi, setiap baris di belakangnya bertambah 3 kursi, dan terdapat 15 baris. Banyak seluruh kursi:</p>
+        <div class="mathline">a = 18, b = 3, n = 15 &rarr; S<sub>15</sub> = 15/2 (2&middot;18 + 14&middot;3) = 7,5 &times; (36 + 42) = 7,5 &times; 78 = <b style="color:var(--primary)">585 kursi</b></div>
+        <p>Perhatikan hasilnya boleh berupa bilangan desimal <i>di tengah perhitungan</i> (7,5) selama hasil akhirnya bulat &mdash; itu wajar karena kita sedang menjumlah, bukan menghitung suku.</p>
+      </div>
+      <div class="demo-box">
+        <div class="demo-tag">Demo Interaktif &middot; Mesin Penjumlahan Gauss</div>
+        <div class="slrow"><label>Suku pertama a</label><input type="range" id="dga" min="1" max="15" value="2"><span class="slval" id="dgav">2</span></div>
+        <div class="slrow"><label>Beda b</label><input type="range" id="dgb" min="1" max="6" value="3"><span class="slval" id="dgbv">3</span></div>
+        <div class="slrow"><label>Banyak suku n</label><input type="range" id="dgn" min="3" max="12" value="5"><span class="slval" id="dgnv">5</span></div>
+        <div class="tchips" id="gaussChips"></div>
+        <div class="readout" id="gaussPairs"></div>
+        <div class="gwrap" id="chartGa"></div>
+      </div>
+      <div class="gcap">Batang menampilkan jumlah berjalan S<sub>1</sub>, S<sub>2</sub>, &hellip;, S<sub>n</sub>. Baca readout untuk melihat pasangan Gauss: pasangan ujung-ujung deret selalu bernilai sama, itulah mengapa rumusnya n/2 &times; (a + U<sub>n</sub>).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 17: LATIHAN 5 ============ -->
+<section class="slide" data-title="Latihan 5 &middot; Deret Aritmatika">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Latihan &middot; Materi 5</span>
+        <h2 class="slide-title">Latihan 5 &mdash; Deret Aritmatika</h2>
+        <p class="slide-sub">10 soal tentang S<sub>n</sub> dua bentuk rumusnya, mencari n, U<sub>n</sub> dari S<sub>n</sub>, dan aplikasi penjumlahan. Pilih bentuk rumus sesuai data yang tersedia.</p>
+      </div>
+      <div class="instruksi"><span class="topic-chip" data-topic="bd-der">0/10 terjawab</span><span>Jika soal memberi suku terakhir, cari n dulu sebelum menghitung jumlah.</span></div>
+      <div class="qlist" id="q-der"></div>
+    </div>
+  </div>
+</section>
+<!-- ============ SLIDE 18: M6A - DERET GEOMETRI ============ -->
+<section class="slide" data-title="M6 &middot; Konsep Deret Geometri">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 6 &middot; Deret Geometri</span>
+        <h2 class="slide-title">Deret Geometri: Menjumlahkan Barisan Berpangkat</h2>
+        <p class="slide-sub">Deret geometri menjumlahkan barisan geometri: a + ar + ar&sup2; + &hellip;. Rumus jumlahnya lahir dari satu trik elegan: <b>kalikan deret dengan rasinya, lalu kurangkan</b>.</p>
+      </div>
+      <div class="formula" style="text-align:center">
+        <span class="big">S<sub>n</sub> = a (r<sup>n</sup> &minus; 1)/(r &minus; 1) = a (1 &minus; r<sup>n</sup>)/(1 &minus; r) &nbsp;&nbsp;(r &ne; 1)</span><br>
+        <small>untuk r = 1: S<sub>n</sub> = n&middot;a (semua suku sama, tinggal dikali banyaknya)</small>
+      </div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h3><span class="h3dot"></span>Derivasi Trik Perkalian r</h3>
+          <div class="mathline">S = a + ar + ar&sup2; + &hellip; + ar<sup>n&minus;1</sup></div>
+          <div class="mathline">rS = &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ar + ar&sup2; + &hellip; + ar<sup>n&minus;1</sup> + ar<sup>n</sup></div>
+          <div class="mathline">S &minus; rS = a &minus; ar<sup>n</sup> &rarr; S(1 &minus; r) = a(1 &minus; r<sup>n</sup>)</div>
+          <p>Perhatikan: hampir semua suku tengah <b>habis tereliminasi</b>, tersisa hanya ujung-ujungnya. Inilah analogi deret geometri dari trik Gauss pada deret aritmatika &mdash; dan sekaligus alasan rumusnya memuat r<sup>n</sup>.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh Terbimbing</h3>
+          <p><b>Soal:</b> Hitung 3 + 6 + 12 + 24 + &hellip; (8 suku pertama).</p>
+          <div class="mathline">a = 3, r = 2, n = 8</div>
+          <div class="mathline">S<sub>8</sub> = 3(2<sup>8</sup> &minus; 1)/(2 &minus; 1) = 3(256 &minus; 1) = <b style="color:var(--primary)">765</b></div>
+          <p style="margin-top:8px">Cek cepat dengan penjumlahan manual: 3+6+12+24+48+96+192+384 = 765 &check;. Untuk r = 2, rumusnya menyederhana menjadi a(2<sup>n</sup> &minus; 1) &mdash; hafalan kecil yang sering mempercepat soal.</p>
+        </div>
+      </div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh: Dari Suku Terakhir</h3>
+          <p><b>Soal:</b> Hitung 5 + 10 + 20 + &hellip; + 320.</p>
+          <div class="mathline">Cari n: 5&middot;2<sup>n&minus;1</sup> = 320 &rarr; 2<sup>n&minus;1</sup> = 64 &rarr; n = 7</div>
+          <div class="mathline">S<sub>7</sub> = 5(2<sup>7</sup> &minus; 1) = 5 &times; 127 = <b style="color:var(--primary)">635</b></div>
+          <p style="margin-top:8px">Sama seperti deret aritmatika: bila soal memberi suku terakhir, <b>tentukan n dulu</b>. Bedanya, di geometri kita memakai logaritma/pangkat yang dikenal (64 = 2&#8310;).</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>S<sub>n</sub> Diketahui, Cari a</h3>
+          <p><b>Contoh:</b> S<sub>6</sub> = 126 dengan r = 2. Tentukan a.</p>
+          <div class="mathline">126 = a(2&#8310; &minus; 1)/(2 &minus; 1) = a(64 &minus; 1) = 63a</div>
+          <div class="mathline">a = <b style="color:var(--primary)">2</b></div>
+          <p style="margin-top:8px">Pola soal kebalikan sangat umum di TKA: jumlah dan rasio diketahui, suku pertama ditanya. Tulis rumus S<sub>n</sub>, substitusi yang diketahui, selesaikan satu variabel yang tersisa.</p>
+        </div>
+      </div>
+      <div class="note"><b>Jangan lupa kasus r = 1:</b> rumus utama akan terbagi nol. Untuk barisan konstan (7, 7, 7, &hellip;), jumlah n suku pertama memang n &times; 7 &mdash; soal "jebakan r = 1" biasanya mengecoh siswa yang memaksa memakai rumus r &ne; 1.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 19: M6B - TAK HINGGA + DEMO ============ -->
+<section class="slide" data-title="M6 &middot; Deret Tak Hingga + Demo">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 6 &middot; Deret Geometri Tak Hingga</span>
+        <h2 class="slide-title">Deret Tak Hingga: Jumlah yang Tetap Berhingga</h2>
+        <p class="slide-sub">Kejutan terbesar materi ini: menjumlahkan <b>tak terhingga banyak suku</b> bisa menghasilkan bilangan berhingga &mdash; asalkan suku-sukunya cepat mengecil, yaitu |r| &lt; 1.</p>
+      </div>
+      <div class="formula" style="text-align:center">
+        <span class="big">S<sub>&infin;</sub> = a/(1 &minus; r) &nbsp;&nbsp; dengan syarat |r| &lt; 1</span><br>
+        <small>alasannya: jika |r| &lt; 1 maka r<sup>n</sup> &rarr; 0, sehingga S<sub>n</sub> = a(1 &minus; r<sup>n</sup>)/(1 &minus; r) mendekati a/(1 &minus; r)</small>
+      </div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">
+          <h3><span class="h3dot"></span>Contoh Klasik</h3>
+          <p><b>Soal:</b> Hitung 8 + 4 + 2 + 1 + &hellip; (tak hingga).</p>
+          <div class="mathline">a = 8, r = 1/2, |r| &lt; 1 &check;</div>
+          <div class="mathline">S<sub>&infin;</sub> = 8/(1 &minus; 1/2) = 8/(1/2) = <b style="color:var(--primary)">16</b></div>
+          <p style="margin-top:8px">Contoh paling termasyhur: 1/2 + 1/4 + 1/8 + &hellip; = 1/(1 &minus; 1/2) = 1. Bayangkan memotong roti terus-menerus menjadi setengahnya: total seluruh potongan tepat satu roti.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Syarat &amp; Jebakan</h3>
+          <p>Syaratnya <b>nilai mutlak</b>: |r| &lt; 1, artinya &minus;1 &lt; r &lt; 1. Deret dengan r negatif seperti 8 &minus; 4 + 2 &minus; 1 + &hellip; juga konvergen (hasilnya 16/3) karena ukuran sukunya tetap mengecil. Sebaliknya, 2 + 4 + 8 + &hellip; (r = 2) <b>tidak konvergen</b>: sukunya membesar, jumlahnya meledak tanpa batas.</p>
+        </div>
+      </div>
+      <div class="demo-box">
+        <div class="demo-tag">Demo Interaktif &middot; Menyaksikan Konvergensi</div>
+        <div class="slrow"><label>Suku pertama a</label><input type="range" id="dka" min="1" max="10" value="8"><span class="slval" id="dkav">8</span></div>
+        <div class="slrow"><label>Rasio r (0,1 sampai 0,9)</label><input type="range" id="dkr" min="1" max="9" value="5"><span class="slval" id="dkrv">0,5</span></div>
+        <div class="gwrap" id="chartK"></div>
+        <div class="readout" id="noteK"></div>
+      </div>
+      <div class="gcap">Batang = jumlah parsial S<sub>1</sub> sampai S<sub>10</sub>; garis putus-putus oranye = S<sub>&infin;</sub>. Coba r = 0,9: batang merayapi garisnya perlahan. Coba r = 0,2: batang membentur garis hanya dalam beberapa langkah. Semakin kecil r, semakin cepat "berhenti".</div>
+      <div class="note"><b>Ke mana aplikasinya?</b> Total lintasan bola yang memantul makin rendah, sisa obat dalam tubuh setelah dosis berulang, dan penyusutan nilai aset dari waktu ke waktu &mdash; semuanya model S<sub>&infin;</sub>. Kita akan menyentuhnya lagi di materi HOTS.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 20: LATIHAN 6 ============ -->
+<section class="slide" data-title="Latihan 6 &middot; Deret Geometri">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Latihan &middot; Materi 6</span>
+        <h2 class="slide-title">Latihan 6 &mdash; Deret Geometri</h2>
+        <p class="slide-sub">10 soal tentang S<sub>n</sub>, kasus r = 1, deret tak hingga, dan aplikasi pertumbuhan/penyusutan. Perhatikan syarat |r| &lt; 1 setiap kali bertemu jumlah tak hingga.</p>
+      </div>
+      <div class="instruksi"><span class="topic-chip" data-topic="bd-dgeo">0/10 terjawab</span><span>Tulis dulu a, r, dan n dari setiap soal &mdash; lalu pilih rumus yang tepat.</span></div>
+      <div class="qlist" id="q-dgeo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 21: M7A - MPI ============ -->
+<section class="slide" data-title="M7 &middot; MPI: Penalaran Informasi">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 7 &middot; MPI Barisan dan Deret</span>
+        <h2 class="slide-title">MPI: Masalah Penalaran Informasi</h2>
+        <p class="slide-sub">Soal MPI menyajikan informasi dalam bentuk <b>tabel, grafik, diagram, atau teks</b>, lalu menguji kemampuanmu mengekstraksi data, memilih model yang tepat, dan menarik kesimpulan. Ini gaya soal AKM/TKA: bukan menghafal rumus, tapi <b>menalar dengan data</b>.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Strategi 5 Langkah MPI</h3>
+          <ol>
+            <li><b>Baca konteksnya</b> &mdash; apa yang sedang terjadi? Apa satuan datanya (rupiah, unit, orang, km)?</li>
+            <li><b>Ekstraksi data penting</b> &mdash; tulis sebagai deretan angka; coret informasi yang tidak dipakai.</li>
+            <li><b>Tentukan model</b> &mdash; uji selisih (aritmatika?) dan rasio/persen (geometri?).</li>
+            <li><b>Hitung dengan rumus tepat</b> &mdash; U<sub>n</sub> atau S<sub>n</sub>? Berapa n-nya?</li>
+            <li><b>Interpretasi &amp; cek masuk akal</b> &mdash; kembalikan hasil ke konteks dan satuannya.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Kamus Kata Kunci Model</h3>
+          <table class="mtable">
+            <tr><th>Frasa dalam soal</th><th>Model</th></tr>
+            <tr><td>"bertambah tetap Rp50.000 tiap bulan"</td><td>Aritmatika, b = 50.000</td></tr>
+            <tr><td>"menjadi dua kali lipat"</td><td>Geometri, r = 2</td></tr>
+            <tr><td>"naik 10% setiap tahun"</td><td>Geometri, r = 1,1</td></tr>
+            <tr><td>"menyusut 15% setiap tahun"</td><td>Geometri, r = 0,85</td></tr>
+            <tr><td>"jumlah seluruhnya / total"</td><td>Deret (pakai S<sub>n</sub>)</td></tr>
+          </table>
+          <p style="margin-top:10px">Dua jebakan indeks terbesar: <b>"bulan ke-n"</b> berarti hanya (n &minus; 1) kenaikan dari suku pertama, sedangkan <b>"setelah n bulan"</b> berarti n kali kejadian. Selalu tanyakan: kenaikannya terjadi berapa kali?</p>
+        </div>
+      </div>
+      <div class="note"><b>MPI vs HOTS:</b> keduanya sering tumpang tindih. MPI menekankan <b>penyajian informasi</b> (tabel/grafik/teks) &mdash; kemampuan membaca data; HOTS menekankan <b>level berpikir</b> (analisis, evaluasi, penciptaan). Strategi 5 langkah ini adalah fondasi untuk soal HOTS di Materi 8.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 22: M7B - CONTOH MPI ============ -->
+<section class="slide" data-title="M7 &middot; Contoh MPI Terbimbing">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 7 &middot; Contoh Terbimbing</span>
+        <h2 class="slide-title">Dua Contoh MPI dengan Penalaran Bertahap</h2>
+        <p class="slide-sub">Coba nalar sendiri dulu di setiap langkah, baru klik tombol untuk membuka alurnya satu per satu.</p>
+      </div>
+      <div class="card">
+        <h3><span class="h3dot"></span>Contoh 1 &middot; Tabel Tabungan Budi</h3>
+        <p>Tabel tabungan bulanan Budi (dalam ribuan rupiah):</p>
+        <table class="mtable">
+          <tr><th>Bulan ke-</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+          <tr><th>Tabungan (ribu Rp)</th><td>20</td><td>25</td><td>30</td><td>35</td><td>40</td></tr>
+        </table>
+        <p style="margin-top:10px"><b>Pertanyaan:</b> (a) Model data apa yang terbentuk? (b) Berapa tabungan bulan ke-12? (c) Berapa jumlah seluruh tabungan setelah 12 bulan?</p>
+        <div class="demo-bar"><span class="topic-chip" id="cnt-st-mpi1">0 / 5 langkah</span><button class="stepbtn" id="next-st-mpi1" data-stnext="st-mpi1">Buka Langkah Berikutnya</button><button class="stepbtn" data-streset="st-mpi1">Ulangi</button></div>
+        <div class="steps" id="st-mpi1"></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3><span class="h3dot"></span>Contoh 2 &middot; Bakteri di Laboratorium</h3>
+        <p>Dalam sebuah percobaan, awalnya terdapat <b>200 bakteri</b>. Setiap 20 menit, jumlah bakteri <b>menjadi dua kali lipat</b>. Tentukan banyak bakteri setelah <b>2 jam</b>.</p>
+        <div class="demo-bar"><span class="topic-chip" id="cnt-st-mpi2">0 / 5 langkah</span><button class="stepbtn" id="next-st-mpi2" data-stnext="st-mpi2">Buka Langkah Berikutnya</button><button class="stepbtn" data-streset="st-mpi2">Ulangi</button></div>
+        <div class="steps" id="st-mpi2"></div>
+      </div>
+      <div class="note"><b>Perhatikan pola penalarannya:</b> keduanya dimulai dari data mentah, diuji modelnya, lalu ditutup dengan interpretasi konteks. Di latihan berikutnya kamu akan bermain peran sebagai penalar &mdash; tabel dan grafiknya berubah, tetapi strateginya tetap sama.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 23: LATIHAN 7 ============ -->
+<section class="slide" data-title="Latihan 7 &middot; MPI">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Latihan &middot; Materi 7</span>
+        <h2 class="slide-title">Latihan 7 &mdash; MPI Barisan dan Deret</h2>
+        <p class="slide-sub">10 soal berbasis tabel, infografis, dan teks data. Jalankan strategi 5 langkah: baca &rarr; ekstraksi &rarr; tentukan model &rarr; hitung &rarr; interpretasi.</p>
+      </div>
+      <div class="instruksi"><span class="topic-chip" data-topic="bd-mpi">0/10 terjawab</span><span>Waspadai jebakan indeks: "bulan ke-n" vs "setelah n bulan", dan jebakan satuan (ribu/juta).</span></div>
+      <div class="qlist" id="q-mpi"></div>
+    </div>
+  </div>
+</section>
+<!-- ============ SLIDE 24: M8A - HOTS ============ -->
+<section class="slide" data-title="M8 &middot; HOTS: Strategi">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 8 &middot; HOTS Kehidupan Sehari-hari</span>
+        <h2 class="slide-title">Soal HOTS: Berpikir Tingkat Tinggi dengan Barisan &amp; Deret</h2>
+        <p class="slide-sub">HOTS (Higher Order Thinking Skills) menuntut level C4&ndash;C6: <b>menganalisis, mengevaluasi, dan mencipta</b> &mdash; bukan sekadar mensubstitusi rumus. Soalnya datang berbalut cerita kehidupan nyata, dan model matematikanya harus kamu bangun sendiri.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Ciri-Ciri Soal HOTS</h3>
+          <ol>
+            <li>Konteks nyata yang panjang: menabung, pinjaman, produksi, pertumbuhan makhluk hidup.</li>
+            <li>Ada <b>informasi berlebih</b> yang harus diseleksi &mdash; tidak semua angka dipakai.</li>
+            <li>Multi-langkah: satu soal meminta dua sampai tiga hal sekaligus.</li>
+            <li>Modelnya <b>tidak disebut</b>: kamu sendiri yang memutuskan aritmatika atau geometri.</li>
+            <li>Jawaban harus <b>diinterpretasi</b>: dibulatkan sesuai konteks, disertai satuan.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Strategi 6 Langkah</h3>
+          <ol>
+            <li><b>Ringkas informasi</b> &mdash; ubah cerita menjadi tabel/daftar angka.</li>
+            <li><b>Kenali pola</b> &mdash; selisih tetap? rasio/persen tetap?</li>
+            <li><b>Bangun model</b> &mdash; tulis a, b atau a, r secara eksplisit.</li>
+            <li><b>Selesaikan</b> &mdash; pilih U<sub>n</sub> atau S<sub>n</sub> sesuai pertanyaan.</li>
+            <li><b>Kembalikan ke konteks</b> &mdash; satuan rupiah, bulan, unit, meter.</li>
+            <li><b>Cek kewajaran</b> &mdash; apakah hasilnya masuk akal secara hidup sehari-hari?</li>
+          </ol>
+        </div>
+      </div>
+      <div class="danger"><b>Kesalahan umum yang harus dihindari:</b> (1) tertukar aritmatika dengan geometri &mdash; "naik 20%" adalah geometri r = 1,2, bukan aritmatika b = 20; (2) salah indeks &mdash; tahun ke-8 hanya mengalami 7 kenaikan; (3) lupa satuan &mdash; 42,5 ribu ditulis 42,5; (4) pada bola memantul, lupa menambahkan lintasan turun dan naik; (5) menjawab tanpa membaca ulang apa yang ditanya.</div>
+      <div class="note"><b>Kabar baiknya:</b> semua rumus yang kamu butuhkan sudah dikuasai &mdash; U<sub>n</sub> aritmatika/geometri, S<sub>n</sub>, dan S<sub>&infin;</sub>. Tantangan HOTS bukan rumus, tetapi <b>disiplin membaca dan memodelkan</b>. Dua slide berikutnya adalah latihan mental lengkap; slide ketiga menyediakan demo interaktif.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 25: M8B - HOTS CONTOH 1 ============ -->
+<section class="slide" data-title="M8 &middot; HOTS: Menabung Sepeda">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 8 &middot; Studi Kasus 1</span>
+        <h2 class="slide-title">HOTS: Rendi dan Sepeda Listriknya</h2>
+        <p class="slide-sub">Baca soalnya, coba nalar sendiri, lalu buka langkah demi langkah. Perhatikan bagaimana strategi 6 langkah bekerja dari awal sampai akhir.</p>
+      </div>
+      <div class="prob"><b>Masalah:</b> Rendi ingin membeli sepeda listrik seharga <b>Rp4.800.000</b>. Pada bulan pertama ia menabung <b>Rp300.000</b>, dan setiap bulan berikutnya ia menambah <b>Rp100.000</b> dari tabungan bulan sebelumnya. <br>(a) Berapa tabungan Rendi pada bulan ke-10? <br>(b) Paling cepat bulan ke berapa target Rendi tercapai?</div>
+      <div class="demo-bar"><span class="topic-chip" id="cnt-st-hot1">0 / 5 langkah</span><button class="stepbtn" id="next-st-hot1" data-stnext="st-hot1">Buka Langkah Berikutnya</button><button class="stepbtn" data-streset="st-hot1">Ulangi</button></div>
+      <div class="steps" id="st-hot1"></div>
+      <div class="note"><b>Refleksi HOTS:</b> soal ini menuntut dua penalaran sekaligus &mdash; suku (bulan ke-10) dan jumlah (kapan kumulatif mencapai target). Jawaban akhir juga perlu interpretasi: bulan ke-8 bukan hanya "tercapai", tetapi <b>melampaui</b> target sebesar Rp400.000, artinya Rendi bisa langsung membeli di bulan itu.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 26: M8C - HOTS CONTOH 2 + DEMO ============ -->
+<section class="slide" data-title="M8 &middot; HOTS: Bola Memantul + Demo">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Materi 8 &middot; Studi Kasus 2 + Demo</span>
+        <h2 class="slide-title">HOTS: Bola Memantul dan Deret Tak Hingga</h2>
+        <p class="slide-sub">Soal bola memantul adalah perpaduan favorit TKA: barisan geometri untuk tinggi pantulan dan <b>deret tak hingga</b> untuk total lintasan. Sekaligus wujud nyata S<sub>&infin;</sub> dari Materi 6.</p>
+      </div>
+      <div class="prob"><b>Masalah:</b> Sebuah bola dijatuhkan dari ketinggian <b>12 meter</b>. Setiap memantul, bola mencapai <b>setengah</b> dari tinggi sebelumnya. <br>(a) Berapa tinggi pantulan ke-5? <br>(b) Berapa panjang seluruh lintasan bola sampai berhenti?</div>
+      <div class="demo-bar"><span class="topic-chip" id="cnt-st-hot2">0 / 5 langkah</span><button class="stepbtn" id="next-st-hot2" data-stnext="st-hot2">Buka Langkah Berikutnya</button><button class="stepbtn" data-streset="st-hot2">Ulangi</button></div>
+      <div class="steps" id="st-hot2"></div>
+      <div class="demo-box">
+        <div class="demo-tag">Demo Interaktif &middot; Simulator Bola Memantul</div>
+        <div class="slrow"><label>Tinggi jatuh awal (m)</label><input type="range" id="bh" min="4" max="20" value="12"><span class="slval" id="bhv">12</span></div>
+        <div class="slrow"><label>Rasio pantulan r</label><input type="range" id="br" min="30" max="90" step="5" value="50"><span class="slval" id="brv">0,5</span></div>
+        <div class="gwrap" id="chartB"></div>
+        <div class="readout" id="noteB"></div>
+      </div>
+      <div class="gcap">Garis patah menunjukkan lintasan: jatuh dari ketinggian awal, lalu memantul makin rendah. Geser r mendekati 0,9 dan saksikan total lintasan meledak jauh melebihi tinggi awal &mdash; bola yang "hampir" mempertahankan ketinggiannya menempuh jarak yang sangat jauh.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 27: LATIHAN 8 ============ -->
+<section class="slide" data-title="Latihan 8 &middot; HOTS Sehari-hari">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Latihan &middot; Materi 8</span>
+        <h2 class="slide-title">Latihan 8 &mdash; HOTS Kehidupan Sehari-hari</h2>
+        <p class="slide-sub">10 soal HOTS penuh konteks: menabung, bonus, pinjaman, stadion, lampu hias, donor darah, dan lainnya. Jalankan strategi 6 langkah &mdash; ringkas, modelkan, hitung, interpretasi.</p>
+      </div>
+      <div class="instruksi"><span class="topic-chip" data-topic="bd-hots">0/10 terjawab</span><span>Soal-soal ini multilangkah: pastikan kamu menjawab hal yang benar-benar ditanya.</span></div>
+      <div class="qlist" id="q-hots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 28: HASIL ============ -->
+<section class="slide" data-title="Hasil Pengerjaan Siswa" data-key="hasil">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Evaluasi</span>
+        <h2 class="slide-title">Hasil Pengerjaan Siswa</h2>
+        <p class="slide-sub">Rekap jawaban dari 8 set latihan (80 soal): 10 soal untuk setiap materi. Tulis namamu, lalu klik Perbarui Hasil untuk melihat rekap terbaru.</p>
+      </div>
+      <div class="namebox">
+        <input type="text" id="studentName" placeholder="Tulis namamu di sini&hellip;" autocomplete="off">
+      </div>
+      <div class="rwrap">
+        <div class="card scorecard">
+          <div class="score-label">Skor Akhir</div>
+          <div class="score-big" id="scorePct">&mdash;</div>
+          <span class="badge none" id="predikat">Belum ada jawaban</span>
+          <div class="score-sub" id="scoreSub">0 dari 80 soal benar</div>
+          <div class="rbtns">
+            <button class="btn btn-ghost" data-act="refresh">Perbarui Hasil</button>
+            <button class="btn btn-ghost" data-act="reset" style="color:var(--bad);border-color:#fecaca">Ulangi Semua (Reset)</button>
+          </div>
+        </div>
+        <div class="rtable-wrap">
+          <table class="rtable">
+            <thead><tr><th>Materi</th><th>Nilai</th><th>Persentase</th><th>Status</th></tr></thead>
+            <tbody id="rtbody"></tbody>
+          </table>
+          <p class="rnote">Predikat: <b>Sangat Baik</b> &ge; 85% &middot; <b>Baik</b> &ge; 70% &middot; <b>Cukup</b> &ge; 55% &middot; di bawahnya <b>Perlu Latihan Lagi</b>. Jawaban dan nama tersimpan otomatis di browser (localStorage), jadi tetap aman saat halaman dimuat ulang.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 29: KESIMPULAN ============ -->
+<section class="slide" data-title="Kesimpulan">
+  <div class="slide-inner">
+    <div class="slide-body">
+      <div class="titlebar">
+        <span class="kicker">Penutup</span>
+        <h2 class="slide-title">Kesimpulan</h2>
+        <p class="slide-sub">Enam bekal utama dari materi Barisan dan Deret yang harus selalu kamu bawa ke ruang ujian TKA.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3><span class="h3dot"></span>Pola Bilangan Dulu, Rumus Kemudian</h3>
+          <p>Menguji pola itu sistematis: selisih &rarr; rasio &rarr; selisih dari selisih &rarr; dua-selang &rarr; Fibonacci. Barisan aritmatika (selisih tetap) dan geometri (rasio tetap) adalah dua model paling teratur &mdash; hafalkan wajah pola terkenal (ganjil, genap, kuadrat, segitiga, Fibonacci) agar soal "suku berikutnya" selesai dalam hitungan detik.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Barisan: Aritmatika &amp; Geometri</h3>
+          <p>Aritmatika: U<sub>n</sub> = a + (n&minus;1)b, suku tengah = rata-rata, lompat k suku = +k&middot;b. Geometri: U<sub>n</sub> = a&middot;r<sup>n&minus;1</sup>, suku tengah geometrik y&sup2; = xz, r negatif berselang-seling. Menyisipkan k suku membagi jarak dengan (k + 1) pada kedua model.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Membangun Rumus Suku ke-n</h3>
+          <p>Rumus bisa diturunkan, bukan dihafal buta. Dengan dua suku: eliminasi memberi b = (U<sub>n</sub> &minus; U<sub>m</sub>)/(n &minus; m), lalu substitusi memberi a. Bentuk U<sub>n</sub> = An + B langsung menunjukkan beda = A. <b>Verifikasi selalu</b> dengan suku yang diketahui sebelum menjawab.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>Deret: Aritmatika &amp; Geometri</h3>
+          <p>S<sub>n</sub> aritmatika = n/2 (2a + (n&minus;1)b) = n/2 (a + U<sub>n</sub>) &mdash; lahir dari pasangan Gauss. S<sub>n</sub> geometri = a(r<sup>n</sup> &minus; 1)/(r &minus; 1) untuk r &ne; 1, dan n&middot;a untuk r = 1. Untuk |r| &lt; 1, jumlah tak hingga S<sub>&infin;</sub> = a/(1 &minus; r) &mdash; tak terhingga suku, berhingga hasilnya.</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>MPI: Menalar dari Data</h3>
+          <p>Tabel, grafik, dan teks data dijawab dengan strategi 5 langkah: baca konteks &rarr; ekstraksi &rarr; tentukan model &rarr; hitung &rarr; interpretasi. Kamus kata kuncinya: "bertambah tetap" = aritmatika; "menjadi &hellip; kali / naik persen" = geometri; "total/jumlah seluruhnya" = deret. Hati-hati jebakan indeks "bulan ke-n".</p>
+        </div>
+        <div class="card">
+          <h3><span class="h3dot"></span>HOTS: Memodelkan Dunia Nyata</h3>
+          <p>Soal cerita ditaklukkan dengan 6 langkah: ringkas &rarr; kenali pola &rarr; bangun model &rarr; selesaikan &rarr; kembalikan konteks &rarr; cek kewajaran. Kombinasi favorit ujian: menabung bertingkat (S<sub>n</sub> vs target), bola memantul (S<sub>&infin;</sub> dua arah), dan bonus berpersen (geometri r = 1 + persen).</p>
+        </div>
+      </div>
+      <div class="card closing" style="margin-top:16px">
+        <h3>Mengenali Pola, Menguasai Jumlah</h3>
+        <p>Perjalananmu: membaca pola bilangan &rarr; memahami barisan aritmatika dan geometri &rarr; membangun rumus suku ke-n dari data &rarr; menjumlahkan dengan deret hingga tak hingga &rarr; menalar data MPI &rarr; memodelkan masalah nyata HOTS. Selamat! Kamu telah menyelesaikan seluruh materi barisan dan deret &mdash; termasuk 80 latihan soal berpembahasan &mdash; dan siap menghadapinya di TKA SMA.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px">
+          <button class="btn btn-primary" data-goto="27">Lihat Skor Kamu</button>
+          <button class="btn btn-ghost" data-goto="0" style="background:#fff">Ulangi Materi dari Awal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+(function(){
+"use strict";
+
+/* ================= DATA SOAL ================= */
+var TYPE_LABEL = {pg:'Pilihan Ganda', bs:'Benar / Salah', pgk:'PG Kompleks'};
+var LETTERS = ['A','B','C','D','E'];
+
+var QUESTIONS = [
+/* ---- SET 1: POLA BILANGAN ---- */
+{id:'p1', topic:'bd-pol', box:'q-pol', type:'pg', no:1,
+ text:'Perhatikan barisan 3, 6, 9, 12, &hellip;. Suku berikutnya adalah&hellip;',
+ opts:['14','15','16','18','21'], ans:[1],
+ exp:'Selisih antarsuku selalu 3: 6 &minus; 3 = 3, 9 &minus; 6 = 3, 12 &minus; 9 = 3. Maka suku berikutnya = 12 + 3 = <b>15</b>. Barisan dengan selisih tetap seperti ini adalah calon barisan aritmatika yang akan kita perdalam di Materi 2.'},
+{id:'p2', topic:'bd-pol', box:'q-pol', type:'pg', no:2,
+ text:'Perhatikan barisan 2, 4, 8, 16, &hellip;. Suku berikutnya adalah&hellip;',
+ opts:['20','24','32','64','18'], ans:[2],
+ exp:'Di sini selisihnya (2, 4, 8) tidak tetap, tetapi <b>rasionya</b> tetap: setiap suku menjadi 2 kali suku sebelumnya. Maka 16 &times; 2 = <b>32</b>. Ketika selisih tidak setia, selalu uji rasio &mdash; itulah pola geometri.'},
+{id:'p3', topic:'bd-pol', box:'q-pol', type:'pg', no:3,
+ text:'Perhatikan barisan 1, 4, 9, 16, 25, &hellip;. Suku berikutnya adalah&hellip;',
+ opts:['30','35','36','49','42'], ans:[2],
+ exp:'Ini bilangan kuadrat: 1&sup2;, 2&sup2;, 3&sup2;, 4&sup2;, 5&sup2;, &hellip; sehingga suku berikutnya 6&sup2; = <b>36</b>. Ciri khasnya: selisih antarsuku adalah bilangan ganjil berurutan (3, 5, 7, 9, 11) &mdash; naik 2 setiap langkah.'},
+{id:'p4', topic:'bd-pol', box:'q-pol', type:'pg', no:4,
+ text:'Perhatikan barisan Fibonacci 1, 1, 2, 3, 5, 8, &hellip;. Suku berikutnya adalah&hellip;',
+ opts:['10','11','12','13','15'], ans:[3],
+ exp:'Aturan Fibonacci: setiap suku adalah <b>jumlah dua suku sebelumnya</b>, U<sub>n</sub> = U<sub>n&minus;1</sub> + U<sub>n&minus;2</sub>. Maka 5 + 8 = <b>13</b>. Soal seperti ini mengecoh siswa yang hanya mencari selisih atau rasio &mdash; bila keduanya gagal, uji penjumlahan dua suku.'},
+{id:'p5', topic:'bd-pol', box:'q-pol', type:'bs', no:5,
+ text:'Barisan 100, 90, 81, 73, &hellip; berlanjut dengan suku berikutnya 66.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> Selisihnya: &minus;10, &minus;9, &minus;8, sehingga selisih berikutnya &minus;7 dan 73 &minus; 7 = <b>66</b>. Pola turun dengan selisih yang mengecil teratur juga adalah pola &mdash; bukan berarti selisih harus tetap agar suatu barisan punya aturan.'},
+{id:'p6', topic:'bd-pol', box:'q-pol', type:'pg', no:6,
+ text:'Rumus suku ke-n dari pola 5, 10, 20, 40, &hellip; adalah&hellip;',
+ opts:['U<sub>n</sub> = 5n','U<sub>n</sub> = 5 &times; 2n','U<sub>n</sub> = 5 &times; 2<sup>n&minus;1</sup>','U<sub>n</sub> = 2 &times; 5<sup>n&minus;1</sup>','U<sub>n</sub> = 10 &times; 2<sup>n</sup>'], ans:[2],
+ exp:'Rasio tetap r = 2 dan suku pertama a = 5, sehingga U<sub>n</sub> = a&middot;r<sup>n&minus;1</sup> = <b>5 &times; 2<sup>n&minus;1</sup></b>. Uji: n = 3 &rarr; 5&middot;4 = 20 &check; Opsi 2 &times; 5<sup>n&minus;1</sup> adalah jebakan yang menukar peran a dan r: untuk n = 2 ia memberi 10, tetapi untuk n = 3 memberi 50 yang salah.'},
+{id:'p7', topic:'bd-pol', box:'q-pol', type:'pgk', no:7,
+ text:'Pilihlah SEMUA barisan yang memiliki selisih tetap antarsuku.',
+ opts:['2, 5, 8, 11, &hellip;','1, 2, 4, 8, &hellip;','30, 25, 20, 15, &hellip;','1, 4, 9, 16, &hellip;','1, 1, 2, 3, 5, &hellip;'], ans:[0,2],
+ exp:'<b>Benar:</b> 2, 5, 8, 11 (selisih +3 tetap) dan 30, 25, 20, 15 (selisih &minus;5 tetap &mdash; selisih tetap boleh negatif!). <b>Salah:</b> 1, 2, 4, 8 berpola rasio &times;2; 1, 4, 9, 16 adalah bilangan kuadrat (selisih 3, 5, 7 naik); 1, 1, 2, 3, 5 adalah Fibonacci.'},
+{id:'p8', topic:'bd-pol', box:'q-pol', type:'pg', no:8,
+ text:'Bilangan segitiga: 1, 3, 6, 10, 15, &hellip;. Suku berikutnya adalah&hellip;',
+ opts:['18','20','21','25','24'], ans:[2],
+ exp:'Selisihnya +2, +3, +4, +5, lalu +6: 15 + 6 = <b>21</b>. Cara lain: bilangan segitiga ke-n adalah jumlah n bilangan asli pertama, U<sub>n</sub> = n(n+1)/2, sehingga U<sub>6</sub> = 6&middot;7/2 = 21. Visualnya: bola yang disusun membentuk segitiga makin besar.'},
+{id:'p9', topic:'bd-pol', box:'q-pol', type:'bs', no:9,
+ text:'Pada barisan 2, 6, 12, 20, 30, &hellip;, selisih antarsuku bertambah 2 setiap langkah.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> Selisihnya 4, 6, 8, 10 &mdash; naik 2 setiap langkah. Pola "derajat dua" seperti ini memiliki rumus bentuk An&sup2; + Bn + C; untuk barisan ini U<sub>n</sub> = n&sup2; + n (uji: n = 4 &rarr; 16 + 4 = 20 &check;). Mengenali selisih yang berubah teratur adalah langkah pertama menuju rumusnya.'},
+{id:'p10', topic:'bd-pol', box:'q-pol', type:'pg', no:10,
+ text:'Barisan bergantian 2, 9, 4, 11, 6, 13, &hellip;. Suku ke-7 adalah&hellip;',
+ opts:['7','8','15','20','16'], ans:[1],
+ exp:'Pisahkan dua pola: posisi ganjil berisi 2, 4, 6, &hellip; (naik 2) dan posisi genap berisi 9, 11, 13, &hellip; (naik 2). Suku ke-7 berada di posisi ganjil, melanjutkan 2, 4, 6 menjadi <b>8</b>. Trik dua-selang ini selalu dipakai ketika satu barisan tampak "tidak konsisten".'},
+
+/* ---- SET 2: BARISAN ARITMATIKA ---- */
+{id:'a1', topic:'bd-arit', box:'q-arit', type:'pg', no:1,
+ text:'Barisan 7, 11, 15, 19, &hellip; memiliki beda b = &hellip;',
+ opts:['3','4','5','6','7'], ans:[1],
+ exp:'b = U<sub>2</sub> &minus; U<sub>1</sub> = 11 &minus; 7 = <b>4</b>. Selalu cek pada pasangan lain: 15 &minus; 11 = 4 &check; dan 19 &minus; 15 = 4 &check;. Mencocokkan dua pasangan memastikan barisannya memang aritmatika, bukan kebetulan.'},
+{id:'a2', topic:'bd-arit', box:'q-arit', type:'pg', no:2,
+ text:'Barisan aritmatika dengan a = 5 dan b = 3. Nilai U<sub>8</sub> adalah&hellip;',
+ opts:['23','26','29','32','35'], ans:[1],
+ exp:'U<sub>8</sub> = a + (8 &minus; 1)b = 5 + 7&middot;3 = 5 + 21 = <b>26</b>. Perhatikan pengalinya (n &minus; 1) = 7, bukan 8 &mdash; dari suku pertama ke suku kedelapan hanya ada 7 langkah loncatan. Ini jebakan paling sering terjadi pada materi ini.'},
+{id:'a3', topic:'bd-arit', box:'q-arit', type:'pg', no:3,
+ text:'Barisan 20, 16, 12, &hellip; adalah barisan aritmatika. Nilai U<sub>10</sub> adalah&hellip;',
+ opts:['&minus;16','&minus;14','&minus;12','&minus;20','&minus;24'], ans:[0],
+ exp:'Bedanya b = 16 &minus; 20 = &minus;4 (barisan menurun). U<sub>10</sub> = 20 + 9&middot;(&minus;4) = 20 &minus; 36 = <b>&minus;16</b>. Barisan aritmatika boleh menurun dan boleh melewati nol menjadi negatif &mdash; yang penting selisihnya tetap.'},
+{id:'a4', topic:'bd-arit', box:'q-arit', type:'bs', no:4,
+ text:'Barisan 4, 9, 14, 19, &hellip; adalah barisan aritmatika dengan beda 5.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> 9 &minus; 4 = 5, 14 &minus; 9 = 5, 19 &minus; 14 = 5 &mdash; selisih setiap dua suku berurutan selalu 5. Definisi barisan aritmatika terpenuhi, dengan a = 4 dan b = 5.'},
+{id:'a5', topic:'bd-arit', box:'q-arit', type:'pg', no:5,
+ text:'Barisan aritmatika dengan U<sub>3</sub> = 11 dan U<sub>7</sub> = 23. Beda barisan tersebut adalah&hellip;',
+ opts:['2','3','4','6','12'], ans:[1],
+ exp:'Dari U<sub>3</sub> ke U<sub>7</sub> ada 7 &minus; 3 = 4 langkah loncatan, jadi b = (23 &minus; 11)/(7 &minus; 3) = 12/4 = <b>3</b>. Pembaginya adalah <b>selisih nomor suku</b> &mdash; membagi dengan 4 suku "tengah" (misalnya salah pakai 5) adalah kesalahan klasik.'},
+{id:'a6', topic:'bd-arit', box:'q-arit', type:'pg', no:6,
+ text:'Barisan aritmatika dengan U<sub>5</sub> = 17 dan U<sub>9</sub> = 33. Nilai U<sub>20</sub> adalah&hellip;',
+ opts:['73','77','81','85','69'], ans:[1],
+ exp:'b = (33 &minus; 17)/(9 &minus; 5) = 16/4 = 4, lalu a = U<sub>5</sub> &minus; 4b = 17 &minus; 16 = 1. Maka U<sub>20</sub> = 1 + 19&middot;4 = <b>77</b>. Verifikasi: U<sub>5</sub> = 1 + 4&middot;4 = 17 &check; dan U<sub>9</sub> = 1 + 8&middot;4 = 33 &check;.'},
+{id:'a7', topic:'bd-arit', box:'q-arit', type:'pgk', no:7,
+ text:'Pilihlah SEMUA pernyataan yang BENAR tentang barisan aritmatika.',
+ opts:['Selisih dua suku berurutan selalu tetap','U<sub>n</sub> = a + (n &minus; 1)b','Rasio dua suku berurutan selalu tetap','Titik (n, U<sub>n</sub>) selalu terletak pada satu garis lurus','Barisan aritmatika selalu menaik'], ans:[0,1,3],
+ exp:'<b>Benar:</b> selisih tetap adalah definisinya; rumus U<sub>n</sub> = a + (n&minus;1)b adalah inti materi; dan karena U<sub>n</sub> linear terhadap n, titik-titiknya segaris. <b>Salah:</b> rasio tetap adalah ciri barisan <i>geometri</i>, dan barisan aritmatika bisa menurun (b &lt; 0) atau konstan (b = 0).'},
+{id:'a8', topic:'bd-arit', box:'q-arit', type:'pg', no:8,
+ text:'Disisipkan 5 bilangan tepat di antara 8 dan 38 sehingga membentuk barisan aritmatika. Beda barisan baru adalah&hellip;',
+ opts:['4','5','6','7,5','6,5'], ans:[1],
+ exp:'Menyisipkan 5 bilangan membuat banyak suku menjadi 5 + 2 = 7. Banyak langkah loncatan dari ujung ke ujung adalah 6, sehingga b = (38 &minus; 8)/6 = <b>5</b>. Jebakannya membagi dengan 5 (banyak bilangan sisipan); yang benar adalah banyak <b>loncatan</b> = banyak suku &minus; 1.'},
+{id:'a9', topic:'bd-arit', box:'q-arit', type:'bs', no:9,
+ text:'Pada barisan 3, 8, 13, 18, &hellip;, nilai U<sub>15</sub> = 73.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> a = 3 dan b = 5, sehingga U<sub>15</sub> = 3 + 14&middot;5 = 3 + 70 = <b>73</b>. Uji cepat: barisannya naik 5 setiap suku, dari 3 ke U<sub>15</sub> ada 14 langkah, 14 &times; 5 = 70, 3 + 70 = 73.'},
+{id:'a10', topic:'bd-arit', box:'q-arit', type:'pg', no:10,
+ text:'Pada barisan aritmatika, U<sub>2</sub> = 9 dan U<sub>6</sub> = 25. Nilai U<sub>4</sub> (suku di tengah antara U<sub>2</sub> dan U<sub>6</sub>) adalah&hellip;',
+ opts:['15','16','17','18','19'], ans:[2],
+ exp:'Sifat suku tengah: suku yang persis di tengah adalah <b>rata-rata</b> kedua ujungnya, U<sub>4</sub> = (9 + 25)/2 = <b>17</b>. Cara panjangnya: b = (25 &minus; 9)/4 = 4 lalu U<sub>4</sub> = 9 + 2&middot;4 = 17 &mdash; hasil sama, tetapi sifat rata-rata jauh lebih cepat.'},
+
+/* ---- SET 3: BARISAN GEOMETRI ---- */
+{id:'g1', topic:'bd-geo', box:'q-geo', type:'pg', no:1,
+ text:'Barisan 3, 6, 12, 24, &hellip; memiliki rasio r = &hellip;',
+ opts:['2','3','4','6','1/2'], ans:[0],
+ exp:'r = U<sub>2</sub>/U<sub>1</sub> = 6/3 = <b>2</b>. Cek konsistensi: 12/6 = 2 &check; dan 24/12 = 2 &check;. Bedakan dengan barisan 3, 6, 9, 12 yang selisihnya tetap &mdash; di sini yang tetap adalah <b>perbandingannya</b>.'},
+{id:'g2', topic:'bd-geo', box:'q-geo', type:'pg', no:2,
+ text:'Barisan geometri dengan a = 5 dan r = 3. Nilai U<sub>6</sub> adalah&hellip;',
+ opts:['405','1.215','3.645','363','1.215.000'], ans:[1],
+ exp:'U<sub>6</sub> = a&middot;r<sup>5</sup> = 5 &times; 3<sup>5</sup> = 5 &times; 243 = <b>1.215</b>. Pangkatnya 5 (bukan 6) karena n &minus; 1. Ini juga contoh betapa cepatnya barisan geometri membesar: enam suku saja sudah melewati seribu.'},
+{id:'g3', topic:'bd-geo', box:'q-geo', type:'pg', no:3,
+ text:'Barisan 48, 24, 12, 6, &hellip; adalah barisan geometri. Nilai U<sub>8</sub> adalah&hellip;',
+ opts:['0,25','0,375','0,5','0,75','1,5'], ans:[1],
+ exp:'r = 24/48 = 1/2. U<sub>8</sub> = 48 &times; (1/2)<sup>7</sup> = 48/128 = <b>0,375</b>. Untuk 0 &lt; r &lt; 1 barisan merunduk mendekati nol tanpa pernah mencapainya &mdash; perilaku yang akan menjadi bintang di deret tak hingga.'},
+{id:'g4', topic:'bd-geo', box:'q-geo', type:'bs', no:4,
+ text:'Barisan 2, &minus;6, 18, &minus;54, &hellip; adalah barisan geometri dengan rasio &minus;3.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> &minus;6/2 = &minus;3; 18/(&minus;6) = &minus;3; &minus;54/18 = &minus;3 &mdash; rasio tetap &minus;3. Rasio negatif membuat suku-suku <b>berselang-seling tanda</b> (positif, negatif, positif, &hellip;) sementara nilai mutlaknya terus membesar.'},
+{id:'g5', topic:'bd-geo', box:'q-geo', type:'pg', no:5,
+ text:'Barisan geometri dengan U<sub>3</sub> = 12 dan U<sub>5</sub> = 108 (rasio positif). Rasio barisan tersebut adalah&hellip;',
+ opts:['2','3','6','9','&plusmn;9'], ans:[1],
+ exp:'Dari U<sub>3</sub> ke U<sub>5</sub> ada 2 loncatan: r&sup2; = U<sub>5</sub>/U<sub>3</sub> = 108/12 = 9, sehingga r = &radic;9 = <b>3</b> (soal menyatakan rasio positif). Opsi 9 adalah jebakan membiarkan r&sup2; &mdash; selalu akarkan sebelum menjawab, dan perhatikan kemungkinan r negatif jika soal tidak mengikat tanda.'},
+{id:'g6', topic:'bd-geo', box:'q-geo', type:'pg', no:6,
+ text:'Suku tengah (rata-rata geometrik) di antara 4 dan 64 adalah&hellip;',
+ opts:['12','16','32','34','30'], ans:[1],
+ exp:'Suku tengah geometri = &radic;(x&middot;z) = &radic;(4 &times; 64) = &radic;256 = <b>16</b>. Hasilnya membentuk 4, 16, 64 dengan rasio 4 &check;. Bandingkan: rata-rata <i>aritmatikanya</i> adalah (4 + 64)/2 = 34 &mdash; dua konsep "tengah" yang berbeda dan sering ditukar.'},
+{id:'g7', topic:'bd-geo', box:'q-geo', type:'pgk', no:7,
+ text:'Pilihlah SEMUA pernyataan yang BENAR tentang barisan geometri.',
+ opts:['Rasio dua suku berurutan selalu tetap','U<sub>n</sub> = a &middot; r<sup>n&minus;1</sup>','Beda dua suku berurutan selalu tetap','Jika r negatif, suku-suku barisan berselang-seling tanda','Jika 0 &lt; r &lt; 1, barisan menaik'], ans:[0,1,3],
+ exp:'<b>Benar:</b> rasio tetap adalah definisinya; rumus U<sub>n</sub> = a&middot;r<sup>n&minus;1</sup> adalah inti materi; dan r negatif membalik tanda setiap suku baru. <b>Salah:</b> beda tetap adalah ciri barisan <i>aritmatika</i>; dan 0 &lt; r &lt; 1 membuat barisan <b>menurun</b> menuju nol (misal 48, 24, 12, &hellip;), bukan menaik.'},
+{id:'g8', topic:'bd-geo', box:'q-geo', type:'pg', no:8,
+ text:'Barisan 81, 27, 9, &hellip; adalah barisan geometri. Nilai U<sub>7</sub> adalah&hellip;',
+ opts:['1/3','1/9','1/27','3','1/81'], ans:[1],
+ exp:'r = 27/81 = 1/3. U<sub>7</sub> = 81 &times; (1/3)<sup>6</sup> = 81/729 = <b>1/9</b>. Cara cepat: setiap loncatan membagi 3, dan dari U<sub>1</sub> ke U<sub>7</sub> ada 6 loncatan: 81 &rarr; 27 &rarr; 9 &rarr; 3 &rarr; 1 &rarr; 1/3 &rarr; 1/9.'},
+{id:'g9', topic:'bd-geo', box:'q-geo', type:'bs', no:9,
+ text:'Barisan geometri dengan r = 1 memiliki semua suku yang sama besar.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> U<sub>n</sub> = a&middot;1<sup>n&minus;1</sup> = a untuk setiap n, sehingga barisannya 5, 5, 5, 5, &hellip; (contoh). Kasus r = 1 memang membosankan sebagai barisan, tetapi menjadi jebakan penting di deret geometri karena rumus S<sub>n</sub> biasa terbagi nol &mdash; jumlahnya adalah n&middot;a.'},
+{id:'g10', topic:'bd-geo', box:'q-geo', type:'pg', no:10,
+ text:'Disisipkan 3 bilangan di antara 2 dan 162 sehingga membentuk barisan geometri. Rasio barisan baru adalah&hellip;',
+ opts:['2','3','4','9','81'], ans:[1],
+ exp:'Banyak suku menjadi 5, jadi ada 4 loncatan: r&#8308; = 162/2 = 81 &rarr; r = <b>3</b>. Barisan barunya 2, 6, 18, 54, 162 &check;. Opsi 81 adalah jebakan lupa mengakarkan; ingat r = (U<sub>akhir</sub>/U<sub>awal</sub>)<sup>1/(k+1)</sup>.'}
+,
+/* ---- SET 4: MENENTUKAN RUMUS SUKU KE-N ---- */
+{id:'r1', topic:'bd-rum', box:'q-rum', type:'pg', no:1,
+ text:'Jika U<sub>n</sub> = 4n &minus; 1, nilai U<sub>10</sub> adalah&hellip;',
+ opts:['36','39','40','41','38'], ans:[1],
+ exp:'U<sub>10</sub> = 4(10) &minus; 1 = <b>39</b>. Membaca rumus juga keterampilan: dari U<sub>n</sub> = 4n &minus; 1 kita tahu bedanya 4 (koefisien n) dan suku pertamanya 3 (substitusi n = 1) &mdash; barisannya 3, 7, 11, 15, &hellip;'},
+{id:'r2', topic:'bd-rum', box:'q-rum', type:'pg', no:2,
+ text:'Barisan aritmatika dengan a = 6 dan b = &minus;2. Rumus suku ke-n barisan tersebut adalah&hellip;',
+ opts:['U<sub>n</sub> = &minus;2n + 8','U<sub>n</sub> = &minus;2n &minus; 8','U<sub>n</sub> = 2n + 8','U<sub>n</sub> = 8n &minus; 2','U<sub>n</sub> = &minus;2n + 6'], ans:[0],
+ exp:'U<sub>n</sub> = 6 + (n &minus; 1)(&minus;2) = 6 &minus; 2n + 2 = <b>&minus;2n + 8</b>. Verifikasi: U<sub>1</sub> = &minus;2 + 8 = 6 &check; dan U<sub>2</sub> = &minus;4 + 8 = 4 (turun 2, sesuai b) &check;. Jebakan &minus;2n &minus; 8 lahir dari salah menandatangani konstanta saat membuka kurung.'},
+{id:'r3', topic:'bd-rum', box:'q-rum', type:'pg', no:3,
+ text:'Barisan aritmatika dengan U<sub>2</sub> = 9 dan U<sub>5</sub> = 21. Rumus suku ke-n barisan tersebut adalah&hellip;',
+ opts:['U<sub>n</sub> = 4n + 1','U<sub>n</sub> = 4n &minus; 1','U<sub>n</sub> = 5n &minus; 1','U<sub>n</sub> = 4n + 5','U<sub>n</sub> = 2n + 7'], ans:[0],
+ exp:'b = (21 &minus; 9)/(5 &minus; 2) = 4, lalu a = U<sub>2</sub> &minus; b = 9 &minus; 4 = 5, sehingga U<sub>n</sub> = 5 + (n &minus; 1)4 = <b>4n + 1</b>. Verifikasi ganda: U<sub>2</sub> = 9 &check; dan U<sub>5</sub> = 21 &check;. Barisannya 5, 9, 13, 17, 21, &hellip;'},
+{id:'r4', topic:'bd-rum', box:'q-rum', type:'bs', no:4,
+ text:'Jika U<sub>n</sub> = 3n + 5, maka U<sub>1</sub> = 8.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> Suku pertama selalu diperoleh dengan substitusi n = 1: U<sub>1</sub> = 3(1) + 5 = <b>8</b>. Kebiasaan bagus: dari setiap rumus U<sub>n</sub>, hitung U<sub>1</sub> dan U<sub>2</sub> untuk melihat a dan beda langsung &mdash; di sini a = 8 dan b = 3.'},
+{id:'r5', topic:'bd-rum', box:'q-rum', type:'pg', no:5,
+ text:'Rumus suku ke-n dari barisan 5, 9, 13, 17, &hellip; adalah&hellip;',
+ opts:['U<sub>n</sub> = 4n + 1','U<sub>n</sub> = 4n &minus; 1','U<sub>n</sub> = 5n','U<sub>n</sub> = n + 4','U<sub>n</sub> = 4n + 5'], ans:[0],
+ exp:'a = 5 dan b = 4: U<sub>n</sub> = 5 + (n &minus; 1)4 = <b>4n + 1</b>. Cek: U<sub>2</sub> = 9 &check;. Opsi 4n &minus; 1 adalah jebakan halus &mdash; ia cocok untuk barisan 3, 7, 11 (a = 3). Uji rumus dengan U<sub>1</sub> sebelum memilih: rumus yang benar harus memberi 5 saat n = 1.'},
+{id:'r6', topic:'bd-rum', box:'q-rum', type:'pg', no:6,
+ text:'Pola titik pada figur: baris pertama berisi 3 titik, baris kedua 6 titik, baris ketiga 9 titik, dan seterusnya. Banyak titik pada baris ke-n dirumuskan&hellip;',
+ opts:['U<sub>n</sub> = 3n','U<sub>n</sub> = 2n + 1','U<sub>n</sub> = 3n &minus; 3','U<sub>n</sub> = n + 3','U<sub>n</sub> = 3n + 3'], ans:[0],
+ exp:'Ubah figur menjadi deretan angka: 3, 6, 9, 12, &hellip; dengan selisih tetap 3 dan a = 3. Maka U<sub>n</sub> = 3 + (n &minus; 1)3 = <b>3n</b>. Uji: U<sub>2</sub> = 6 &check;. Soal pola figur hanyalah soal barisan yang menyamar sebagai gambar.'},
+{id:'r7', topic:'bd-rum', box:'q-rum', type:'pgk', no:7,
+ text:'Diketahui U<sub>n</sub> = 2n + 3. Pilihlah SEMUA pernyataan yang BENAR.',
+ opts:['U<sub>1</sub> = 5','U<sub>5</sub> = 13','Beda barisan = 3','U<sub>10</sub> = 23','Barisan ini menurun'], ans:[0,1,3],
+ exp:'<b>Benar:</b> U<sub>1</sub> = 2 + 3 = 5 &check;; U<sub>5</sub> = 10 + 3 = 13 &check;; U<sub>10</sub> = 20 + 3 = 23 &check;. <b>Salah:</b> beda barisan adalah koefisien n, yaitu <b>2</b> (bukan 3 &mdash; 3 itu konstantanya); dan barisan menaik karena b = 2 &gt; 0.'},
+{id:'r8', topic:'bd-rum', box:'q-rum', type:'pg', no:8,
+ text:'Barisan geometri dengan U<sub>2</sub> = 6 dan U<sub>5</sub> = 48. Rumus suku ke-n barisan tersebut adalah&hellip;',
+ opts:['U<sub>n</sub> = 2 &middot; 3<sup>n&minus;1</sup>','U<sub>n</sub> = 3 &middot; 2<sup>n&minus;1</sup>','U<sub>n</sub> = 6 &middot; 2<sup>n&minus;1</sup>','U<sub>n</sub> = 3 &middot; 2<sup>n</sup>','U<sub>n</sub> = 2 &middot; 3<sup>n</sup>'], ans:[1],
+ exp:'r&sup3; = U<sub>5</sub>/U<sub>2</sub> = 48/6 = 8 &rarr; r = 2; lalu a = U<sub>2</sub>/r = 3. Jadi U<sub>n</sub> = <b>3 &middot; 2<sup>n&minus;1</sup></b>. Verifikasi: U<sub>2</sub> = 3&middot;2 = 6 &check; dan U<sub>5</sub> = 3&middot;16 = 48 &check;. Opsi 3 &middot; 2<sup>n</sup> jebakan pangkatnya &mdash; U<sub>1</sub>-nya menjadi 6, bukan 3.'},
+{id:'r9', topic:'bd-rum', box:'q-rum', type:'bs', no:9,
+ text:'Barisan dengan U<sub>n</sub> = 100 &minus; 4n adalah barisan yang suku-sukunya semakin kecil.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> Bedanya b = &minus;4 &lt; 0 (koefisien n), sehingga barisan menurun: U<sub>1</sub> = 96, U<sub>2</sub> = 92, &hellip;, U<sub>25</sub> = 0, lalu negatif terus. Bentuk An + B selalu "bercerita": tanda A menunjukkan arah barisan.'},
+{id:'r10', topic:'bd-rum', box:'q-rum', type:'pg', no:10,
+ text:'Barisan aritmatika dengan U<sub>3</sub> = 10 dan U<sub>8</sub> = 25. Nilai U<sub>15</sub> adalah&hellip;',
+ opts:['43','46','49','52','55'], ans:[1],
+ exp:'b = (25 &minus; 10)/(8 &minus; 3) = 3 dan a = 10 &minus; 2&middot;3 = 4. Maka U<sub>15</sub> = 4 + 14&middot;3 = <b>46</b>. Verifikasi: U<sub>3</sub> = 4 + 6 = 10 &check; dan U<sub>8</sub> = 4 + 21 = 25 &check;. Alur standar: dua suku &rarr; b &rarr; a &rarr; rumus &rarr; suku yang ditanya.'},
+
+/* ---- SET 5: DERET ARITMATIKA ---- */
+{id:'d1', topic:'bd-der', box:'q-der', type:'pg', no:1,
+ text:'Nilai dari 2 + 5 + 8 + &hellip; + 30 adalah&hellip;',
+ opts:['150','155','160','165','170'], ans:[2],
+ exp:'a = 2, b = 3, suku terakhir 30. Cari n dulu: n = (30 &minus; 2)/3 + 1 = 10. Lalu S<sub>10</sub> = 10/2 (2 + 30) = 5 &times; 32 = <b>160</b>. Pola kerja soal "sampai &hellip;": tentukan n dari suku terakhir, baru pakai S<sub>n</sub> = n/2 (a + U<sub>n</sub>).'},
+{id:'d2', topic:'bd-der', box:'q-der', type:'pg', no:2,
+ text:'Deret aritmatika dengan a = 7 dan b = 4. Jumlah 12 suku pertamanya adalah&hellip;',
+ opts:['324','336','348','360','372'], ans:[2],
+ exp:'S<sub>12</sub> = 12/2 (2&middot;7 + 11&middot;4) = 6 (14 + 44) = 6 &times; 58 = <b>348</b>. Bentuk rumus ini dipakai ketika suku terakhir tidak diketahui &mdash; data yang tersedia hanya a, b, dan n.'},
+{id:'d3', topic:'bd-der', box:'q-der', type:'pg', no:3,
+ text:'Jumlah 10 suku pertama dari deret 4 + 9 + 14 + &hellip; adalah&hellip;',
+ opts:['255','260','265','270','275'], ans:[2],
+ exp:'a = 4 dan b = 5: S<sub>10</sub> = 10/2 (2&middot;4 + 9&middot;5) = 5 (8 + 45) = 5 &times; 53 = <b>265</b>. Cek singkat: suku ke-10 = 4 + 45 = 49, maka S<sub>10</sub> = 10/2 (4 + 49) = 265 &mdash; kedua bentuk rumus selalu sepakat.'},
+{id:'d4', topic:'bd-der', box:'q-der', type:'bs', no:4,
+ text:'Jumlah seratus bilangan asli pertama (1 + 2 + 3 + &hellip; + 100) sama dengan 5.050.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar</b> &mdash; ini kisah legendaris Gauss: S<sub>100</sub> = 100/2 (1 + 100) = 50 &times; 101 = <b>5.050</b>. Ada 50 pasangan yang masing-masing bernilai 101: (1+100), (2+99), (3+98), &hellip; Trik pasangan inilah asal mula rumus S<sub>n</sub> = n/2 (a + U<sub>n</sub>).'},
+{id:'d5', topic:'bd-der', box:'q-der', type:'pg', no:5,
+ text:'Deret aritmatika dengan S<sub>8</sub> = 96 dan U<sub>1</sub> = 5. Beda deret tersebut adalah&hellip;',
+ opts:['2','3','4','2,5','1,5'], ans:[0],
+ exp:'96 = 8/2 (2&middot;5 + 7b) = 4(10 + 7b) &rarr; 10 + 7b = 24 &rarr; b = <b>2</b>. Barisannya 5, 7, 9, &hellip; dan memang S<sub>8</sub> = 5+7+9+11+13+15+17+19 = 96 &check;. Soal jenis ini menyatukan rumus deret dengan satu data suku.'},
+{id:'d6', topic:'bd-der', box:'q-der', type:'pg', no:6,
+ text:'Jumlah 20 suku pertama dari deret 3 + 8 + 13 + &hellip; adalah&hellip;',
+ opts:['1.000','1.010','1.020','1.030','1.040'], ans:[1],
+ exp:'a = 3, b = 5, n = 20: S<sub>20</sub> = 20/2 (2&middot;3 + 19&middot;5) = 10 (6 + 95) = 10 &times; 101 = <b>1.010</b>. Kebetulan angka 101 muncul dua kali di set ini &mdash; kebetulan, bukan rumus; jangan menghafal hasil, hafalkan prosesnya.'},
+{id:'d7', topic:'bd-der', box:'q-der', type:'pgk', no:7,
+ text:'Pilihlah SEMUA rumus yang BENAR untuk deret aritmatika.',
+ opts:['S<sub>n</sub> = n/2 (2a + (n &minus; 1)b)','S<sub>n</sub> = n/2 (a + U<sub>n</sub>)','U<sub>n</sub> = S<sub>n</sub> &minus; S<sub>n&minus;1</sub> untuk n &ge; 2','S<sub>n</sub> selalu bernilai positif','S<sub>n</sub> = n &middot; a untuk semua deret aritmatika'], ans:[0,1,2],
+ exp:'<b>Benar:</b> dua bentuk S<sub>n</sub> (dengan b, atau dengan suku ujung) dan hubungan suku-dari-jumlah. <b>Salah:</b> deret menurun bisa menghasilkan S<sub>n</sub> negatif (contoh 20 + 17 + 14 + &hellip; pada n besar); dan S<sub>n</sub> = n&middot;a hanya berlaku untuk barisan konstan (b = 0), bukan semua deret.'},
+{id:'d8', topic:'bd-der', box:'q-der', type:'pg', no:8,
+ text:'Deret aritmatika dengan S<sub>5</sub> = 60 dan U<sub>5</sub> = 20. Suku pertamanya adalah&hellip;',
+ opts:['2','3','4','5','6'], ans:[2],
+ exp:'S<sub>5</sub> = 5/2 (a + U<sub>5</sub>) &rarr; 60 = 2,5 (a + 20) &rarr; a + 20 = 24 &rarr; a = <b>4</b>. Barisannya 4, 8, 12, 16, 20 &mdash; jumlahnya 60 &check;. Bentuk S<sub>n</sub> = n/2 (a + U<sub>n</sub>) paling efektif ketika suku terakhir diketahui.'},
+{id:'d9', topic:'bd-der', box:'q-der', type:'bs', no:9,
+ text:'Hubungan U<sub>n</sub> = S<sub>n</sub> &minus; S<sub>n&minus;1</sub> berlaku untuk n &ge; 2.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> S<sub>n</sub> menjumlah sampai U<sub>n</sub>, sedangkan S<sub>n&minus;1</sub> hanya sampai U<sub>n&minus;1</sub>; selisih keduanya tepat U<sub>n</sub>. Syarat n &ge; 2 penting karena S<sub>0</sub> tidak terdefinisi &mdash; untuk suku pertama gunakan langsung U<sub>1</sub> = S<sub>1</sub>.'},
+{id:'d10', topic:'bd-der', box:'q-der', type:'pg', no:10,
+ text:'Kursi di sebuah aula disusun: baris pertama 18 kursi, setiap baris berikutnya bertambah 3 kursi, dan terdapat 15 baris. Banyak seluruh kursi adalah&hellip;',
+ opts:['555','570','585','600','615'], ans:[2],
+ exp:'a = 18, b = 3, n = 15: S<sub>15</sub> = 15/2 (2&middot;18 + 14&middot;3) = 7,5 (36 + 42) = 7,5 &times; 78 = <b>585</b>. Hasil antara boleh desimal (7,5) selama hasil akhir bulat. Soal kursi/tribun seperti ini adalah aplikasi S<sub>n</sub> paling sering keluar.'},
+
+/* ---- SET 6: DERET GEOMETRI ---- */
+{id:'e1', topic:'bd-dgeo', box:'q-dgeo', type:'pg', no:1,
+ text:'Jumlah 8 suku pertama dari deret 3 + 6 + 12 + 24 + &hellip; adalah&hellip;',
+ opts:['255','510','765','1.530','750'], ans:[2],
+ exp:'a = 3, r = 2, n = 8: S<sub>8</sub> = 3(2<sup>8</sup> &minus; 1)/(2 &minus; 1) = 3 &times; 255 = <b>765</b>. Untuk r = 2 rumusnya menyederhana menjadi a(2<sup>n</sup> &minus; 1) &mdash; bentuk paling sering dipakai di soal cepat.'},
+{id:'e2', topic:'bd-dgeo', box:'q-dgeo', type:'pg', no:2,
+ text:'Deret geometri dengan a = 2 dan r = 3. Jumlah 5 suku pertamanya adalah&hellip;',
+ opts:['121','242','243','363','240'], ans:[1],
+ exp:'S<sub>5</sub> = 2(3<sup>5</sup> &minus; 1)/(3 &minus; 1) = 2(243 &minus; 1)/2 = <b>242</b>. Perhatikan pembilang dan penyebut saling meniadakan di sini. Cek manual: 2 + 6 + 18 + 54 + 162 = 242 &check;.'},
+{id:'e3', topic:'bd-dgeo', box:'q-dgeo', type:'pg', no:3,
+ text:'Nilai dari 5 + 10 + 20 + &hellip; + 320 adalah&hellip;',
+ opts:['635','640','645','650','630'], ans:[0],
+ exp:'Cari n dulu: 5&middot;2<sup>n&minus;1</sup> = 320 &rarr; 2<sup>n&minus;1</sup> = 64 = 2&#8310; &rarr; n = 7. Lalu S<sub>7</sub> = 5(2<sup>7</sup> &minus; 1) = 5 &times; 127 = <b>635</b>. Mengenali 64, 128, 256, 512 sebagai pangkat dua adalah keterampilan yang menghemat waktu besar di TKA.'},
+{id:'e4', topic:'bd-dgeo', box:'q-dgeo', type:'bs', no:4,
+ text:'Untuk deret geometri dengan r = 1, jumlah n suku pertama adalah S<sub>n</sub> = n &middot; a.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> Jika r = 1 semua suku sama dengan a, sehingga jumlahnya memang n&middot;a (contoh: 7 + 7 + 7 + 7 + 7 = 5 &times; 7). Rumus utama S<sub>n</sub> = a(r<sup>n</sup> &minus; 1)/(r &minus; 1) tidak boleh dipakai di sini karena penyebutnya nol.'},
+{id:'e5', topic:'bd-dgeo', box:'q-dgeo', type:'pg', no:5,
+ text:'Deret geometri dengan S<sub>6</sub> = 126 dan r = 2. Suku pertamanya adalah&hellip;',
+ opts:['1','2','3','6','4'], ans:[1],
+ exp:'126 = a(2&#8310; &minus; 1)/(2 &minus; 1) = a &times; 63 &rarr; a = <b>2</b>. Barisannya 2, 4, 8, 16, 32, 64 &mdash; jumlahnya 126 &check;. Soal "jumlah diketahui, cari a" adalah arah kebalikan yang paling sering muncul di TKA.'},
+{id:'e6', topic:'bd-dgeo', box:'q-dgeo', type:'pg', no:6,
+ text:'Deret geometri tak hingga dengan a = 9 dan r = 1/3. Jumlahnya adalah&hellip;',
+ opts:['12','13,5','18','27','13'], ans:[1],
+ exp:'S<sub>&infin;</sub> = a/(1 &minus; r) = 9/(1 &minus; 1/3) = 9/(2/3) = 9 &times; 3/2 = <b>13,5</b>. Membagi pecahan dengan pecahan: balik dan kalikan. Syarat |r| &lt; 1 terpenuhi (1/3 &lt; 1), jadi jumlah berhingga ini sah.'},
+{id:'e7', topic:'bd-dgeo', box:'q-dgeo', type:'pgk', no:7,
+ text:'Pilihlah SEMUA pernyataan yang BENAR tentang deret geometri.',
+ opts:['S<sub>n</sub> = a(r<sup>n</sup> &minus; 1)/(r &minus; 1) berlaku untuk r &ne; 1','S<sub>&infin;</sub> = a/(1 &minus; r) berlaku untuk |r| &lt; 1','Deret 2 + 4 + 8 + 16 + &hellip; memiliki jumlah tak hingga yang berhingga','Deret geometri tak hingga dengan |r| &lt; 1 dikatakan konvergen','Untuk r = 1 berlaku S<sub>n</sub> = a(r<sup>n</sup> &minus; 1)/(r &minus; 1)'], ans:[0,1,3],
+ exp:'<b>Benar:</b> rumus utama (r &ne; 1), rumus tak hingga (syarat |r| &lt; 1), dan istilah konvergen untuk |r| &lt; 1. <b>Salah:</b> deret dengan r = 2 meledak &mdash; jumlahnya membesar tanpa batas; dan untuk r = 1 rumus utama terbagi nol, yang benar adalah S<sub>n</sub> = n&middot;a.'},
+{id:'e8', topic:'bd-dgeo', box:'q-dgeo', type:'pg', no:8,
+ text:'Bola dijatuhkan dari ketinggian 8 m dan setiap pantulan mencapai setengah tinggi sebelumnya. Tinggi pantulan ke-4 adalah&hellip;',
+ opts:['0,25 m','0,5 m','1 m','2 m','4 m'], ans:[1],
+ exp:'Tinggi pantulan ke-n = 8 &times; (1/2)<sup>n</sup>: pantulan ke-1 = 4 m, ke-2 = 2 m, ke-3 = 1 m, ke-4 = <b>0,5 m</b>. Perhatikan indeksnya: pantulan pertama terjadi <b>setelah</b> jatuh pertama, jadi tingginya 8&middot;(1/2)&sup1;, bukan 8&middot;(1/2)&sup0;.'},
+{id:'e9', topic:'bd-dgeo', box:'q-dgeo', type:'bs', no:9,
+ text:'Jumlah deret tak hingga 8 + 4 + 2 + 1 + &hellip; sama dengan 16.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> a = 8, r = 1/2: S<sub>&infin;</sub> = 8/(1 &minus; 1/2) = <b>16</b>. Intuisinya: suku-suku berikutnya (1/2, 1/4, 1/8, &hellip;) menyumbang makin kecil sehingga totalnya "berhenti" di 16 &mdash; jumlah tak terhingga yang berhingga.'},
+{id:'e10', topic:'bd-dgeo', box:'q-dgeo', type:'pg', no:10,
+ text:'Tabungan Rina pada bulan pertama Rp100.000, dan setiap bulan menjadi 1,5 kali bulan sebelumnya. Jumlah tabungan Rina selama 5 bulan pertama adalah&hellip;',
+ opts:['Rp1.218.750','Rp1.318.750','Rp1.418.750','Rp1.500.000','Rp1.212.500'], ans:[1],
+ exp:'a = 100.000, r = 1,5, n = 5: S<sub>5</sub> = 100.000(1,5&#8309; &minus; 1)/(0,5) = 200.000(7,59375 &minus; 1) = 200.000 &times; 6,59375 = <b>Rp1.318.750</b>. Hitung 1,5&#8309; bertahap: 1,5&sup2; = 2,25 &rarr; 1,5&sup3; = 3,375 &rarr; 1,5&#8308; = 5,0625 &rarr; 1,5&#8309; = 7,59375. Model "menjadi &hellip; kali" selalu geometri.'}
+,
+/* ---- SET 7: MPI BARISAN DAN DERET ---- */
+{id:'m1', topic:'bd-mpi', box:'q-mpi', type:'pg', no:1,
+ text:'Tabel tabungan bulanan Budi (dalam ribuan rupiah):<table class="mtable"><tr><th>Bulan ke-</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><th>Tabungan (ribu Rp)</th><td>20</td><td>25</td><td>30</td><td>35</td><td>40</td></tr></table>Jika pola ini berlanjut, jumlah seluruh tabungan Budi setelah 12 bulan adalah&hellip;',
+ opts:['Rp540.000','Rp570.000','Rp600.000','Rp630.000','Rp660.000'], ans:[1],
+ exp:'Data berselisih tetap +5.000 &rarr; aritmatika dengan a = 20.000 dan b = 5.000. U<sub>12</sub> = 20.000 + 11&middot;5.000 = 75.000, lalu S<sub>12</sub> = 12/2 (20.000 + 75.000) = 6 &times; 95.000 = <b>Rp570.000</b>. Soal MPI dua langkah: baca tabel &rarr; pilih model &rarr; hitung jumlah.'},
+{id:'m2', topic:'bd-mpi', box:'q-mpi', type:'bs', no:2,
+ text:'Sebuah pabrik memproduksi 150 unit pada bulan Januari, dan produksinya naik tetap 20 unit setiap bulan. Berdasarkan informasi tersebut, produksi pada bulan Juni adalah 250 unit.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> Januari = suku ke-1, Juni = suku ke-6, sehingga kenaikan hanya terjadi <b>5 kali</b>: 150 + 5 &times; 20 = <b>250</b>. Jebakan indeksnya mengalikan 6 &times; 20 = 300. "Bulan ke-n" berarti n &minus; 1 kali kenaikan &mdash; kunci membaca soal MPI bertipe kalimat.'},
+{id:'m3', topic:'bd-mpi', box:'q-mpi', type:'pg', no:3,
+ text:'Dalam sebuah percobaan, awalnya terdapat 200 bakteri. Setiap 20 menit jumlah bakteri menjadi dua kali lipat. Banyak bakteri setelah 2 jam adalah&hellip;',
+ opts:['3.200','6.400','12.800','25.600','51.200'], ans:[2],
+ exp:'Langkah pertama bukan menghitung, tapi menghitung <b>periode</b>: 2 jam = 120 menit = 120/20 = 6 periode penggandaan. Model geometri: 200 &times; 2&#8310; = 200 &times; 64 = <b>12.800</b>. Jawaban 6.400 lahir dari salah menghitung 5 periode &mdash; selalu konversi satuan waktu lebih dulu.'},
+{id:'m4', topic:'bd-mpi', box:'q-mpi', type:'pg', no:4,
+ text:'Sebuah infografis gedung pertunjukan menyatakan: baris pertama berisi 24 kursi, setiap baris di belakangnya bertambah 4 kursi, dan terdapat 18 baris. Banyak seluruh kursi adalah&hellip;',
+ opts:['1.008','1.044','1.080','1.152','1.224'], ans:[1],
+ exp:'Model aritmatika: a = 24, b = 4, n = 18. S<sub>18</sub> = 18/2 (2&middot;24 + 17&middot;4) = 9 (48 + 68) = 9 &times; 116 = <b>1.044</b>. Kata "seluruh" dalam infografis adalah sinyal memakai jumlah (S<sub>n</sub>), bukan suku ke-n.'},
+{id:'m5', topic:'bd-mpi', box:'q-mpi', type:'pg', no:5,
+ text:'Harga sebuah rumah Rp400 juta dan naik 4% setiap tahun. Perkiraan harga rumah setelah 3 tahun adalah&hellip;',
+ opts:['Rp448 juta','Rp449,9 juta','Rp452 juta','Rp460 juta','Rp464 juta'], ans:[1],
+ exp:'"Naik 4% tiap tahun" = geometri dengan r = 1,04: harga = 400 &times; 1,04&sup3; = 400 &times; 1,124864 &asymp; <b>Rp449,9 juta</b>. Hitung bertahap: 400 &rarr; 416 &rarr; 432,64 &rarr; 449,9456. Jebakan 448 lahir dari mengira "4% &times; 3 tahun = 12%" &mdash; bunga majemuk bukan begitu bekerja.'},
+{id:'m6', topic:'bd-mpi', box:'q-mpi', type:'bs', no:6,
+ text:'Gaji tahun pertama seorang karyawan Rp3.000.000 dan naik Rp250.000 setiap tahun. Gaji pada tahun ke-8 adalah Rp4.750.000.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> Aritmatika dengan a = 3.000.000 dan b = 250.000: tahun ke-8 berarti 7 kenaikan &rarr; 3.000.000 + 7 &times; 250.000 = <b>Rp4.750.000</b>. Kata "naik Rp&hellip; setiap tahun" (bukan "naik persen") adalah sinyal aritmatika, bukan geometri.'},
+{id:'m7', topic:'bd-mpi', box:'q-mpi', type:'pg', no:7,
+ text:'Program lari seorang siswa: minggu pertama 2 km, dan setiap minggu berikutnya ditambah 0,5 km dari minggu sebelumnya. Total jarak tempuh selama 10 minggu pertama adalah&hellip;',
+ opts:['40 km','42,5 km','45 km','47,5 km','50 km'], ans:[1],
+ exp:'Aritmatika dengan a = 2, b = 0,5, n = 10: S<sub>10</sub> = 10/2 (2&middot;2 + 9&middot;0,5) = 5 (4 + 4,5) = 5 &times; 8,5 = <b>42,5 km</b>. Desimal pada data bukan halangan &mdash; prosedurnya sama persis; tinggal teliti pada perkalian.'},
+{id:'m8', topic:'bd-mpi', box:'q-mpi', type:'pg', no:8,
+ text:'Nilai sebuah laptop Rp5.000.000 menyusut 10% setiap tahun. Nilai laptop setelah 3 tahun adalah&hellip;',
+ opts:['Rp3.600.000','Rp3.645.000','Rp3.700.000','Rp3.915.000','Rp4.000.000'], ans:[1],
+ exp:'"Menyusut 10%" = r = 0,9: nilai = 5.000.000 &times; 0,9&sup3; = 5.000.000 &times; 0,729 = <b>Rp3.645.000</b>. Bertahap: 5.000.000 &rarr; 4.500.000 &rarr; 4.050.000 &rarr; 3.645.000. Penyusutan persen tetap adalah geometri &mdash; dan ingat r = 1 &minus; persen, bukan persennya langsung.'},
+{id:'m9', topic:'bd-mpi', box:'q-mpi', type:'pgk', no:9,
+ text:'Angsuran pertama pembelian sebuah barang Rp500.000 dan setiap bulan naik Rp50.000. Pilihlah SEMUA pernyataan yang BENAR berdasarkan informasi tersebut.',
+ opts:['Angsuran ke-6 sebesar Rp750.000','Total 10 angsuran pertama Rp7.250.000','Angsuran ke-12 sebesar Rp1.100.000','Data ini dimodelkan dengan deret aritmatika','Total angsuran semakin lama semakin kecil'], ans:[0,1,3],
+ exp:'<b>Benar:</b> U<sub>6</sub> = 500.000 + 5&middot;50.000 = 750.000 &check;; S<sub>10</sub> = 5 (1.000.000 + 450.000) = 7.250.000 &check;; selisih tetap = deret aritmatika &check;. <b>Salah:</b> U<sub>12</sub> = 500.000 + 11&middot;50.000 = 1.050.000 (bukan 1.100.000), dan totalnya jelas semakin besar, bukan semakin kecil.'},
+{id:'m10', topic:'bd-mpi', box:'q-mpi', type:'pg', no:10,
+ text:'Pengunjung sebuah taman pada hari pertama 80 orang, dan setiap hari berikutnya bertambah 15 orang. Banyak pengunjung pada hari ke-20 adalah&hellip;',
+ opts:['350','365','380','395','305'], ans:[1],
+ exp:'U<sub>20</sub> = 80 + 19 &times; 15 = 80 + 285 = <b>365</b>. Hari ke-20 mengalami 19 kenaikan &mdash; bukan 20. Kalau soal bertanya "jumlah pengunjung selama 20 hari", barulah kita pakai S<sub>20</sub>; baca ulang apa yang ditanya, selalu.'},
+
+/* ---- SET 8: HOTS KEHIDUPAN SEHARI-HARI ---- */
+{id:'h1', topic:'bd-hots', box:'q-hots', type:'pg', no:1,
+ text:'Ani menabung Rp10.000 pada minggu pertama, dan setiap minggu berikutnya ia menambah Rp2.000 dari minggu sebelumnya. Total tabungan Ani setelah 52 minggu adalah&hellip;',
+ opts:['Rp2.912.000','Rp3.172.000','Rp3.380.000','Rp3.640.000','Rp2.704.000'], ans:[1],
+ exp:'Aritmatika: a = 10.000, b = 2.000, n = 52. S<sub>52</sub> = 26 (2&middot;10.000 + 51&middot;2.000) = 26 (20.000 + 102.000) = 26 &times; 122.000 = <b>Rp3.172.000</b>. Kebiasaan HOTS: ringkas dulu data ke a, b, n &mdash; baru hitung. Konstanta 122.000 = tabungan minggu pertama + total tambahan 51 minggu.'},
+{id:'h2', topic:'bd-hots', box:'q-hots', type:'pg', no:2,
+ text:'Sebuah bola dijatuhkan dari ketinggian 10 m dan setiap pantulan mencapai 3/4 tinggi sebelumnya. Panjang seluruh lintasan bola sampai berhenti adalah&hellip;',
+ opts:['60 m','70 m','80 m','90 m','40 m'], ans:[1],
+ exp:'Lintasan <b>turun</b>: 10 + 7,5 + 5,625 + &hellip; = 10/(1 &minus; 3/4) = 40 m. Lintasan <b>naik</b>: 7,5 + 5,625 + &hellip; = 7,5/(1/4) = 30 m. Total = 40 + 30 = <b>70 m</b>. Lupa lintasan naik (menjawab 40) adalah kesalahan paling umum &mdash; bola bergerak dua arah!'},
+{id:'h3', topic:'bd-hots', box:'q-hots', type:'pg', no:3,
+ text:'Sebuah perusahaan memberi bonus tahunan Rp2.000.000 pada tahun pertama, dan setiap tahun naik 20% dari tahun sebelumnya. Total bonus selama 5 tahun pertama adalah&hellip;',
+ opts:['Rp12.400.000','Rp13.411.200','Rp14.883.200','Rp15.488.000','Rp14.400.000'], ans:[2],
+ exp:'Geometri dengan r = 1,2: S<sub>5</sub> = 2.000.000 (1,2&#8309; &minus; 1)/(0,2) = 10.000.000 &times; 1,48832 = <b>Rp14.883.200</b>. Hitung 1,2&#8309; bertahap: 1,2 &rarr; 1,44 &rarr; 1,728 &rarr; 2,0736 &rarr; 2,48832. "Naik persen" = geometri; "naik rupiah tetap" = aritmatika.'},
+{id:'h4', topic:'bd-hots', box:'q-hots', type:'bs', no:4,
+ text:'A menabung tetap Rp50.000 per bulan; B menabung Rp10.000 pada bulan pertama lalu setiap bulan menjadi 2 kali bulan sebelumnya. Setelah 6 bulan, total tabungan B melebihi total tabungan A.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> A: 6 &times; 50.000 = Rp300.000. B (geometri r = 2): S<sub>6</sub> = 10.000(2&#8310; &minus; 1) = 10.000 &times; 63 = <b>Rp630.000</b> &gt; 300.000. Pelajaran HOTS: pertumbuhan eksponensial (geometri) pada akhirnya selalu melampaui pertumbuhan linear (aritmatika), walau startnya jauh lebih kecil.'},
+{id:'h5', topic:'bd-hots', box:'q-hots', type:'pg', no:5,
+ text:'Kursi stadion disusun bertingkat: baris terbawah 30 kursi dan setiap baris di atasnya berkurang 2 kursi sampai baris paling atas berisi 4 kursi. Banyak seluruh kursi adalah&hellip;',
+ opts:['210','224','238','252','266'], ans:[2],
+ exp:'Langkah 1: banyak baris = (30 &minus; 4)/2 + 1 = <b>14</b>. Langkah 2: S<sub>14</sub> = 14/2 (30 + 4) = 7 &times; 34 = <b>238</b>. Dua penalaran sekaligus: mencari n dari dua ujung barisan, lalu menjumlahkannya &mdash; pola favorit soal tribun.'},
+{id:'h6', topic:'bd-hots', box:'q-hots', type:'pg', no:6,
+ text:'Pinjaman dilunasi dengan angsuran pertama Rp1.100.000, dan setiap bulan angsurannya turun Rp50.000. Besar angsuran pada bulan ke-10 adalah&hellip;',
+ opts:['Rp600.000','Rp650.000','Rp700.000','Rp750.000','Rp800.000'], ans:[1],
+ exp:'Barisan aritmatika <b>menurun</b>: U<sub>10</sub> = 1.100.000 &minus; 9&middot;50.000 = <b>Rp650.000</b>. HOTS di sini: mengenali "turun tetap" tetap model aritmatika dengan b negatif. Bonus pikir: angsuran ke-22 sudah 0 &mdash; pinjaman lunas sekitar 21 bulan.'},
+{id:'h7', topic:'bd-hots', box:'q-hots', type:'pgk', no:7,
+ text:'Sebuah pabrik memproduksi 500 unit pada bulan pertama, dan kapasitas produksinya naik 10% setiap bulan. Pilihlah SEMUA pernyataan yang BENAR.',
+ opts:['Produksi bulan ke-4 sekitar 665 unit','Data ini dimodelkan dengan barisan geometri rasio 1,1','Produksi bulan ke-3 adalah 610 unit','Total produksi 3 bulan pertama adalah 1.655 unit','Total produksi 3 bulan pertama adalah 1.650 unit'], ans:[0,1,3],
+ exp:'<b>Benar:</b> model geometri r = 1,1 &check;; bulan ke-4 = 500 &times; 1,1&sup3; &asymp; 665,5 &asymp; 665 &check;; total 3 bulan = 500 + 550 + 605 = 1.655 &check;. <b>Salah:</b> bulan ke-3 = 500 &times; 1,1&sup2; = <b>605</b> (bukan 610), dan karena itu totalnya 1.655 &mdash; bukan 1.650 hasil pembulatan ceroboh.'},
+{id:'h8', topic:'bd-hots', box:'q-hots', type:'pg', no:8,
+ text:'Dina menabung untuk DP rumah sebesar Rp25.000.000. Bulan pertama ia menabung Rp1.000.000 dan setiap bulan menambah Rp500.000 dari bulan sebelumnya. Agar target tercapai, Dina minimal menabung selama&hellip;',
+ opts:['8 bulan','9 bulan','10 bulan','11 bulan','7 bulan'], ans:[1],
+ exp:'S<sub>n</sub> = n/2 (2.000.000 + (n&minus;1)500.000). Uji: n = 8 &rarr; 4 (2.000.000 + 3.500.000) = 22 juta (belum); n = 9 &rarr; 4,5 (2.000.000 + 4.000.000) = 27 juta &ge; 25 juta &check;. Jadi minimal <b>9 bulan</b>. Soal "kapan target tercapai" diselesaikan dengan menguji n, bukan menebak.'},
+{id:'h9', topic:'bd-hots', box:'q-hots', type:'bs', no:9,
+ text:'Lampu hias disusun 5 baris: baris pertama 4 lampu dan setiap baris berikutnya 3 kali baris sebelumnya. Total seluruh lampu adalah 484.',
+ opts:['Benar','Salah'], ans:[0],
+ exp:'<b>Benar.</b> Geometri r = 3: barisannya 4, 12, 36, 108, 324. S<sub>5</sub> = 4(3&#8309; &minus; 1)/(3 &minus; 1) = 4 &times; 242/2 = 2 &times; 242 = <b>484</b>. HOTS-nya: "3 kali lipat" otomatis geometri, dan yang ditanya total &rarr; S<sub>n</sub>, bukan U<sub>5</sub> = 324.'},
+{id:'h10', topic:'bd-hots', box:'q-hots', type:'pg', no:10,
+ text:'Aksi donor darah: hari pertama terdapat 3 pendonor, dan setiap hari berikutnya jumlah pendonor menjadi 2 kali hari sebelumnya. Total pendonor selama 7 hari adalah&hellip;',
+ opts:['189','192','381','384','127'], ans:[2],
+ exp:'S<sub>7</sub> = 3(2&#8311; &minus; 1)/(2 &minus; 1) = 3 &times; 127 = <b>381</b>. Opsi 192 adalah jebakan "hari ke-7 saja" (3 &times; 2&#8310;). Soal HOTS sering menyelipkan opsi untuk pertanyaan yang <i>hampir sama</i> &mdash; "pada hari ke-n" vs "selama n hari".'}
+];
+
+/* ================= TOPIK & STATE ================= */
+var TOPICS = [
+  {id:'bd-pol',  label:'Pola Bilangan',                 tag:'Latihan Materi 1'},
+  {id:'bd-arit', label:'Barisan Aritmatika',            tag:'Latihan Materi 2'},
+  {id:'bd-geo',  label:'Barisan Geometri',              tag:'Latihan Materi 3'},
+  {id:'bd-rum',  label:'Rumus Suku ke-n',               tag:'Latihan Materi 4'},
+  {id:'bd-der',  label:'Deret Aritmatika',              tag:'Latihan Materi 5'},
+  {id:'bd-dgeo', label:'Deret Geometri',                tag:'Latihan Materi 6'},
+  {id:'bd-mpi',  label:'MPI Barisan &amp; Deret',       tag:'Latihan Materi 7'},
+  {id:'bd-hots', label:'HOTS Sehari-hari',              tag:'Latihan Materi 8'}
+];
+
+var QMAP = {};
+QUESTIONS.forEach(function(q){ QMAP[q.id] = q; });
+
+var KEY = 'tkaBarisanDeret_v1';
+var state = { name:'', answers:{} };
+
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      var d = JSON.parse(raw);
+      if(d && typeof d === 'object'){
+        state.name = (typeof d.name === 'string') ? d.name : '';
+        state.answers = (d.answers && typeof d.answers === 'object') ? d.answers : {};
+      }
+    }
+  }catch(e){}
+}
+function sameSet(sel, ans){
+  if(sel.length !== ans.length) return false;
+  return ans.every(function(a){ return sel.indexOf(a) !== -1; });
+}
+function $(s){ return document.querySelector(s); }
+function $all(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); }
+
+/* ================= DATA LANGKAH (MPI & HOTS) ================= */
+var STEP_SETS = {
+mpi1: {
+  steps:[
+    {t:'Langkah 1 &mdash; Baca &amp; ekstraksi informasi', m:'Tabungan: 20, 25, 30, 35, 40 (ribu Rp) tiap bulan', d:'Tabel menyimpan lima data. Ditanya tiga hal: model, U<sub>12</sub>, dan S<sub>12</sub>. Satuan ribuan rupiah harus dipakai konsisten sampai akhir.'},
+    {t:'Langkah 2 &mdash; Uji model', m:'Selisih: +5, +5, +5, +5 &rarr; ARITMATIKA, a = 20, b = 5', d:'Selisih tetap adalah tanda tangan barisan aritmatika. Kalau selisih tidak tetap, baru uji rasio. Selalu tulis kesimpulan model sebelum menghitung.'},
+    {t:'Langkah 3 &mdash; Jawab (a): tabungan bulan ke-12', m:'U<sub>12</sub> = 20 + 11&times;5 = 75 ribu = Rp75.000', d:'Bulan ke-12 berarti 11 langkah kenaikan &mdash; bukan 12. Ini jebakan indeks yang paling sering menggugurkan nilai di soal MPI.'},
+    {t:'Langkah 4 &mdash; Jawab (b): total 12 bulan', m:'S<sub>12</sub> = 12/2 (20 + 75) = 6 &times; 95 = 570 ribu = Rp570.000', d:'Bentuk S<sub>n</sub> = n/2 (a + U<sub>n</sub>) paling efisien karena U<sub>12</sub> sudah dihitung di langkah sebelumnya &mdash; kerja bertahap saling menghidupi.'},
+    {t:'Langkah 5 &mdash; Interpretasi &amp; cek masuk akal', m:'Rata-rata tabungan = 570/12 = 47,5 ribu per bulan', d:'Rata-rata harus terletak antara 20 (bulan pertama) dan 75 (bulan terakhir) &mdash; dan 47,5 tepat di tengahnya karena barisan aritmatika simetris. Data masuk akal: jawaban terverifikasi.'}
+  ]
+},
+mpi2: {
+  steps:[
+    {t:'Langkah 1 &mdash; Baca &amp; konversi satuan', m:'200 bakteri; jadi 2&times; setiap 20 menit; ditanya setelah 2 jam', d:'Kesalahan pertama yang harus dicegah: mencampur satuan menit dan jam. Konversi dulu: 2 jam = 120 menit.'},
+    {t:'Langkah 2 &mdash; Hitung banyak periode', m:'120 / 20 = 6 periode penggandaan', d:'Ini langkah penentu. Soal memberi laju "per 20 menit" tetapi menanya "setelah 2 jam" &mdash; jumlah periode adalah pembagian waktu, bukan 6 yang dihafal.'},
+    {t:'Langkah 3 &mdash; Pilih model &amp; susun rumus', m:'Geometri r = 2: bakteri = 200 &times; 2<sup>6</sup>', d:'"Menjadi dua kali lipat" = rasio 2. Setiap periode mengalikan sekali, 6 periode berarti pangkat 6. Tulis rumusnya eksplisit sebelum berhitung.'},
+    {t:'Langkah 4 &mdash; Hitung', m:'2<sup>6</sup> = 64 &rarr; 200 &times; 64 = 12.800 bakteri', d:'Pangkat dua kecil wajib lancar: 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024. Untuk 200 &times; 64, hitung 2 &times; 64 = 128 lalu tambah nol.'},
+    {t:'Langkah 5 &mdash; Cek dengan uraian bertahap', m:'200 &rarr; 400 &rarr; 800 &rarr; 1.600 &rarr; 3.200 &rarr; 6.400 &rarr; 12.800', d:'Tujuh bilangan itu tepat 6 langkah penggandaan &mdash; cocok. Uraian bertahap seperti ini adalah verifikasi termurah untuk soal pertumbuhan, dan sekaligus membuktikan jawabanmu masuk akal.'}
+  ]
+},
+hot1: {
+  steps:[
+    {t:'Langkah 1 &mdash; Ringkas informasi', m:'U<sub>1</sub> = 300.000; selisih +100.000; target S<sub>n</sub> &ge; 4.800.000', d:'Cerita panjang dikompres menjadi tiga data. Coret informasi lain: harga sepeda hanya dipakai sebagai target, bukan bagian barisan.'},
+    {t:'Langkah 2 &mdash; Tentukan model', m:'"menambah Rp100.000 dari bulan sebelumnya" = aritmatika, b = 100.000', d:'Penambahan rupiah tetap = aritmatika. Kalau bunyinya "menjadi 1,5 kali", barulah geometri. Memilih model salah = seluruh jawaban salah, jadi langkah ini paling menentukan.'},
+    {t:'Langkah 3 &mdash; Jawab (a): tabungan bulan ke-10', m:'U<sub>10</sub> = 300.000 + 9&times;100.000 = Rp1.200.000', d:'Bulan ke-10 = 9 loncatan kenaikan. Tabungan bulan ke-10 adalah SUKU, bukan jumlah &mdash; bedakan dengan pertanyaan (b) yang menuntut kumulatif.'},
+    {t:'Langkah 4 &mdash; Jawab (b): uji n pada S<sub>n</sub>', m:'S<sub>8</sub> = 4(600.000 + 700.000) = 5.200.000; S<sub>7</sub> = 3,5(600.000 + 600.000) = 4.200.000', d:'Tidak ada rumus langsung "cari n dari target", jadi uji: S<sub>7</sub> = 4,2 juta belum cukup, S<sub>8</sub> = 5,2 juta sudah melampaui 4,8 juta. Menggunakan bentuk S<sub>n</sub> = n/2 (2a + (n&minus;1)b) membuat uji cepat.'},
+    {t:'Langkah 5 &mdash; Simpulkan &amp; interpretasi', m:'Target tercapai paling cepat di bulan ke-8 (kelebihan Rp400.000)', d:'Jawaban akhir bukan sekadar angka: bulan ke-8 bukan hanya "tercapai" tetapi <b>melampaui</b> target 400 ribu, artinya Rendi bisa langsung membeli sepeda itu. Interpretasi seperti ini yang membedakan jawaban HOTS dari jawaban biasa.'}
+  ]
+},
+hot2: {
+  steps:[
+    {t:'Langkah 1 &mdash; Modelkan tinggi pantulan', m:'Pantulan ke-n = 12 &times; (1/2)<sup>n</sup> (geometri r = 1/2)', d:'"Setengah dari tinggi sebelumnya" = rasio 1/2. Pantulan pertama terjadi SETELAH jatuh pertama, jadi pangkatnya mulai dari 1: 6, 3, 1,5, &hellip;'},
+    {t:'Langkah 2 &mdash; Jawab (a): pantulan ke-5', m:'12 &times; (1/2)<sup>5</sup> = 12/32 = 0,375 m', d:'Suku barisan geometri menjawab pertanyaan satu pantulan. Bandingkan: 12 &rarr; 6 &rarr; 3 &rarr; 1,5 &rarr; 0,75 &rarr; 0,375 &mdash; lima loncatan.'},
+    {t:'Langkah 3 &mdash; Jawab (b): lintasan turun', m:'12 + 6 + 3 + &hellip; = S<sub>&infin;</sub> = 12/(1 &minus; 1/2) = 24 m', d:'Lintasan turun dimulai dari jatuh pertama (12 m) lalu tiap pantulan turun lagi. Deret tak hingga dengan r = 1/2 memberi 24 m &mdash; S<sub>&infin;</sub> dari Materi 6 bekerja di dunia nyata.'},
+    {t:'Langkah 4 &mdash; Jawab (b): lintasan naik', m:'6 + 3 + 1,5 + &hellip; = 6/(1 &minus; 1/2) = 12 m', d:'Lintasan naik dimulai dari pantulan PERTAMA (6 m) &mdash; tanpa angka 12. Banyak siswa menjumlah 12 dua kali di sini. Cara aman: naik = turun &minus; 12 = 24 &minus; 12 = 12 m.'},
+    {t:'Langkah 5 &mdash; Total &amp; refleksi', m:'Total = 24 + 12 = 36 m', d:'Bola kecil dari 12 meter menempuh 36 meter &mdash; tiga kali tinggi awalnya! Untuk rasio pantulan makin besar (mendekati 1), totalnya meledak; itulah mengapa demo simulator di slide ini menyediakan slider r untuk kamu eksplorasi sendiri.'}
+  ]
+}
+};
+
+var stState = {};
+function stInit(cont, key){ stState[cont] = {key:key, shown:0}; stRender(cont); }
+function stRender(cont){
+  var ui = stState[cont], data = STEP_SETS[ui.key];
+  var box = document.getElementById(cont);
+  if(!box) return;
+  var html = '';
+  data.steps.forEach(function(s, i){
+    if(i >= ui.shown) return;
+    html += '<div class="step show"><span class="step-n">' + (i + 1) + '</span><div class="step-b">' +
+      '<div class="st">' + s.t + '</div>' +
+      (s.m ? '<div class="sm">' + s.m + '</div>' : '') +
+      (s.d ? '<div class="sd">' + s.d + '</div>' : '') +
+      '</div></div>';
+  });
+  if(ui.shown >= data.steps.length && data.v){
+    html += '<div class="verify show"><div class="exp-title">Verifikasi / Catatan</div>' + data.v + '</div>';
+  }
+  box.innerHTML = html;
+  var cnt = document.getElementById('cnt-' + cont);
+  if(cnt) cnt.textContent = ui.shown + ' / ' + data.steps.length + ' langkah';
+  var nb = document.getElementById('next-' + cont);
+  if(nb) nb.disabled = (ui.shown >= data.steps.length);
+}
+function nextStep(cont){
+  var ui = stState[cont], data = STEP_SETS[ui.key];
+  if(ui.shown < data.steps.length){ ui.shown++; stRender(cont); }
+}
+function resetStep(cont){ stState[cont].shown = 0; stRender(cont); }
+
+/* ================= SVG HELPERS ================= */
+function fmtN(v){
+  if(!isFinite(v)) return '&infin;';
+  var x = Math.round(v * 1000) / 1000;
+  var s = (Math.abs(x) < 1e-9) ? '0' : (Number.isInteger(x) ? String(x) : x.toFixed(3).replace(/0+$/, '').replace(/\.$/, ''));
+  var neg = s.charAt(0) === '-';
+  if(neg) s = s.slice(1);
+  var parts = s.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return (neg ? '&minus;' : '') + parts.join(',');
+}
+
+function barsSVG(vals, labels, opts){
+  opts = opts || {};
+  var w = opts.w || 660, h = opts.h || 240;
+  var padL = 26, padR = 30, padT = 30, padB = 40, gap = 12;
+  var n = vals.length, i, v;
+  var bw = (w - padL - padR - gap * (n - 1)) / n;
+  var hasNeg = false;
+  for(i = 0; i < n; i++){ if(vals[i] < 0) hasNeg = true; }
+  var target = (typeof opts.target === 'number') ? opts.target : null;
+  var maxAbs = 1e-9;
+  for(i = 0; i < n; i++){ maxAbs = Math.max(maxAbs, Math.abs(vals[i])); }
+  if(target !== null) maxAbs = Math.max(maxAbs, Math.abs(target));
+  maxAbs *= 1.10;
+  var plotH = h - padT - padB, base, scale;
+  if(hasNeg){ base = padT + plotH * 0.60; scale = Math.min(base - padT, h - padB - base) / maxAbs; }
+  else { base = h - padB; scale = (base - padT) / maxAbs; }
+  var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img">';
+  s += '<defs><linearGradient id="gbar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>';
+  if(target !== null){
+    var yT = base - target * scale;
+    s += '<line x1="' + padL + '" y1="' + yT.toFixed(1) + '" x2="' + (w - padR) + '" y2="' + yT.toFixed(1) + '" stroke="#d97706" stroke-width="2.2" stroke-dasharray="7 5"/>';
+    s += '<text x="' + (w - padR) + '" y="' + (yT - 7).toFixed(1) + '" font-size="12.5" font-weight="800" fill="#b45309" text-anchor="end">' + (opts.targetLabel || ('S\u221E = ' + fmtN(target))) + '</text>';
+  }
+  s += '<line x1="' + (padL - 8) + '" y1="' + base + '" x2="' + (w - padR + 8) + '" y2="' + base + '" stroke="#94a3b8" stroke-width="1.6"/>';
+  for(i = 0; i < n; i++){
+    v = vals[i];
+    var x = padL + i * (bw + gap);
+    var bh = Math.max(1.2, Math.abs(v) * scale);
+    var y = v >= 0 ? base - bh : base;
+    var fill = v < 0 ? '#f87171' : (opts.color || 'url(#gbar)');
+    s += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + bh.toFixed(1) + '" rx="5" fill="' + fill + '"/>';
+    var vy = v >= 0 ? (base - bh - 5) : (base + bh + 13);
+    s += '<text x="' + (x + bw / 2).toFixed(1) + '" y="' + vy.toFixed(1) + '" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">' + fmtN(v) + '</text>';
+    s += '<text x="' + (x + bw / 2).toFixed(1) + '" y="' + (h - padB + 16) + '" font-size="10.5" fill="#94a3b8" text-anchor="middle">' + (labels && labels[i] ? labels[i] : (i + 1)) + '</text>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function lineSVG(vals){
+  var w = 660, h = 250, padL = 46, padR = 26, padT = 28, padB = 42, n = vals.length, i;
+  var mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals);
+  if(mn === mx){ mx = mn + 1; }
+  var span = mx - mn;
+  var x0 = padL, x1 = w - padR, y0 = h - padB, y1 = padT;
+  function px(i){ return x0 + i * (x1 - x0) / (n - 1); }
+  function py(v){ return y0 - (v - mn) / span * (y0 - y1); }
+  var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img">';
+  for(i = 0; i <= 4; i++){
+    var gy = y1 + (y0 - y1) * i / 4, gv = mx - span * i / 4;
+    s += '<line x1="' + x0 + '" y1="' + gy.toFixed(1) + '" x2="' + x1 + '" y2="' + gy.toFixed(1) + '" stroke="#e2f3ec" stroke-width="1"/>';
+    s += '<text x="' + (x0 - 7) + '" y="' + (gy + 4).toFixed(1) + '" font-size="10.5" fill="#94a3b8" text-anchor="end">' + fmtN(gv) + '</text>';
+  }
+  var pts = '';
+  for(i = 0; i < n; i++){ pts += px(i).toFixed(1) + ',' + py(vals[i]).toFixed(1) + ' '; }
+  s += '<polyline points="' + pts.trim() + '" fill="none" stroke="#047857" stroke-width="3" stroke-linecap="round"/>';
+  for(i = 0; i < n; i++){
+    s += '<circle cx="' + px(i).toFixed(1) + '" cy="' + py(vals[i]).toFixed(1) + '" r="5.5" fill="#10b981" stroke="#fff" stroke-width="2"/>';
+    s += '<text x="' + px(i).toFixed(1) + '" y="' + (py(vals[i]) - 11).toFixed(1) + '" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">' + fmtN(vals[i]) + '</text>';
+    s += '<text x="' + px(i).toFixed(1) + '" y="' + (h - padB + 18) + '" font-size="10.5" fill="#94a3b8" text-anchor="middle">n=' + (i + 1) + '</text>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+function bounceSVG(h0, r){
+  var w = 660, h = 260, padL = 34, padR = 34, padT = 30, padB = 46;
+  var n = 6, i;
+  var peaks = [h0];
+  for(i = 1; i < n; i++) peaks.push(h0 * Math.pow(r, i));
+  var mx = h0 * 1.12;
+  var x0 = padL, x1 = w - padR, y0 = h - padB, y1 = padT;
+  function px(k){ return x0 + k * (x1 - x0) / (2 * (n - 1)); }
+  function py(v){ return y0 - v / mx * (y0 - y1); }
+  var pts = '';
+  for(i = 0; i < n; i++){
+    pts += px(2 * i).toFixed(1) + ',' + py(peaks[i]).toFixed(1) + ' ';
+    if(i < n - 1) pts += px(2 * i + 1).toFixed(1) + ',' + y0 + ' ';
+  }
+  var s = '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img">';
+  s += '<line x1="' + (x0 - 12) + '" y1="' + y0 + '" x2="' + (x1 + 12) + '" y2="' + y0 + '" stroke="#94a3b8" stroke-width="1.8"/>';
+  s += '<polyline points="' + pts.trim() + '" fill="none" stroke="#047857" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+  for(i = 0; i < n; i++){
+    s += '<circle cx="' + px(2 * i).toFixed(1) + '" cy="' + py(peaks[i]).toFixed(1) + '" r="4.5" fill="#d97706" stroke="#fff" stroke-width="1.6"/>';
+    var lab = (i === 0 ? 'jatuh' : 'P' + i) + ' ' + fmtN(peaks[i]) + ' m';
+    s += '<text x="' + px(2 * i).toFixed(1) + '" y="' + (py(peaks[i]) - 9).toFixed(1) + '" font-size="10.5" font-weight="700" fill="#b45309" text-anchor="middle">' + lab + '</text>';
+  }
+  s += '</svg>';
+  return s;
+}
+
+/* ================= DEMO 1: PENJELAJAH POLA ================= */
+var FIB = [1, 1, 2, 3, 5, 8, 13, 21, 34];
+var PATTERNS = [
+  {n:'Bilangan Ganjil', rule:'Selalu ditambah 2, dimulai dari 1 &mdash; selisih tetap b = 2.', f:'U<sub>n</sub> = 2n &minus; 1', gen:function(k){ return 2 * k - 1; }},
+  {n:'Bilangan Genap', rule:'Selalu ditambah 2, dimulai dari 2 &mdash; selisih tetap b = 2.', f:'U<sub>n</sub> = 2n', gen:function(k){ return 2 * k; }},
+  {n:'Bilangan Kuadrat', rule:'Selisih antarsuku 3, 5, 7, 9, &hellip; &mdash; naik 2 setiap langkah.', f:'U<sub>n</sub> = n<sup>2</sup>', gen:function(k){ return k * k; }},
+  {n:'Bilangan Segitiga', rule:'Selisih antarsuku 2, 3, 4, 5, &hellip; &mdash; naik 1 setiap langkah.', f:'U<sub>n</sub> = n(n+1)/2', gen:function(k){ return k * (k + 1) / 2; }},
+  {n:'Fibonacci', rule:'Setiap suku = jumlah dua suku sebelumnya.', f:'U<sub>n</sub> = U<sub>n&minus;1</sub> + U<sub>n&minus;2</sub>', gen:function(k){ return FIB[k - 1]; }},
+  {n:'Barisan Aritmatika', rule:'Beda tetap b = 4, suku pertama a = 3.', f:'U<sub>n</sub> = 4n &minus; 1', gen:function(k){ return 4 * k - 1; }},
+  {n:'Barisan Geometri', rule:'Rasio tetap r = 2, suku pertama a = 2.', f:'U<sub>n</sub> = 2<sup>n&minus;1</sup>', gen:function(k){ return Math.pow(2, k - 1); }}
+];
+var polIdx = 0, polShown = false;
+function polShow(i){
+  polIdx = i; polShown = false;
+  $all('[data-pol]').forEach(function(b){ b.classList.toggle('on', +b.getAttribute('data-pol') === i); });
+  var p = PATTERNS[i], html = '';
+  for(var k = 1; k <= 8; k++){
+    html += '<span class="tchip"><small>U<sub>' + k + '</sub></small><b>' + fmtN(p.gen(k)) + '</b></span>';
+  }
+  var chips = document.getElementById('polChips');
+  if(chips) chips.innerHTML = html;
+  var info = document.getElementById('polInfo');
+  if(info) info.innerHTML = '<b>' + p.n + '</b> &mdash; ' + p.rule + '<br>Rumus: <b>' + p.f + '</b>';
+}
+function polNext(){
+  if(polShown) return;
+  polShown = true;
+  var p = PATTERNS[polIdx], u9 = p.gen(9);
+  var chips = document.getElementById('polChips');
+  if(chips) chips.innerHTML += '<span class="tchip hl"><small>U<sub>9</sub></small><b>' + fmtN(u9) + '</b></span>';
+  var info = document.getElementById('polInfo');
+  if(info) info.innerHTML += '<br>Suku ke-9: <b>' + fmtN(u9) + '</b> &mdash; cocok dengan tebakanmu?';
+}
+
+/* ================= LAB 2: BARISAN ARITMATIKA ================= */
+function drawLabA(){
+  var ea = document.getElementById('la'), eb = document.getElementById('lb');
+  if(!ea || !eb) return;
+  var a = +ea.value, b = +eb.value;
+  var la = document.getElementById('lav'), lb = document.getElementById('lbv');
+  if(la) la.textContent = a;
+  if(lb) lb.textContent = b;
+  var vals = [], k;
+  for(k = 1; k <= 10; k++) vals.push(a + (k - 1) * b);
+  var chart = document.getElementById('chartA');
+  if(chart) chart.innerHTML = barsSVG(vals, null, {});
+  var note = document.getElementById('noteA');
+  if(note){
+    var arah = b > 0 ? 'barisan <b>menaik</b> (batang naik teratur)' : (b < 0 ? 'barisan <b>menurun</b> (batang turun, bisa menjadi negatif)' : 'barisan <b>konstan</b> (semua batang sama)');
+    note.innerHTML = 'U<sub>n</sub> = ' + a + ' + (n &minus; 1) &times; (' + b + ') = <b>' + b + 'n + ' + (a - b) + '</b><br>Interpretasi: ' + arah + '. Selisih setiap dua batang berurutan selalu ' + b + ' &mdash; itulah beda (b).';
+  }
+}
+
+/* ================= LAB 3: BARISAN GEOMETRI ================= */
+function drawLabG(){
+  var ea = document.getElementById('lga'), er = document.getElementById('lgr');
+  if(!ea || !er) return;
+  var a = +ea.value, r = parseFloat(er.value);
+  var va = document.getElementById('lgav'), vr = document.getElementById('lgrv');
+  if(va) va.textContent = a;
+  if(vr) vr.textContent = fmtN(r);
+  var vals = [], k;
+  for(k = 1; k <= 8; k++) vals.push(a * Math.pow(r, k - 1));
+  var chart = document.getElementById('chartG');
+  if(chart) chart.innerHTML = barsSVG(vals, null, {});
+  var note = document.getElementById('noteG');
+  if(note){
+    var desk;
+    if(r === 0) desk = 'r = 0: semua suku setelah yang pertama menjadi 0 &mdash; barisan mati total.';
+    else if(r === 1) desk = 'r = 1: semua suku sama dengan a = ' + a + ' &mdash; barisan konstan (ingat kasus khusus ini di deret!).';
+    else if(r > 1) desk = 'r = ' + fmtN(r) + ' &gt; 1: barisan <b>membesar cepat</b> &mdash; dari ' + a + ' menjadi ' + fmtN(vals[7]) + ' hanya dalam 8 suku. Inilah kekuatan pertumbuhan eksponensial.';
+    else if(r > 0) desk = '0 &lt; r &lt; 1: barisan <b>merunduk</b> mendekati 0 (U<sub>8</sub> = ' + fmtN(vals[7]) + ') tanpa pernah mencapainya &mdash; bahan baku deret tak hingga.';
+    else desk = 'r = ' + fmtN(r) + ' &lt; 0: suku-suku <b>berselang-seling tanda</b> (batang merah = negatif), nilai mutlaknya ' + (Math.abs(r) > 1 ? 'membesar' : 'mengecil') + '.';
+    note.innerHTML = 'U<sub>n</sub> = ' + a + ' &times; (' + fmtN(r) + ')<sup>n&minus;1</sup><br>Interpretasi: ' + desk;
+  }
+}
+
+/* ================= LAB 4: RUMUS SUKU KE-N ================= */
+function drawLabR(){
+  var ea = document.getElementById('lra'), eb = document.getElementById('lrb');
+  if(!ea || !eb) return;
+  var a = +ea.value, b = +eb.value;
+  var va = document.getElementById('lrav'), vb = document.getElementById('lrbv');
+  if(va) va.textContent = a;
+  if(vb) vb.textContent = b;
+  var vals = [], k;
+  for(k = 1; k <= 8; k++) vals.push(a + (k - 1) * b);
+  var f = document.getElementById('formulaR');
+  if(f) f.innerHTML = 'U<sub>n</sub> = ' + a + ' + (n &minus; 1) &times; (' + b + ') = <span class="big">' + b + 'n + ' + (a - b) + '</span>';
+  var chips = document.getElementById('chipsR');
+  if(chips){
+    var html = '';
+    for(k = 1; k <= 8; k++) html += '<span class="tchip"><small>U<sub>' + k + '</sub></small><b>' + fmtN(vals[k - 1]) + '</b></span>';
+    chips.innerHTML = html;
+  }
+  var chart = document.getElementById('chartR');
+  if(chart) chart.innerHTML = lineSVG(vals);
+  var note = document.getElementById('noteR');
+  if(note) note.innerHTML = 'Semua titik (n, U<sub>n</sub>) <b>selalu segaris</b>, apa pun a dan b: gradien garis = b (beda), dan garis itu memotong "sumbu vertikal" di a &minus; b = ' + (a - b) + '. Inilah makna kalimat: barisan aritmatika adalah <b>fungsi linear dari n</b>.';
+}
+
+/* ================= DEMO 5: GAUSS ================= */
+function drawGauss(){
+  var ea = document.getElementById('dga'), eb = document.getElementById('dgb'), en = document.getElementById('dgn');
+  if(!ea || !eb || !en) return;
+  var a = +ea.value, b = +eb.value, n = +en.value, k;
+  var va = document.getElementById('dgav'), vb = document.getElementById('dgbv'), vn = document.getElementById('dgnv');
+  if(va) va.textContent = a;
+  if(vb) vb.textContent = b;
+  if(vn) vn.textContent = n;
+  var vals = [], un = a + (n - 1) * b;
+  for(k = 1; k <= n; k++) vals.push(a + (k - 1) * b);
+  var chips = document.getElementById('gaussChips');
+  if(chips){
+    var html = '';
+    for(k = 1; k <= n; k++) html += '<span class="tchip"><small>U<sub>' + k + '</sub></small><b>' + fmtN(vals[k - 1]) + '</b></span>';
+    chips.innerHTML = html;
+  }
+  var pairs = document.getElementById('gaussPairs');
+  if(pairs){
+    var npas = Math.floor(n / 2);
+    var teks = 'Pasangan Gauss: setiap pasangan ujung bernilai sama, U<sub>1</sub> + U<sub>' + n + '</sub> = ' + a + ' + ' + fmtN(un) + ' = <b>' + fmtN(a + un) + '</b>. Ada ' + npas + ' pasangan';
+    if(n % 2 === 1) teks += ' + 1 suku tengah U<sub>' + ((n + 1) / 2) + '</sub> = ' + fmtN(vals[(n - 1) / 2]) + ' yang berdiri sendiri';
+    teks += '. Maka S<sub>' + n + '</sub> = ' + n + '/2 &times; (a + U<sub>n</sub>) = ' + n + '/2 &times; ' + fmtN(a + un) + ' = <b>' + fmtN(n * (a + un) / 2) + '</b>.';
+    pairs.innerHTML = teks;
+  }
+  var chart = document.getElementById('chartGa');
+  if(chart){
+    var cum = [], tot = 0, labs = [];
+    for(k = 0; k < n; k++){ tot += vals[k]; cum.push(tot); labs.push('S' + (k + 1)); }
+    chart.innerHTML = barsSVG(cum, labs, {w: 660, h: 230});
+  }
+}
+
+/* ================= DEMO 6: KONVERGENSI ================= */
+function drawKonv(){
+  var ea = document.getElementById('dka'), er = document.getElementById('dkr');
+  if(!ea || !er) return;
+  var a = +ea.value, r = (+er.value) / 10, k;
+  var va = document.getElementById('dkav'), vr = document.getElementById('dkrv');
+  if(va) va.textContent = a;
+  if(vr) vr.textContent = fmtN(r);
+  var S = [], tot = 0, term = a;
+  for(k = 1; k <= 10; k++){ tot += term; S.push(tot); term *= r; }
+  var sinf = a / (1 - r);
+  var chart = document.getElementById('chartK');
+  if(chart) chart.innerHTML = barsSVG(S, null, {target: sinf, targetLabel: 'S\u221E = ' + fmtN(sinf)});
+  var note = document.getElementById('noteK');
+  if(note){
+    var rel = (sinf - S[9]) / sinf;
+    var fase = rel < 0.05 ? 'sudah sangat dekat dengan' : (rel < 0.25 ? 'mulai merayap mendekati' : 'masih merayap perlahan menuju');
+    note.innerHTML = 'r = ' + fmtN(r) + ', a = ' + a + '. Jumlah parsial S<sub>10</sub> = ' + fmtN(S[9]) + ' ' + fase + ' S<sub>&infin;</sub> = a/(1 &minus; r) = <b>' + fmtN(sinf) + '</b>; selisihnya ' + fmtN(sinf - S[9]) + ' (tepatnya a&middot;r<sup>10</sup>). Makin kecil r, makin cepat batang "membentur" garis target &mdash; itulah konvergensi.';
+  }
+}
+
+/* ================= DEMO 7: BOLA MEMANTUL ================= */
+function drawBounce(){
+  var eh = document.getElementById('bh'), er = document.getElementById('br');
+  if(!eh || !er) return;
+  var h0 = +eh.value, r = (+er.value) / 100, k;
+  var vh = document.getElementById('bhv'), vr = document.getElementById('brv');
+  if(vh) vh.textContent = h0;
+  if(vr) vr.textContent = fmtN(r);
+  var p5 = h0 * Math.pow(r, 5);
+  var chart = document.getElementById('chartB');
+  if(chart) chart.innerHTML = bounceSVG(h0, r);
+  var note = document.getElementById('noteB');
+  if(note){
+    var turun = h0 / (1 - r), naik = h0 * r / (1 - r);
+    note.innerHTML = 'r = ' + fmtN(r) + ', h<sub>0</sub> = ' + h0 + ' m.<br>Lintasan <b>turun</b>: h<sub>0</sub>/(1 &minus; r) = <b>' + fmtN(turun) + ' m</b> &middot; Lintasan <b>naik</b>: h<sub>0</sub>r/(1 &minus; r) = <b>' + fmtN(naik) + ' m</b> &middot; <b>Total = ' + fmtN(turun + naik) + ' m</b>. Pantulan ke-5 tingginya ' + fmtN(p5) + ' m. Perhatikan: makin besar r (makin "peringinan" pantulannya), total lintasan makin jauh melebihi tinggi awal &mdash; walaupun bola tampak "hampir berhenti".';
+  }
+}
+
+/* ================= RENDER SOAL ================= */
+function renderQ(q){
+  var art = document.createElement('article');
+  art.className = 'qcard';
+  art.id = 'qc-' + q.id;
+
+  var meta = '<div class="qmeta"><span class="qnum">Soal ' + q.no + '</span>' +
+    '<span class="qtype t-' + q.type + '">' + TYPE_LABEL[q.type] + '</span>' +
+    (q.type === 'pgk' ? '<span class="qhint">centang semua yang benar</span>' : '') +
+    '</div>';
+
+  var input = (q.type === 'pgk') ? 'checkbox' : 'radio';
+  var optsHtml = '<div class="opts' + (q.type === 'bs' ? ' bs' : '') + '" data-role="opts">';
+  q.opts.forEach(function(o, i){
+    var key = (q.type === 'bs') ? '' : '<span class="okey">' + LETTERS[i] + '</span>';
+    optsHtml += '<label class="opt"><input type="' + input + '" name="' + q.id + '" value="' + i + '">' + key + '<span>' + o + '</span></label>';
+  });
+  optsHtml += '</div>';
+
+  art.innerHTML = meta +
+    '<div class="qtext">' + q.text + '</div>' +
+    optsHtml +
+    '<div class="qactions"><button class="btn-check" data-check="' + q.id + '">Cek Jawaban</button></div>' +
+    '<div class="fb" data-role="fb"></div>' +
+    '<div class="pembahasan" data-role="exp"><div class="exp-title">Pembahasan</div>' + q.exp + '</div>';
+  return art;
+}
+
+function buildAll(){
+  QUESTIONS.forEach(function(q){
+    var box = document.getElementById(q.box);
+    if(box) box.appendChild(renderQ(q));
+  });
+}
+
+/* ================= CEK JAWABAN ================= */
+function paintResult(card, q, correct, sel){
+  card.classList.add(correct ? 'ok' : 'bad');
+  card.querySelectorAll('.opt').forEach(function(el, i){
+    var isC = q.ans.indexOf(i) !== -1;
+    var isSel = sel.indexOf(i) !== -1;
+    el.classList.remove('sel');
+    el.classList.toggle('correct', isC);
+    el.classList.toggle('wrong', isSel && !isC);
+    var inp = el.querySelector('input');
+    if(inp) inp.disabled = true;
+  });
+  var optsBox = card.querySelector('[data-role="opts"]');
+  if(optsBox) optsBox.classList.add('locked');
+  var fb = card.querySelector('[data-role="fb"]');
+  fb.className = 'fb show ' + (correct ? 'ok' : 'bad');
+  fb.textContent = correct ? 'Tepat sekali! Jawabanmu benar.' : 'Belum tepat. Jawaban yang benar ditandai warna hijau.';
+  card.querySelector('[data-role="exp"]').classList.add('show');
+  var b = card.querySelector('.btn-check');
+  if(b) b.disabled = true;
+}
+
+function check(qid){
+  var q = QMAP[qid];
+  var card = document.getElementById('qc-' + qid);
+  if(!q || !card || state.answers[qid] && state.answers[qid].done) return;
+  var fb = card.querySelector('[data-role="fb"]');
+  var sel = $all('#qc-' + qid + ' input:checked').map(function(i){ return +i.value; });
+  if(sel.length === 0){
+    fb.className = 'fb show warn';
+    fb.textContent = 'Pilih jawaban terlebih dahulu, lalu klik Cek Jawaban.';
+    return;
+  }
+  var correct = sameSet(sel, q.ans);
+  paintResult(card, q, correct, sel);
+  state.answers[qid] = { sel: sel, done: true, correct: correct };
+  save();
+  updateChips();
+  if(Object.keys(state.answers).length === QUESTIONS.length){
+    toast('Semua ' + QUESTIONS.length + ' soal selesai! Buka slide "Hasil Pengerjaan Siswa" untuk melihat skormu.');
+  }
+}
+
+function restore(){
+  Object.keys(state.answers).forEach(function(qid){
+    var a = state.answers[qid];
+    var q = QMAP[qid];
+    if(!q || !a || !a.done) return;
+    var card = document.getElementById('qc-' + qid);
+    if(!card) return;
+    a.sel.forEach(function(v){
+      var inp = card.querySelector('input[name="' + qid + '"][value="' + v + '"]');
+      if(inp) inp.checked = true;
+    });
+    paintResult(card, q, !!a.correct, a.sel);
+  });
+}
+
+function resetAll(){
+  if(!confirm('Hapus semua jawaban dan ulangi latihan dari awal?')) return;
+  state.answers = {};
+  save();
+  QUESTIONS.forEach(function(q){
+    var card = document.getElementById('qc-' + q.id);
+    if(!card) return;
+    card.classList.remove('ok','bad');
+    card.querySelectorAll('input').forEach(function(i){ i.checked = false; i.disabled = false; });
+    card.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong','sel'); });
+    var ob = card.querySelector('[data-role="opts"]');
+    if(ob) ob.classList.remove('locked');
+    var fb = card.querySelector('[data-role="fb"]');
+    fb.className = 'fb'; fb.textContent = '';
+    card.querySelector('[data-role="exp"]').classList.remove('show');
+    var b = card.querySelector('.btn-check');
+    if(b) b.disabled = false;
+  });
+  updateChips();
+  renderResults();
+  toast('Semua latihan direset. Selamat mencoba lagi!');
+}
+
+/* ================= CHIP PROGRES & HASIL ================= */
+function updateChips(){
+  $all('[data-topic]').forEach(function(ch){
+    var t = ch.getAttribute('data-topic');
+    var qs = QUESTIONS.filter(function(q){ return q.topic === t; });
+    var done = qs.filter(function(q){
+      return state.answers[q.id] && state.answers[q.id].done;
+    }).length;
+    ch.textContent = done + '/' + qs.length + ' terjawab';
+  });
+}
+
+function renderResults(){
+  var nameEl = $('#studentName');
+  if(nameEl) nameEl.value = state.name;
+  var tbody = $('#rtbody');
+  if(!tbody) return;
+  tbody.innerHTML = '';
+  var allCorrect = 0;
+  TOPICS.forEach(function(t){
+    var qs = QUESTIONS.filter(function(q){ return q.topic === t.id; });
+    var done = qs.filter(function(q){ return state.answers[q.id] && state.answers[q.id].done; }).length;
+    var correct = qs.filter(function(q){ return state.answers[q.id] && state.answers[q.id].correct; }).length;
+    allCorrect += correct;
+    var pct = Math.round(correct / qs.length * 100);
+    var badge;
+    if(done === 0) badge = '<span class="badge none">Belum dikerjakan</span>';
+    else if(done < qs.length) badge = '<span class="badge part">' + (qs.length - done) + ' soal belum</span>';
+    else badge = '<span class="badge done">Selesai</span>';
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><b>' + t.label + '</b><br><span class="badge focus">' + t.tag + '</span></td>' +
+      '<td>' + correct + ' / ' + qs.length + '</td>' +
+      '<td><span class="rbar"><i style="width:' + pct + '%"></i></span><span class="rpct">' + pct + '%</span></td>' +
+      '<td>' + badge + '</td>';
+    tbody.appendChild(tr);
+  });
+
+  var answered = Object.keys(state.answers).filter(function(k){
+    return state.answers[k] && state.answers[k].done;
+  }).length;
+  var pctAll = Math.round(allCorrect / QUESTIONS.length * 100);
+  var scorePct = $('#scorePct'), predEl = $('#predikat'), subEl = $('#scoreSub');
+
+  if(answered === 0){
+    scorePct.textContent = '\u2014';
+    predEl.className = 'badge none';
+    predEl.textContent = 'Belum ada jawaban';
+    subEl.textContent = '0 dari ' + QUESTIONS.length + ' soal benar';
+    return;
+  }
+  scorePct.textContent = pctAll + '%';
+  subEl.textContent = allCorrect + ' dari ' + QUESTIONS.length + ' soal benar' +
+    (answered < QUESTIONS.length ? ' (' + (QUESTIONS.length - answered) + ' belum dijawab)' : '');
+  var pred;
+  if(pctAll >= 85) pred = ['Sangat Baik', 'done'];
+  else if(pctAll >= 70) pred = ['Baik', 'done'];
+  else if(pctAll >= 55) pred = ['Cukup', 'part'];
+  else pred = ['Perlu Latihan Lagi', 'part'];
+  predEl.className = 'badge ' + pred[1];
+  predEl.textContent = 'Predikat: ' + pred[0];
+  if(answered === QUESTIONS.length && pctAll >= 70) confetti();
+}
+
+function confetti(){
+  var colors = ['#047857','#10b981','#d97706','#f59e0b','#0d9488','#fbbf24'];
+  for(var i = 0; i < 70; i++){
+    var d = document.createElement('div');
+    d.className = 'confetti';
+    d.style.left = Math.random() * 100 + 'vw';
+    d.style.background = colors[i % colors.length];
+    d.style.animationDelay = (Math.random() * 1.2) + 's';
+    d.style.animationDuration = (2.6 + Math.random() * 1.8) + 's';
+    document.body.appendChild(d);
+    (function(el){ setTimeout(function(){ el.remove(); }, 5400); })(d);
+  }
+}
+
+/* ================= NAVIGASI SLIDE ================= */
+var slides = $all('.slide');
+var cur = 0;
+
+function updateChrome(){
+  $('#progress').style.width = ((cur + 1) / slides.length * 100) + '%';
+  $('#counter').textContent = (cur + 1) + ' / ' + slides.length;
+  $all('.dot').forEach(function(d, i){ d.classList.toggle('on', i === cur); });
+  $all('#menuList .menu-item').forEach(function(m, i){ m.classList.toggle('cur', i === cur); });
+  var p = $('#btnPrev'), n = $('#btnNext');
+  if(p) p.disabled = (cur === 0);
+  if(n) n.disabled = (cur === slides.length - 1);
+}
+
+function goTo(i){
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  if(i === cur){ updateChrome(); return; }
+  slides[cur].classList.remove('active');
+  cur = i;
+  slides[cur].classList.add('active');
+  var body = slides[cur].querySelector('.slide-body');
+  if(body) body.scrollTop = 0;
+  updateChrome();
+  if(slides[cur].getAttribute('data-key') === 'hasil') renderResults();
+}
+
+function buildDots(){
+  var wrap = $('#dots');
+  slides.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.className = 'dot';
+    b.setAttribute('data-i', i);
+    b.setAttribute('aria-label', 'Slide ' + (i + 1));
+    wrap.appendChild(b);
+  });
+}
+
+function buildMenu(){
+  var ml = $('#menuList');
+  slides.forEach(function(s, i){
+    var d = document.createElement('div');
+    d.className = 'menu-item';
+    d.setAttribute('data-goto', i);
+    d.innerHTML = '<span class="mi-num">' + String(i + 1).padStart(2, '0') + '</span><span>' +
+      (s.getAttribute('data-title') || 'Slide ' + (i + 1)) + '</span>';
+    ml.appendChild(d);
+  });
+}
+
+/* ================= MENU, TOAST, LAINNYA ================= */
+var menuEl = document.getElementById('menu');
+function openMenu(){ menuEl.classList.add('open'); }
+function closeMenu(){ menuEl.classList.remove('open'); }
+
+var toastTimer = null;
+function toast(msg){
+  var t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 3400);
+}
+
+function toggleFS(){
+  if(document.fullscreenElement){
+    if(document.exitFullscreen) document.exitFullscreen();
+  } else if(document.documentElement.requestFullscreen){
+    document.documentElement.requestFullscreen();
+  }
+}
+
+/* ================= EVENT DELEGASI ================= */
+document.addEventListener('click', function(e){
+  var el = e.target;
+
+  var chk = el.closest('[data-check]');
+  if(chk){ check(chk.getAttribute('data-check')); return; }
+
+  var pb = el.closest('[data-pol]');
+  if(pb){ polShow(+pb.getAttribute('data-pol')); return; }
+
+  var pn = el.closest('[data-polnext]');
+  if(pn){ polNext(); return; }
+
+  var sn = el.closest('[data-stnext]');
+  if(sn){ nextStep(sn.getAttribute('data-stnext')); return; }
+
+  var sr = el.closest('[data-streset]');
+  if(sr){ resetStep(sr.getAttribute('data-streset')); return; }
+
+  var act = el.closest('[data-act]');
+  if(act){
+    var a = act.getAttribute('data-act');
+    if(a === 'reset') resetAll();
+    else if(a === 'refresh') renderResults();
+    return;
+  }
+
+  var go = el.closest('[data-goto]');
+  if(go){ closeMenu(); goTo(+go.getAttribute('data-goto')); return; }
+
+  if(el.closest('[data-menu]')){ openMenu(); return; }
+  if(el.closest('[data-menu-close]')){ closeMenu(); return; }
+  if(el.classList.contains('menu')){ closeMenu(); return; }
+
+  if(el.closest('[data-fullscreen]')){ toggleFS(); return; }
+
+  var nav = el.closest('[data-nav]');
+  if(nav){
+    if(nav.getAttribute('data-nav') === 'next') goTo(cur + 1);
+    else goTo(cur - 1);
+    return;
+  }
+
+  var dot = el.closest('.dot');
+  if(dot){ goTo(+dot.getAttribute('data-i')); return; }
+});
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){ closeMenu(); return; }
+  var tag = document.activeElement ? document.activeElement.tagName : '';
+  if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  if(e.key === 'ArrowRight' || e.key === 'PageDown') goTo(cur + 1);
+  else if(e.key === 'ArrowLeft' || e.key === 'PageUp') goTo(cur - 1);
+  else if(e.key === 'Home') goTo(0);
+  else if(e.key === 'End') goTo(slides.length - 1);
+});
+
+var tx = 0, ty = 0;
+document.addEventListener('touchstart', function(e){
+  tx = e.touches[0].clientX;
+  ty = e.touches[0].clientY;
+}, {passive:true});
+document.addEventListener('touchend', function(e){
+  var dx = e.changedTouches[0].clientX - tx;
+  var dy = e.changedTouches[0].clientY - ty;
+  if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4){
+    if(dx < 0) goTo(cur + 1); else goTo(cur - 1);
+  }
+}, {passive:true});
+
+/* ================= INISIALISASI ================= */
+function bind(id, fn){
+  var el = document.getElementById(id);
+  if(el) el.addEventListener('input', fn);
+}
+
+function init(){
+  load();
+  buildAll();
+  restore();
+  stInit('st-mpi1', 'mpi1');
+  stInit('st-mpi2', 'mpi2');
+  stInit('st-hot1', 'hot1');
+  stInit('st-hot2', 'hot2');
+  polShow(0);
+  drawLabA();
+  drawLabG();
+  drawLabR();
+  drawGauss();
+  drawKonv();
+  drawBounce();
+  buildDots();
+  buildMenu();
+  updateChips();
+  updateChrome();
+  ['la','lb'].forEach(function(id){ bind(id, drawLabA); });
+  ['lga','lgr'].forEach(function(id){ bind(id, drawLabG); });
+  ['lra','lrb'].forEach(function(id){ bind(id, drawLabR); });
+  ['dga','dgb','dgn'].forEach(function(id){ bind(id, drawGauss); });
+  ['dka','dkr'].forEach(function(id){ bind(id, drawKonv); });
+  ['bh','br'].forEach(function(id){ bind(id, drawBounce); });
+  var nameEl = $('#studentName');
+  if(nameEl) nameEl.addEventListener('input', function(e){
+    state.name = e.target.value;
+    save();
+  });
+}
+init();
+})();
+</script>
+</body>
+</html>
