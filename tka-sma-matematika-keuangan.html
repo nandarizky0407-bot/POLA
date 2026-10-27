@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matematika Keuangan — TKA SMA | Anuitas · PV &amp; FV · Bunga Tunggal · Bunga Majemuk</title>
+<style>
+:root{
+  --bg:#eef2f7; --card:#ffffff; --ink:#0f172a; --muted:#5b6b7f;
+  --blue:#2563eb; --rose:#e11d48; --amber:#d97706; --green:#059669;
+  --purple:#7c3aed; --slate:#475569; --line:#e2e8f0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+sup,sub{font-size:72%}
+body{font-family:'Segoe UI',Tahoma,system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+
+/* ===== Topbar & progress ===== */
+#topbar{position:fixed;top:0;left:0;right:0;background:rgba(11,18,32,.96);color:#fff;z-index:50;box-shadow:0 2px 12px rgba(2,6,23,.35)}
+.tb-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:9px 18px}
+.logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#f59e0b,#f97316);display:flex;align-items:center;justify-content:center;font-weight:800;color:#1f1300;font-size:13px;flex:none}
+.brand{font-weight:700;letter-spacing:.3px;font-size:15px;white-space:nowrap}
+.tag{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);padding:2px 10px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:1px;white-space:nowrap}
+.pwrap{margin-left:auto;flex:1;max-width:260px;height:8px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden}
+#pbar{height:100%;width:0;background:linear-gradient(90deg,#38bdf8,#34d399);border-radius:99px;transition:width .3s}
+
+/* ===== Bottom nav ===== */
+#navbar{position:fixed;bottom:0;left:0;right:0;background:rgba(11,18,32,.96);z-index:50;border-top:1px solid rgba(255,255,255,.08)}
+.nb-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:9px 18px}
+.nb-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;padding:8px 15px;border-radius:10px;cursor:pointer;font-weight:600;font-size:13.5px;font-family:inherit;white-space:nowrap}
+.nb-btn:hover{background:rgba(255,255,255,.24)}
+#counter{color:#cbd5e1;font-size:13px;min-width:64px;text-align:center;font-weight:600}
+.spacer{flex:1}
+
+/* ===== Deck & slide ===== */
+#deck{max-width:1000px;margin:0 auto;padding:78px 18px 90px}
+.slide{display:none;background:var(--card);border-radius:20px;padding:36px 42px;min-height:540px;box-shadow:0 10px 34px rgba(15,23,42,.09)}
+.slide.active{display:block;animation:fadein .4s ease}
+.slide:not(.active){display:none!important}
+.slide.active.cover{display:flex}
+.slide.active.divider{display:flex}
+@keyframes fadein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.acc-rose{--acc:#e11d48}.acc-blue{--acc:#2563eb}.acc-amber{--acc:#d97706}
+.acc-green{--acc:#059669}.acc-purple{--acc:#7c3aed}.acc-slate{--acc:#475569}
+
+h2{font-size:26px;letter-spacing:-.3px}
+h3{font-size:17px}
+.sub{color:var(--muted);margin:6px 0 18px;font-size:15px}
+.rule{width:64px;height:5px;border-radius:99px;background:var(--acc,var(--blue));margin:10px 0 20px}
+
+/* ===== Boxes ===== */
+.defbox{background:#f8fafc;border:1px solid var(--line);border-left:5px solid var(--acc,var(--blue));padding:15px 20px;border-radius:12px;margin:14px 0;font-size:15.5px}
+.formula{background:linear-gradient(135deg,#eff6ff,#eef2ff);border:1px solid #c7d2fe;border-radius:12px;padding:13px 18px;margin:10px 0;font-size:16.5px;font-weight:600;color:#1e3a8a;line-height:1.7}
+.formula small{display:block;font-weight:400;color:#475569;font-size:12.5px;margin-top:4px}
+.callout{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px 16px;margin:12px 0;font-size:14.5px}
+.note{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px 16px;margin:12px 0;font-size:14.5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0}
+.mini{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.mini h4{font-size:13px;color:var(--acc,var(--blue));margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px}
+.mini p{font-size:14px}
+.tbl{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.tbl th{background:#0f172a;color:#fff;padding:8px 10px;text-align:left;font-size:12.5px}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--line)}
+.tbl tr:nth-child(even) td{background:#f8fafc}
+.tbl tr.hi td{background:#fef9c3;font-weight:700}
+
+/* ===== Cover ===== */
+.slide.cover{background:linear-gradient(140deg,#0b1220 0%,#10254d 55%,#134e4a 100%);color:#fff;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.cover::after{content:'';position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(245,158,11,.28),transparent 65%)}
+.cover::before{content:'';position:absolute;left:-100px;bottom:-140px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,.2),transparent 65%)}
+.kicker{font-size:12.5px;letter-spacing:3px;font-weight:800;color:#fbbf24;margin-bottom:14px}
+.cover h1{font-size:50px;line-height:1.08;letter-spacing:-1px;margin-bottom:14px;position:relative;z-index:1}
+.cover .subtitle{font-size:16.5px;color:#cbd5e1;max-width:660px;margin-bottom:22px;position:relative;z-index:1}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600}
+.cta{background:linear-gradient(135deg,#f59e0b,#f97316);border:none;color:#1f1300;font-weight:800;font-size:16px;padding:13px 30px;border-radius:12px;cursor:pointer;font-family:inherit;box-shadow:0 8px 22px rgba(245,158,11,.4);transition:transform .15s;position:relative;z-index:1}
+.cta:hover{transform:translateY(-2px)}
+.hintline{margin-top:18px;font-size:12.5px;color:#94a3b8}
+
+/* ===== Menu ===== */
+.menugrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+.menucard{background:#f8fafc;border:1.5px solid var(--line);border-radius:16px;padding:18px 20px;cursor:pointer;transition:.18s}
+.menucard:hover{border-color:var(--acc);transform:translateY(-3px);box-shadow:0 10px 24px rgba(15,23,42,.1)}
+.mnum{font-size:11.5px;font-weight:800;letter-spacing:2px;color:var(--acc)}
+.menucard h3{margin:4px 0 6px;font-size:17.5px}
+.menucard p{font-size:13.5px;color:var(--muted)}
+.mtag{display:inline-block;margin-top:10px;background:var(--acc);color:#fff;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px}
+
+/* ===== Divider ===== */
+.slide.divider{background:linear-gradient(140deg,#0f172a,#1e293b);color:#fff;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.dnum{position:absolute;right:20px;bottom:-46px;font-size:190px;font-weight:900;color:rgba(255,255,255,.06);line-height:1}
+.dkicker{color:var(--acc);font-weight:800;letter-spacing:3px;font-size:13px;margin-bottom:10px}
+.divider h1{font-size:42px;margin-bottom:16px;letter-spacing:-.5px}
+.dlist{list-style:none}
+.dlist li{padding:7px 0 7px 28px;position:relative;color:#cbd5e1;font-size:15.5px}
+.dlist li::before{content:'\25B8';position:absolute;left:6px;color:var(--acc);font-weight:700}
+.slide:not(.divider):not(.cover) .dlist{color:var(--ink)}
+.slide:not(.divider):not(.cover) .dlist li{color:#334155}
+
+/* ===== Quiz ===== */
+.quiz-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.lvl{background:#ede9fe;color:#6d28d9;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;letter-spacing:.5px}
+.qcount{margin-left:auto;color:var(--muted);font-size:13.5px;font-weight:600}
+.qtext{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-size:15.5px;margin:12px 0 16px;line-height:1.65}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;font-size:14.5px;font-family:inherit;line-height:1.5;transition:.15s;color:var(--ink)}
+.opt:hover:not(.locked){border-color:#94a3b8;background:#f8fafc}
+.opt.selected{border-color:var(--blue);background:#eff6ff;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.opt.correct{border-color:#16a34a;background:#f0fdf4;box-shadow:0 0 0 3px rgba(22,163,74,.12)}
+.opt.wrong{border-color:#dc2626;background:#fef2f2;box-shadow:0 0 0 3px rgba(220,38,38,.1)}
+.opt.locked{cursor:default}
+.optletter{flex:none;width:26px;height:26px;border-radius:8px;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#334155;margin-top:1px}
+.opt.selected .optletter{background:var(--blue);color:#fff}
+.opt.correct .optletter{background:#16a34a;color:#fff}
+.opt.wrong .optletter{background:#dc2626;color:#fff}
+.expbox{border-radius:12px;padding:14px 18px;margin-top:14px;font-size:14.5px;line-height:1.65;display:none}
+.expbox.good{background:#f0fdf4;border:1px solid #86efac}
+.expbox.bad{background:#fef2f2;border:1px solid #fca5a5}
+.qctrl{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{border:none;border-radius:11px;padding:11px 22px;font-weight:700;font-size:14.5px;cursor:pointer;font-family:inherit}
+.btn.pri{background:var(--acc,var(--blue));color:#fff}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn.ghost{background:#eef2f7;color:#334155;border:1px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.qresult{text-align:center;padding:30px 10px}
+.qscore{font-size:62px;font-weight:900;color:var(--acc)}
+.qscore span{font-size:26px;color:var(--muted);font-weight:700}
+.qpct{color:var(--muted);margin:8px 0 18px;font-weight:700}
+
+/* ===== Kalkulator ===== */
+.calcbox{background:#f8fafc;border:1.5px dashed #cbd5e1;border-radius:16px;padding:18px 20px;margin:16px 0}
+.calcbox h3{font-size:15.5px;margin-bottom:12px;color:var(--acc,var(--blue))}
+.cgrid{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.cgrid label{display:flex;flex-direction:column;gap:5px;font-size:11.5px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.4px}
+.cgrid input,.cgrid select{border:1.5px solid #cbd5e1;border-radius:10px;padding:9px 12px;font-size:15px;width:132px;font-family:inherit;background:#fff;color:var(--ink)}
+.cgrid input[type=range]{width:150px;padding:0}
+.cgrid input:focus,.cgrid select:focus{outline:none;border-color:var(--acc,var(--blue))}
+.calcmajor{font-size:16px;margin:10px 0;background:#fff;border-radius:10px;padding:10px 14px;border:1px solid var(--line)}
+.hl{color:var(--green);font-weight:800}
+.twores{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+.rescard{border-radius:14px;padding:15px 18px}
+.rescard span{display:block;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#475569;margin-bottom:6px}
+.rescard b{font-size:21px;display:block;margin-bottom:6px}
+.rescard small{color:var(--muted);font-size:12.5px}
+.rescard.green{background:#f0fdf4;border:1px solid #86efac}
+.rescard.blue{background:#eff6ff;border:1px solid #93c5fd}
+
+/* ===== Grafik batang ===== */
+.chartwrap{display:flex;align-items:flex-end;gap:12px;height:220px;padding:10px 6px 0;border-bottom:2px solid #334155;overflow-x:auto;margin-top:8px}
+.bargroup{flex:1;min-width:44px;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}
+.bars{display:flex;gap:4px;align-items:flex-end;height:100%;width:100%;justify-content:center}
+.bar{width:15px;border-radius:6px 6px 0 0;transition:height .3s}
+.bar.s{background:#94a3b8}
+.bar.c{background:linear-gradient(180deg,#10b981,#059669)}
+.bargroup span{font-size:11.5px;color:var(--muted);padding-top:5px;font-weight:700}
+.legend{display:flex;gap:18px;margin-top:10px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.dot{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+
+/* ===== Diagram alur ===== */
+.flow{display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0;flex-wrap:wrap}
+.fbox{border-radius:14px;padding:15px 22px;text-align:center;font-weight:700;font-size:14.5px}
+.fbox small{display:block;font-weight:400;opacity:.75;font-size:12px;margin-top:4px}
+.farrow{font-size:12.5px;color:#475569;text-align:center;line-height:1.3}
+.farrow b{display:block;font-size:14.5px;color:var(--acc,var(--blue))}
+
+/* ===== Skor ===== */
+.scorebig{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;border-radius:18px;padding:20px 26px;margin:14px 0}
+.scorebig .big{font-size:50px;font-weight:900;color:#fbbf24;line-height:1}
+.scorebar{height:10px;background:#e2e8f0;border-radius:99px;overflow:hidden;display:inline-block}
+.scorebar i{display:block;height:100%;border-radius:99px}
+
+@media (max-width:760px){
+  .grid2,.grid3,.menugrid,.twores{grid-template-columns:1fr}
+  .slide{padding:24px 18px}
+  .cover h1{font-size:34px}
+  .divider h1{font-size:30px}
+  .brand span.tag{display:none}
+  .cgrid input,.cgrid select{width:120px}
+  .slide{min-height:auto}
+}
+</style>
+</head>
+<body>
+<header id="topbar"><div class="tb-in">
+  <div class="logo">Rp</div>
+  <div class="brand">Matematika Keuangan <span class="tag">TKA SMA</span></div>
+  <div class="pwrap"><div id="pbar"></div></div>
+</div></header>
+
+<div id="deck">
+
+<!-- 1. COVER -->
+<section class="slide cover" id="s-cover">
+  <p class="kicker">BANK MATERI TKA SMA &middot; INTERAKTIF &amp; MENDALAM</p>
+  <h1>Matematika<br>Keuangan</h1>
+  <p class="subtitle">Anuitas &middot; Nilai Sekarang &amp; Nilai Masa Depan &middot; Lama Waktu Menabung dengan Bunga Tunggal &middot; Aplikasi Barisan: Bunga Majemuk</p>
+  <div class="chips">
+    <span class="chip">4 Materi Inti</span>
+    <span class="chip">40 Soal HOTS</span>
+    <span class="chip">Kalkulator Interaktif</span>
+    <span class="chip">Pembahasan Lengkap</span>
+  </div>
+  <button class="cta" data-goto="s-menu">Mulai Belajar</button>
+  <p class="hintline">Tips: gunakan tombol panah &larr; &rarr; pada keyboard untuk berpindah halaman. Skor latihan tersimpan otomatis di perangkatmu.</p>
+</section>
+
+<!-- 2. MENU -->
+<section class="slide" id="s-menu">
+  <h2>Peta Materi</h2>
+  <p class="sub">Klik kartu untuk langsung menuju materi. Urutan alur belajar: anuitas &rarr; nilai uang &rarr; bunga tunggal &rarr; bunga majemuk.</p>
+  <div class="menugrid">
+    <div class="menucard acc-rose" data-goto="s-d1">
+      <span class="mnum">MATERI 01</span>
+      <h3>Anuitas</h3>
+      <p>Pelunasan pinjaman dengan pembayaran tetap: bunga dari sisa pinjaman, angsuran membesar, dan kalkulator anuitas interaktif.</p>
+      <span class="mtag">10 Soal HOTS</span>
+    </div>
+    <div class="menucard acc-blue" data-goto="s-d2">
+      <span class="mnum">MATERI 02</span>
+      <h3>Nilai Sekarang &amp; Nilai Masa Depan</h3>
+      <p>Time value of money: rumus FV &amp; PV untuk skema tunggal dan majemuk, plus kalkulator diskonto interaktif.</p>
+      <span class="mtag">10 Soal HOTS</span>
+    </div>
+    <div class="menucard acc-amber" data-goto="s-d3">
+      <span class="mnum">MATERI 03</span>
+      <h3>Lama Waktu Menabung (Bunga Tunggal)</h3>
+      <p>Menentukan lama menabung (n), suku bunga (i), dan modal awal (M) dari target keuangan &mdash; dengan kalkulator waktu.</p>
+      <span class="mtag">10 Soal HOTS</span>
+    </div>
+    <div class="menucard acc-green" data-goto="s-d4">
+      <span class="mnum">MATERI 04</span>
+      <h3>Aplikasi Barisan: Bunga Majemuk</h3>
+      <p>M<sub>n</sub> = M(1+i)<sup>n</sup>: koneksi barisan geometri, penyusutan aset, literasi pinjaman bunga berbunga, dan grafik interaktif.</p>
+      <span class="mtag">10 Soal HOTS</span>
+    </div>
+    <div class="menucard acc-purple" data-goto="s-score">
+      <span class="mnum">REKAP</span>
+      <h3>Nilai Kamu</h3>
+      <p>Rekapitulasi otomatis 40 soal HOTS dari 4 materi, lengkap dengan predikat &mdash; tersimpan otomatis di perangkatmu.</p>
+      <span class="mtag">Cek Progres</span>
+    </div>
+    <div class="menucard acc-slate" data-goto="s-summary">
+      <span class="mnum">PENUTUP</span>
+      <h3>Rangkuman &amp; Strategi HOTS</h3>
+      <p>Kumpulan rumus inti keempat materi plus 5 strategi berpikir untuk menaklukkan soal HOTS matematika keuangan.</p>
+      <span class="mtag">Baca Sebelum Ujian</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3. DIVIDER M1 -->
+<section class="slide divider acc-rose" id="s-d1">
+  <div class="dnum">01</div>
+  <p class="dkicker">MATERI 1</p>
+  <h1>Anuitas</h1>
+  <ul class="dlist">
+    <li>Konsep pelunasan pinjaman dengan pembayaran periodik tetap</li>
+    <li>Komponen anuitas: bunga (i<sub>n</sub>) dan angsuran pokok (a<sub>n</sub>)</li>
+    <li>Rumus anuitas, angsuran ke-n, dan sisa pinjaman</li>
+    <li>Kalkulator anuitas interaktif dengan tabel amortisasi</li>
+    <li>10 soal HOTS dengan pembahasan lengkap</li>
+  </ul>
+</section>
+
+<!-- 4. M1 KONSEP -->
+<section class="slide acc-rose" id="s-m1a">
+  <h2>Konsep Dasar Anuitas</h2>
+  <p class="sub">Metode pelunasan kredit yang paling umum dipakai bank &mdash; cicilan "sama tiap bulan" itu anuitas.</p>
+  <div class="rule"></div>
+  <div class="defbox"><b>Anuitas</b> adalah metode pelunasan pinjaman (kredit) dengan pembayaran periodik yang <b>sama besar setiap periode</b>. Setiap pembayaran &mdash; disebut <b>anuitas (A)</b> &mdash; terdiri atas dua komponen: <b>bunga</b> dan <b>angsuran pokok</b>.</div>
+  <div class="formula">A = a<sub>n</sub> + i<sub>n</sub><small>A = anuitas (pembayaran tetap) &middot; a<sub>n</sub> = angsuran ke-n &middot; i<sub>n</sub> = bunga ke-n</small></div>
+  <div class="grid2">
+    <div class="mini"><h4>Mengapa bunga mengecil?</h4><p>Bunga setiap periode dihitung dari <b>sisa pinjaman</b> (bukan pinjaman awal). Karena sisa pinjaman terus berkurang setiap kali dibayar, bunga yang dibebankan juga terus <b>mengecil</b>.</p></div>
+    <div class="mini"><h4>Mengapa angsuran membesar?</h4><p>Anuitas A tetap. Karena A = angsuran + bunga, maka a<sub>n</sub> = A &minus; i<sub>n</sub>: ketika bunga mengecil, porsi <b>angsuran pokok otomatis membesar</b> dengan rasio (1 + i).</p></div>
+  </div>
+  <table class="tbl">
+    <tr><th>Periode</th><th>Bunga (10% dari sisa)</th><th>Angsuran</th><th>Pembayaran (A)</th><th>Sisa Pinjaman</th></tr>
+    <tr><td>Pinjaman awal</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>Rp 1.000.000</td></tr>
+    <tr><td>1</td><td>Rp 100.000</td><td>Rp 150.000</td><td>Rp 250.000</td><td>Rp 850.000</td></tr>
+    <tr><td>2</td><td>Rp 85.000</td><td>Rp 165.000</td><td>Rp 250.000</td><td>Rp 685.000</td></tr>
+    <tr><td>3</td><td>Rp 68.500</td><td>Rp 181.500</td><td>Rp 250.000</td><td>Rp 503.500</td></tr>
+  </table>
+  <div class="callout"><b>Amati tabel!</b> Pinjaman Rp 1.000.000, bunga 10% per bulan, anuitas Rp 250.000. Bunga turun 100.000 &rarr; 85.000 &rarr; 68.500; angsuran naik 150.000 &rarr; 165.000 &rarr; 181.500; tetapi total pembayaran <b>selalu Rp 250.000</b>. Pola angsuran inilah barisan geometri dengan rasio 1,1 (dibahas dalam Materi 4!).</div>
+</section>
+
+<!-- 5. M1 RUMUS + KALKULATOR -->
+<section class="slide acc-rose" id="s-m1b">
+  <h2>Rumus Anuitas &amp; Kalkulator Interaktif</h2>
+  <p class="sub">Empat rumus kunci pelunasan anuitas &mdash; lalu coba sendiri lewat kalkulator di bawah.</p>
+  <div class="rule"></div>
+  <div class="grid2">
+    <div class="formula">a<sub>n</sub> = a<sub>1</sub> &middot; (1 + i)<sup>n&minus;1</sup><small>Angsuran ke-n: barisan geometri dengan rasio (1 + i)</small></div>
+    <div class="formula">i<sub>n</sub> = A &minus; a<sub>n</sub><small>Bunga ke-n: sisa pembayaran setelah angsuran dipotong</small></div>
+  </div>
+  <div class="formula">A = M &middot; i &middot; (1+i)<sup>n</sup> / ((1+i)<sup>n</sup> &minus; 1) = M &middot; i / (1 &minus; (1+i)<sup>&minus;n</sup>)<small>Besar anuitas dari pinjaman M, suku bunga i per periode, lama n periode (i &gt; 0)</small></div>
+  <div class="formula">Sisa<sub>k</sub> = M(1+i)<sup>k</sup> &minus; A &middot; ((1+i)<sup>k</sup> &minus; 1) / i<small>Sisa pinjaman setelah k kali pembayaran &middot; cara cepat: Sisa<sub>k</sub> = M &minus; (a<sub>1</sub> + a<sub>2</sub> + &hellip; + a<sub>k</sub>)</small></div>
+  <div class="calcbox">
+    <h3>Kalkulator Anuitas Interaktif</h3>
+    <div class="cgrid">
+      <label>Pinjaman (Rp)<input type="number" id="an-M" value="1000000" min="0" step="50000"></label>
+      <label>Bunga/periode (%)<input type="number" id="an-i" value="10" min="0" step="0.5"></label>
+      <label>Lama (periode)<input type="number" id="an-n" value="4" min="1" max="24" step="1"></label>
+      <button class="btn pri" id="an-go">Hitung Anuitas</button>
+    </div>
+    <div id="an-out"></div>
+  </div>
+  <div class="note"><b>Coba sendiri:</b> ubah nilai-nilainya dan amati tabel amortisasi &mdash; bunga turun, angsuran naik, pembayaran tetap. Angsuran tiap periode selalu = angsuran sebelumnya &times; (1 + i).</div>
+</section>
+
+<!-- 6. M1 CONTOH -->
+<section class="slide acc-rose" id="s-m1c">
+  <h2>Contoh Soal Terpecahkan &mdash; Anuitas</h2>
+  <p class="sub">Dua contoh klasik: menghitung komponen pembayaran dan sisa pinjaman.</p>
+  <div class="rule"></div>
+  <div class="defbox"><b>Contoh 1.</b> Pinjaman Rp 2.400.000,00 dilunasi dengan anuitas per bulan sebesar Rp 600.000,00 dengan suku bunga 5% per bulan. Tentukan angsuran ke-4 dan bunga ke-4!</div>
+  <p><b>Langkah 1</b> &mdash; Bunga pertama dihitung dari pinjaman awal: 5% &times; 2.400.000 = Rp 120.000, sehingga angsuran-1 = 600.000 &minus; 120.000 = <b>Rp 480.000</b>.</p>
+  <p><b>Langkah 2</b> &mdash; Angsuran membesar dengan rasio 1,05: angsuran-2 = 480.000 &times; 1,05 = 504.000; angsuran-3 = 529.200; <b>angsuran-4 = 529.200 &times; 1,05 = Rp 555.660</b>.</p>
+  <p><b>Langkah 3</b> &mdash; Bunga-4 = A &minus; angsuran-4 = 600.000 &minus; 555.660 = <b>Rp 44.340,00</b>. Cek: 5% dari sisa setelah 3 angsuran (Rp 886.800) = 44.340 &#10003;</p>
+  <div class="defbox" style="margin-top:22px"><b>Contoh 2.</b> Pinjaman Rp 5.000.000,00 dilunasi dengan anuitas tahunan Rp 1.400.000,00 dengan suku bunga 10% per tahun. Tentukan sisa pinjaman setelah pembayaran ke-2!</div>
+  <p>Bunga-1 = 10% &times; 5.000.000 = 500.000 &rarr; angsuran-1 = 900.000 (sisa 4.100.000) &rarr; bunga-2 = 10% &times; 4.100.000 = 410.000 &rarr; angsuran-2 = 990.000.</p>
+  <p>Sisa setelah 2 pembayaran = 5.000.000 &minus; (900.000 + 990.000) = <b>Rp 3.110.000,00</b>.</p>
+  <div class="callout">Pola berpikir anuitas: (1) bunga = i &times; <b>sisa pinjaman saat itu</b>; (2) angsuran = A &minus; bunga; (3) angsuran berikutnya = angsuran sekarang &times; (1 + i).</div>
+</section>
+
+<!-- 7. M1 KUIS -->
+<section class="slide acc-rose" id="s-m1q">
+  <div id="q-anuitas-body">
+    <h2>Latihan HOTS &mdash; Anuitas</h2>
+    <p class="sub">10 soal berpikir tingkat tinggi. Pilih satu jawaban lalu klik <b>Periksa Jawaban</b>; pembahasan lengkap muncul otomatis.</p>
+    <div class="quiz-top"><span class="lvl" id="q-anuitas-lvl">C4 &middot; Analisis</span><span class="qcount">Soal <b id="q-anuitas-num">1</b>/10 &middot; Skor: <b id="q-anuitas-score">0</b></span></div>
+    <div class="qtext" id="q-anuitas-text"></div>
+    <div class="opts" id="q-anuitas-opts"></div>
+    <div class="expbox" id="q-anuitas-exp"></div>
+    <div class="qctrl">
+      <button class="btn pri" id="q-anuitas-check" disabled>Periksa Jawaban</button>
+      <button class="btn ghost" id="q-anuitas-next" disabled>Soal Berikutnya &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- 8. DIVIDER M2 -->
+<section class="slide divider acc-blue" id="s-d2">
+  <div class="dnum">02</div>
+  <p class="dkicker">MATERI 2</p>
+  <h1>Nilai Sekarang &amp; Nilai Masa Depan</h1>
+  <ul class="dlist">
+    <li>Prinsip nilai uang terhadap waktu (time value of money)</li>
+    <li>Proses bunga (compounding) dan proses diskonto (discounting)</li>
+    <li>Rumus FV &amp; PV untuk skema bunga tunggal dan majemuk</li>
+    <li>Kalkulator FV &amp; PV interaktif</li>
+    <li>10 soal HOTS dengan pembahasan lengkap</li>
+  </ul>
+</section>
+
+<!-- 9. M2 KONSEP -->
+<section class="slide acc-blue" id="s-m2a">
+  <h2>Nilai Uang terhadap Waktu: FV &amp; PV</h2>
+  <p class="sub">Fondasi semua keputusan keuangan: Rp 1 juta hari ini tidak sama nilainya dengan Rp 1 juta lima tahun lagi.</p>
+  <div class="rule"></div>
+  <div class="defbox"><b>Prinsip dasar:</b> uang hari ini <b>lebih berharga</b> daripada uang dengan jumlah sama di masa depan &mdash; karena uang hari ini bisa ditabung atau diinvestasikan sehingga bertambah nilainya. Inilah <i>time value of money</i>.</div>
+  <div class="flow">
+    <div class="fbox" style="background:#eff6ff;border:1.5px solid #93c5fd">Nilai Sekarang (PV)<small>uang hari ini</small></div>
+    <div class="farrow"><b>Dibungakan &rarr;</b><small>proses compounding</small></div>
+    <div class="fbox" style="background:#f0fdf4;border:1.5px solid #86efac">Nilai Masa Depan (FV)<small>uang di waktu mendatang</small></div>
+  </div>
+  <div class="flow">
+    <div class="fbox" style="background:#f0fdf4;border:1.5px solid #86efac">Nilai Masa Depan (FV)</div>
+    <div class="farrow"><b>&larr; Didiskontokan</b><small>proses discounting</small></div>
+    <div class="fbox" style="background:#eff6ff;border:1.5px solid #93c5fd">Nilai Sekarang (PV)</div>
+  </div>
+  <div class="grid2">
+    <div class="mini"><h4>Nilai Masa Depan (Future Value)</h4><p>Nilai <b>uang sekarang</b> yang diproyeksikan ke masa depan setelah diberi bunga. Dipakai saat menabung, berinvestasi, atau menghitung kapan target saldo tercapai.</p></div>
+    <div class="mini"><h4>Nilai Sekarang (Present Value)</h4><p>Nilai <b>uang masa depan</b> yang "ditarik kembali" ke hari ini dengan <b>tingkat diskonto</b>. Dipakai untuk menilai warisan yang cair nanti, piutang berjangka, atau membandingkan dua tawaran.</p></div>
+  </div>
+  <div class="callout"><b>Analogi:</b> PV seperti akar dan FV seperti buahnya &mdash; naik dari PV ke FV melalui bunga; turun dari FV ke PV melalui diskonto. Keduanya selalu berpasangan dalam satu rumus yang sama.</div>
+</section>
+
+<!-- 10. M2 RUMUS + KALKULATOR -->
+<section class="slide acc-blue" id="s-m2b">
+  <h2>Rumus FV &amp; PV + Kalkulator Interaktif</h2>
+  <p class="sub">Bentuk rumusnya bergantung pada skema bunga: tunggal (linear) atau majemuk (eksponensial).</p>
+  <div class="rule"></div>
+  <div class="grid2">
+    <div class="formula">FV = M &middot; (1 + i&middot;n)<small>Bunga tunggal: bunga hanya dari modal awal</small></div>
+    <div class="formula">FV = M &middot; (1 + i)<sup>n</sup><small>Bunga majemuk: bunga ikut berbunga</small></div>
+  </div>
+  <div class="grid2">
+    <div class="formula">PV = FV / (1 + i&middot;n)<small>Nilai sekarang &mdash; diskonto tunggal</small></div>
+    <div class="formula">PV = FV / (1 + i)<sup>n</sup><small>Nilai sekarang &mdash; diskonto majemuk</small></div>
+  </div>
+  <div class="calcbox">
+    <h3>Kalkulator FV &amp; PV</h3>
+    <div class="cgrid">
+      <label>Uang (Rp)<input type="number" id="pv-M" value="10000000" min="0" step="100000"></label>
+      <label>Bunga/periode (%)<input type="number" id="pv-i" value="10" min="0" step="0.5"></label>
+      <label>Jumlah periode<input type="number" id="pv-n" value="3" min="1" max="40" step="1"></label>
+      <label>Skema<select id="pv-mode"><option value="c">Majemuk</option><option value="s">Tunggal</option></select></label>
+      <button class="btn pri" id="pv-go">Hitung</button>
+    </div>
+    <div id="pv-out"></div>
+  </div>
+  <div class="note"><b>Perhatikan:</b> tingkat diskonto berperan seperti suku bunga &mdash; makin tinggi diskonto, makin kecil nilai sekarang suatu pembayaran masa depan. Karena faktor bunga selalu &gt; 1, nilai sekarang selalu <b>lebih kecil</b> daripada nilai masa depannya.</div>
+</section>
+
+<!-- 11. M2 CONTOH -->
+<section class="slide acc-blue" id="s-m2c">
+  <h2>Contoh Soal Terpecahkan &mdash; FV &amp; PV</h2>
+  <p class="sub">Satu soal diskonto (PV) dan satu soal bunga (FV) &mdash; keduanya saling mengembalikan.</p>
+  <div class="rule"></div>
+  <div class="defbox"><b>Contoh 1 (PV).</b> Pak Damar akan menerima warisan Rp 13.310.000,00 yang baru cair 3 tahun lagi. Dengan tingkat diskonto 10% per tahun, berapa nilai sekarang warisan itu?</div>
+  <p>PV = FV / (1+i)<sup>n</sup> = 13.310.000 / (1,1)<sup>3</sup> = 13.310.000 / 1,331 = <b>Rp 10.000.000,00</b>.</p>
+  <p>Artinya: menabung Rp 10 juta sekarang dengan bunga majemuk 10%/tahun setara dengan menerima Rp 13,31 juta tiga tahun lagi &mdash; keduanya "bernilai sama" hari ini.</p>
+  <div class="defbox" style="margin-top:22px"><b>Contoh 2 (FV).</b> Deposito Rp 5.000.000,00 dibungakan dengan bunga majemuk 8% per tahun selama 2 tahun. Berapa nilai masa depannya?</div>
+  <p>FV = M(1+i)<sup>n</sup> = 5.000.000 &times; (1,08)<sup>2</sup> = 5.000.000 &times; 1,1664 = <b>Rp 5.832.000,00</b>.</p>
+  <p>Cek mundur: 5.832.000 / 1,1664 = 5.000.000 &#10003; &mdash; PV dan FV saling mengembalikan satu sama lain.</p>
+</section>
+
+<!-- 12. M2 KUIS -->
+<section class="slide acc-blue" id="s-m2q">
+  <div id="q-nilai-body">
+    <h2>Latihan HOTS &mdash; Nilai Sekarang &amp; Masa Depan</h2>
+    <p class="sub">10 soal berpikir tingkat tinggi. Pilih satu jawaban lalu klik <b>Periksa Jawaban</b>; pembahasan lengkap muncul otomatis.</p>
+    <div class="quiz-top"><span class="lvl" id="q-nilai-lvl">C4 &middot; Analisis</span><span class="qcount">Soal <b id="q-nilai-num">1</b>/10 &middot; Skor: <b id="q-nilai-score">0</b></span></div>
+    <div class="qtext" id="q-nilai-text"></div>
+    <div class="opts" id="q-nilai-opts"></div>
+    <div class="expbox" id="q-nilai-exp"></div>
+    <div class="qctrl">
+      <button class="btn pri" id="q-nilai-check" disabled>Periksa Jawaban</button>
+      <button class="btn ghost" id="q-nilai-next" disabled>Soal Berikutnya &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- 13. DIVIDER M3 -->
+<section class="slide divider acc-amber" id="s-d3">
+  <div class="dnum">03</div>
+  <p class="dkicker">MATERI 3</p>
+  <h1>Lama Waktu Menabung dengan Bunga Tunggal</h1>
+  <ul class="dlist">
+    <li>Konsep bunga tunggal: bunga hanya dari modal awal</li>
+    <li>Rumus B = M&middot;i&middot;n dan M<sub>n</sub> = M(1 + i&middot;n)</li>
+    <li>Membalik rumus untuk mencari n (waktu), i (bunga), dan M (modal)</li>
+    <li>Kalkulator "berapa lama mencapai target?"</li>
+    <li>10 soal HOTS dengan pembahasan lengkap</li>
+  </ul>
+</section>
+
+<!-- 14. M3 KONSEP -->
+<section class="slide acc-amber" id="s-m3a">
+  <h2>Bunga Tunggal: Konsep &amp; Sifat</h2>
+  <p class="sub">Skema tabungan paling sederhana &mdash; dan kuncinya untuk menentukan lama waktu menabung.</p>
+  <div class="rule"></div>
+  <div class="defbox"><b>Bunga tunggal</b> adalah bunga yang dihitung <b>hanya dari modal awal (M)</b> pada setiap periode &mdash; bunga yang sudah diperoleh <b>tidak ikut berbunga</b>. Karena itu saldo tumbuh <b>linear</b>: naik dengan jumlah tetap setiap periode.</div>
+  <div class="grid2">
+    <div class="formula">B = M &middot; i &middot; n<small>B = total bunga &middot; M = modal &middot; i = suku bunga per periode (desimal) &middot; n = banyak periode</small></div>
+    <div class="formula">M<sub>n</sub> = M(1 + i&middot;n)<small>M<sub>n</sub> = saldo akhir (modal + bunga) setelah n periode</small></div>
+  </div>
+  <table class="tbl">
+    <tr><th>Tahun ke</th><th>Bunga tahun itu</th><th>Saldo</th><th>Kenaikan</th></tr>
+    <tr><td>0</td><td>&mdash;</td><td>Rp 1.000.000</td><td>&mdash;</td></tr>
+    <tr><td>1</td><td>Rp 100.000</td><td>Rp 1.100.000</td><td>+100.000</td></tr>
+    <tr><td>2</td><td>Rp 100.000</td><td>Rp 1.200.000</td><td>+100.000</td></tr>
+    <tr><td>3</td><td>Rp 100.000</td><td>Rp 1.300.000</td><td>+100.000</td></tr>
+  </table>
+  <div class="note"><b>Kaitan barisan:</b> saldo bunga tunggal membentuk <b>barisan aritmetika</b> (1.000.000; 1.100.000; 1.200.000; &hellip;) dengan beda b = M&middot;i = 100.000. Bandingkan dengan bunga majemuk (Materi 4) yang membentuk barisan geometri &mdash; jurang keduanya makin lebar makin lama.</div>
+</section>
+
+<!-- 15. M3 MENENTUKAN n + KALKULATOR -->
+<section class="slide acc-amber" id="s-m3b">
+  <h2>Menentukan Lama Waktu Menabung (n)</h2>
+  <p class="sub">Dari rumus bunga tunggal kita "membalik" persamaan untuk menjawab: berapa lama harus menabung?</p>
+  <div class="rule"></div>
+  <div class="formula">M<sub>n</sub> = M(1 + i&middot;n) &nbsp;&rArr;&nbsp; n = (M<sub>n</sub> &minus; M) / (M &middot; i) = B / (M &middot; i)<small>Lama menabung = total bunga yang dibutuhkan &divide; bunga per periode</small></div>
+  <div class="grid3">
+    <div class="mini"><h4>Mencari n (waktu)</h4><p>n = B/(M&middot;i). Pastikan satuan i dan n konsisten: bunga per tahun &harr; n dalam tahun.</p></div>
+    <div class="mini"><h4>Mencari i (suku bunga)</h4><p>i = B/(M&middot;n) &mdash; berguna untuk menilai tawaran bank yang belum jelas tingkat bunganya.</p></div>
+    <div class="mini"><h4>Mencari M (modal)</h4><p>M = M<sub>n</sub>/(1 + i&middot;n) &mdash; modal awal yang harus ditanam agar target tercapai tepat waktu.</p></div>
+  </div>
+  <div class="calcbox">
+    <h3>Kalkulator: Berapa Lama Mencapai Target?</h3>
+    <div class="cgrid">
+      <label>Modal awal (Rp)<input type="number" id="tg-M" value="3000000" min="0" step="50000"></label>
+      <label>Bunga/tahun (%)<input type="number" id="tg-i" value="12" min="0" step="0.5"></label>
+      <label>Target saldo (Rp)<input type="number" id="tg-T" value="3540000" min="0" step="50000"></label>
+      <button class="btn pri" id="tg-go">Hitung Waktu</button>
+    </div>
+    <div id="tg-out"></div>
+  </div>
+  <div class="callout">Soal HOTS sering menyembunyikan "n" di balik tujuan nyata: membeli sepeda motor, membayar DP, atau menutupi biaya &mdash; semua diterjemahkan menjadi <b>target bunga</b> yang harus dikumpulkan.</div>
+</section>
+
+<!-- 16. M3 CONTOH -->
+<section class="slide acc-amber" id="s-m3c">
+  <h2>Contoh Soal Terpecahkan &mdash; Lama Menabung</h2>
+  <p class="sub">Dua contoh: mencari waktu (n) dan mencari suku bunga (i).</p>
+  <div class="rule"></div>
+  <div class="defbox"><b>Contoh 1 (mencari n).</b> Modal Rp 3.000.000,00 ditabung dengan bunga tunggal 12% per tahun. Agar menjadi Rp 3.540.000,00, berapa lama waktu yang dibutuhkan?</div>
+  <p>Bunga dibutuhkan B = 3.540.000 &minus; 3.000.000 = 540.000. Bunga per tahun = 12% &times; 3.000.000 = 360.000.</p>
+  <p>n = 540.000 / 360.000 = 1,5 <b>tahun</b> = <b>18 bulan</b>. Jangan lupa mengubah satuan sesuai pertanyaan!</p>
+  <div class="defbox" style="margin-top:22px"><b>Contoh 2 (mencari i).</b> Modal Rp 4.000.000,00 menjadi Rp 5.600.000,00 setelah 2 tahun dengan bunga tunggal. Berapa suku bunga per tahun?</div>
+  <p>B = 5.600.000 &minus; 4.000.000 = 1.600.000, lalu i = B/(M&middot;n) = 1.600.000 / (4.000.000 &times; 2) = 0,2 = <b>20% per tahun</b>.</p>
+  <div class="note">Cek cepat: 20% &times; 4.000.000 = 800.000 per tahun; dua tahun = 1.600.000 &#10003;</div>
+</section>
+
+<!-- 17. M3 KUIS -->
+<section class="slide acc-amber" id="s-m3q">
+  <div id="q-tunggal-body">
+    <h2>Latihan HOTS &mdash; Lama Menabung (Bunga Tunggal)</h2>
+    <p class="sub">10 soal berpikir tingkat tinggi. Pilih satu jawaban lalu klik <b>Periksa Jawaban</b>; pembahasan lengkap muncul otomatis.</p>
+    <div class="quiz-top"><span class="lvl" id="q-tunggal-lvl">C4 &middot; Analisis</span><span class="qcount">Soal <b id="q-tunggal-num">1</b>/10 &middot; Skor: <b id="q-tunggal-score">0</b></span></div>
+    <div class="qtext" id="q-tunggal-text"></div>
+    <div class="opts" id="q-tunggal-opts"></div>
+    <div class="expbox" id="q-tunggal-exp"></div>
+    <div class="qctrl">
+      <button class="btn pri" id="q-tunggal-check" disabled>Periksa Jawaban</button>
+      <button class="btn ghost" id="q-tunggal-next" disabled>Soal Berikutnya &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- 18. DIVIDER M4 -->
+<section class="slide divider acc-green" id="s-d4">
+  <div class="dnum">04</div>
+  <p class="dkicker">MATERI 4</p>
+  <h1>Aplikasi Barisan: Bunga Majemuk</h1>
+  <ul class="dlist">
+    <li>Dari barisan geometri ke rumus M<sub>n</sub> = M(1+i)<sup>n</sup></li>
+    <li>Perbandingan bunga tunggal (aritmetika) vs majemuk (geometri)</li>
+    <li>Penyusutan aset sebagai barisan geometri menurun</li>
+    <li>Grafik interaktif pertumbuhan saldo</li>
+    <li>10 soal HOTS dengan pembahasan lengkap</li>
+  </ul>
+</section>
+
+<!-- 19. M4 KONSEP -->
+<section class="slide acc-green" id="s-m4a">
+  <h2>Dari Barisan Geometri ke Bunga Majemuk</h2>
+  <p class="sub">Bunga majemuk adalah aplikasi barisan geometri yang paling nyata dalam hidupmu.</p>
+  <div class="rule"></div>
+  <div class="defbox"><b>Bunga majemuk</b>: setiap periode, bunga dihitung dari <b>saldo terakhir</b> (modal + bunga-bunga sebelumnya) &mdash; "bunga ikut berbunga". Akibatnya saldo membentuk <b>barisan geometri</b>.</div>
+  <table class="tbl">
+    <tr><th>Akhir tahun ke</th><th>Perhitungan</th><th>Saldo</th><th>Bunga tahun itu</th></tr>
+    <tr><td>0</td><td>&mdash;</td><td>Rp 1.000.000</td><td>&mdash;</td></tr>
+    <tr><td>1</td><td>1.000.000 &times; 1,1</td><td>Rp 1.100.000</td><td>100.000</td></tr>
+    <tr><td>2</td><td>1.100.000 &times; 1,1</td><td>Rp 1.210.000</td><td>110.000</td></tr>
+    <tr><td>3</td><td>1.210.000 &times; 1,1</td><td>Rp 1.331.000</td><td>121.000</td></tr>
+  </table>
+  <div class="formula">M<sub>n</sub> = M(1 + i)<sup>n</sup><small>Saldo akhir tahun ke-n &mdash; suku barisan geometri M; M(1+i); M(1+i)<sup>2</sup>; &hellip; dengan rasio tetap r = 1 + i</small></div>
+  <div class="grid2">
+    <div class="mini"><h4>Barisan saldonya</h4><p>M ; M(1+i) ; M(1+i)<sup>2</sup> ; M(1+i)<sup>3</sup> ; &hellip; &rarr; geometri dengan rasio tetap r = (1 + i). Perhatikan kolom "bunga tahun itu" di tabel juga bertambah: 100.000 &rarr; 110.000 &rarr; 121.000.</p></div>
+    <div class="mini"><h4>Penyusutan (r &lt; 1)</h4><p>Nilai aset = M(1 &minus; i)<sup>n</sup> &mdash; barisan geometri menurun. Contoh: motor menyusut 10%/tahun memiliki rasio 0,9.</p></div>
+  </div>
+  <div class="callout"><b>Bandingkan:</b> bunga tunggal &rarr; barisan <b>aritmetika</b> (kenaikan tetap M&middot;i); bunga majemuk &rarr; barisan <b>geometri</b> (rasio 1+i). Makin lama waktunya, makin lebar jurang keduanya.</div>
+</section>
+
+<!-- 20. M4 GRAFIK INTERAKTIF -->
+<section class="slide acc-green" id="s-m4b">
+  <h2>Visualisasi Interaktif: Tunggal vs Majemuk</h2>
+  <p class="sub">Geser slider dan lihat sendiri mengapa bunga majemuk disebut pertumbuhan eksponensial.</p>
+  <div class="rule"></div>
+  <div class="calcbox">
+    <h3>Pertumbuhan Saldo &mdash; geser slider dan amati!</h3>
+    <div class="cgrid">
+      <label>Modal (Rp)<input type="number" id="ch-M" value="1000000" min="1000" step="50000"></label>
+      <label>Bunga/tahun: <b id="ch-iv">10</b>%<input type="range" id="ch-i" min="1" max="30" step="0.5" value="10"></label>
+      <label>Lama: <b id="ch-nv">5</b> tahun<input type="range" id="ch-n" min="1" max="10" step="1" value="5"></label>
+    </div>
+    <div class="chartwrap" id="chart-bars"></div>
+    <div class="legend"><span><i class="dot" style="background:#94a3b8"></i>Bunga tunggal (linear)</span><span><i class="dot" style="background:#059669"></i>Bunga majemuk (eksponensial)</span></div>
+    <div id="chart-info"></div>
+  </div>
+  <div class="note"><b>Coba:</b> naikkan bunga ke 25% atau waktu ke 10 tahun &mdash; lihat betapa cepatnya batang majemuk "meledak" melewati batang tunggal. Sifat inilah yang dipakai soal HOTS tentang investasi jangka panjang maupun bahaya pinjaman bunga berbunga.</div>
+</section>
+
+<!-- 21. M4 CONTOH -->
+<section class="slide acc-green" id="s-m4c">
+  <h2>Contoh Soal Terpecahkan &mdash; Bunga Majemuk</h2>
+  <p class="sub">Mencari suku bunga dari saldo akhir, dan menghitung penyusutan aset.</p>
+  <div class="rule"></div>
+  <div class="defbox"><b>Contoh 1 (mencari i).</b> Modal Rp 3.000.000,00 dibungakan dengan bunga majemuk selama 2 tahun menjadi Rp 3.630.000,00. Berapa suku bunga majemuk per tahun?</div>
+  <p>(1+i)<sup>2</sup> = 3.630.000 / 3.000.000 = 1,21 &rarr; 1 + i = 1,1 &rarr; i = <b>10% per tahun</b>.</p>
+  <p>Ini kebalikan soal nilai masa depan: dari pertumbuhan geometrinya, kita rekonstruksi laju bunganya.</p>
+  <div class="defbox" style="margin-top:20px"><b>Contoh 2 (penyusutan).</b> Sepeda motor dibeli Rp 20.000.000,00 dan nilainya menyusut 10% per tahun. Berapa nilai motor setelah 3 tahun?</div>
+  <p>Nilai = M(1 &minus; i)<sup>n</sup> = 20.000.000 &times; (0,9)<sup>3</sup> = 20.000.000 &times; 0,729 = <b>Rp 14.580.000,00</b>.</p>
+  <div class="callout"><b>Literasi keuangan:</b> mekanisme yang sama bekerja <i>melawanmu</i> pada utang berbunga berbunga. Pinjaman daring dengan bunga majemuk 25% per minggu membuat utang Rp 1 juta menjadi &plusmn; Rp 2,44 juta hanya dalam 4 minggu &mdash; selalu hitung dulu sebelum tergoda!</div>
+</section>
+
+<!-- 22. M4 KUIS -->
+<section class="slide acc-green" id="s-m4q">
+  <div id="q-majemuk-body">
+    <h2>Latihan HOTS &mdash; Aplikasi Barisan: Bunga Majemuk</h2>
+    <p class="sub">10 soal berpikir tingkat tinggi. Pilih satu jawaban lalu klik <b>Periksa Jawaban</b>; pembahasan lengkap muncul otomatis.</p>
+    <div class="quiz-top"><span class="lvl" id="q-majemuk-lvl">C4 &middot; Analisis</span><span class="qcount">Soal <b id="q-majemuk-num">1</b>/10 &middot; Skor: <b id="q-majemuk-score">0</b></span></div>
+    <div class="qtext" id="q-majemuk-text"></div>
+    <div class="opts" id="q-majemuk-opts"></div>
+    <div class="expbox" id="q-majemuk-exp"></div>
+    <div class="qctrl">
+      <button class="btn pri" id="q-majemuk-check" disabled>Periksa Jawaban</button>
+      <button class="btn ghost" id="q-majemuk-next" disabled>Soal Berikutnya &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- 23. NILAI KAMU -->
+<section class="slide acc-purple" id="s-score">
+  <h2>Nilai Kamu</h2>
+  <p class="sub">Rekapitulasi otomatis dari 40 soal HOTS. Skor tersimpan di perangkatmu dan bertambah setiap kali kamu menyelesaikan latihan.</p>
+  <div class="rule"></div>
+  <div id="score-overall"></div>
+  <div id="score-table"></div>
+  <div class="qctrl">
+    <button class="btn ghost" id="btn-reset">Reset Semua Skor</button>
+    <button class="btn pri" data-goto="s-menu">Kembali ke Peta Materi</button>
+  </div>
+</section>
+
+<!-- 24. RANGKUMAN -->
+<section class="slide acc-slate" id="s-summary">
+  <h2>Rangkuman &amp; Strategi HOTS</h2>
+  <p class="sub">Semua rumus inti dalam satu halaman &mdash; baca ulang sebelum latihan atau ujian.</p>
+  <div class="rule"></div>
+  <div class="grid2">
+    <div class="mini"><h4>M1 &middot; Anuitas</h4><p>A = a<sub>n</sub> + i<sub>n</sub> &middot; a<sub>n</sub> = a<sub>1</sub>(1+i)<sup>n&minus;1</sup> &middot; i<sub>n</sub> = A &minus; a<sub>n</sub><br>A = M&middot;i&middot;(1+i)<sup>n</sup> / ((1+i)<sup>n</sup> &minus; 1)<br>Sisa<sub>k</sub> = M &minus; (a<sub>1</sub> + &hellip; + a<sub>k</sub>)<br>Bunga selalu dari <b>sisa pinjaman</b>.</p></div>
+    <div class="mini"><h4>M2 &middot; FV &amp; PV</h4><p>FV = M(1+i)<sup>n</sup> (majemuk) &middot; FV = M(1+i&middot;n) (tunggal)<br>PV = FV/(1+i)<sup>n</sup> &middot; PV = FV/(1+i&middot;n)<br>Diskonto = "bunga terbalik" dari masa depan ke sekarang.</p></div>
+    <div class="mini"><h4>M3 &middot; Bunga Tunggal</h4><p>B = M&middot;i&middot;n &middot; M<sub>n</sub> = M(1+i&middot;n)<br>n = B/(M&middot;i) &middot; i = B/(M&middot;n) &middot; M = M<sub>n</sub>/(1+i&middot;n)<br>Saldo: barisan aritmetika, beda b = M&middot;i.</p></div>
+    <div class="mini"><h4>M4 &middot; Bunga Majemuk</h4><p>M<sub>n</sub> = M(1+i)<sup>n</sup> &mdash; barisan geometri r = 1+i<br>Penyusutan: M(1&minus;i)<sup>n</sup> &mdash; geometri menurun<br>Selisih dengan bunga tunggal = "bunga atas bunga".</p></div>
+  </div>
+  <h3 style="margin:22px 0 8px">5 Strategi Menjawab Soal HOTS Matematika Keuangan</h3>
+  <ul class="dlist">
+    <li>Terjemahkan cerita menjadi besaran matematika: apa yang diketahui (M, i, n, A, target) dan apa yang ditanya.</li>
+    <li>Samakan satuan: bunga per tahun dipasangkan dengan waktu dalam tahun; bunga per bulan dipasangkan dengan bulan.</li>
+    <li>Kenali pola pertumbuhannya: kenaikan tetap &rarr; bunga tunggal (aritmetika); bunga ikut berbunga &rarr; bunga majemuk (geometri).</li>
+    <li>Pada anuitas, bunga dihitung dari <b>sisa pinjaman</b> saat itu &mdash; bukan dari pinjaman awal.</li>
+    <li>Membandingkan dua pilihan? Bawa keduanya ke titik waktu yang sama: semua ke nilai sekarang, atau semua ke nilai masa depan.</li>
+  </ul>
+  <div class="note" style="margin-top:18px"><b>Penutup:</b> matematika keuangan bukan sekadar rumus &mdash; ia alat untuk mengambil keputusan: memilih pinjaman, menilai tawaran, dan merencanakan tabungan. Kuasai polanya, dan soal HOTS akan terasa seperti cerita yang bisa dihitung. Selamat belajar, dan sampai jumpa di materi berikutnya!</div>
+</section>
+
+</div><!-- /deck -->
+
+<nav id="navbar"><div class="nb-in">
+  <button class="nb-btn" id="btn-menu">Peta Materi</button>
+  <button class="nb-btn" id="btn-prev">&larr; Sebelumnya</button>
+  <div id="counter">1 / 24</div>
+  <button class="nb-btn" id="btn-next">Berikutnya &rarr;</button>
+  <div class="spacer"></div>
+</div></nav>
+
+<script>
+/* ================= DATA LATIHAN HOTS ================= */
+const QUIZ={};
+QUIZ.anuitas={title:'Anuitas',acc:'#e11d48',qs:[
+{lvl:'C4 \u00B7 Analisis',
+ q:'Pak Andi meminjam uang dari koperasi dan akan melunasi dengan <b>sistem anuitas</b>. Manakah pernyataan yang <b>paling tepat</b> menggambarkan pembayarannya?',
+ opts:['Besar angsuran dan bunga selalu sama pada setiap periode.','Total pembayaran tiap periode sama, angsuran pokok semakin besar, dan bunga semakin kecil.','Total pembayaran tiap periode semakin besar karena bunga terus berjalan.','Bunga setiap periode dihitung dari pinjaman awal sehingga besarannya tetap.'],
+ ans:1,
+ exp:'Pada anuitas, pembayaran total (A) tetap setiap periode. Bunga dihitung dari <b>sisa pinjaman</b> yang terus berkurang, sehingga bunga mengecil. Karena A = angsuran + bunga tetap, porsi angsuran pokok justru <b>membesar</b>. Jadi pernyataan B yang tepat.'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Pinjaman Rp 1.000.000,00 dilunasi dengan anuitas per bulan sebesar Rp 250.000,00 dengan suku bunga 10% per bulan. Besar <b>angsuran pertama</b> adalah\u2026',
+ opts:['Rp 100.000,00','Rp 150.000,00','Rp 165.000,00','Rp 250.000,00'],
+ ans:1,
+ exp:'Bunga pertama = 10% \u00D7 Rp 1.000.000 = Rp 100.000.<br>Angsuran pertama = A \u2212 bunga = Rp 250.000 \u2212 Rp 100.000 = <b>Rp 150.000,00</b>.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Pinjaman Rp 1.000.000,00 dilunasi dengan anuitas Rp 250.000,00 per bulan dan suku bunga 10% per bulan. Besar <b>angsuran ketiga</b> adalah\u2026',
+ opts:['Rp 165.000,00','Rp 170.000,00','Rp 181.500,00','Rp 199.650,00'],
+ ans:2,
+ exp:'Angsuran-1 = Rp 250.000 \u2212 10% \u00D7 1.000.000 = Rp 150.000.<br>Angsuran-2 = 1,1 \u00D7 150.000 = Rp 165.000.<br>Angsuran-3 = 1,1 \u00D7 165.000 = <b>Rp 181.500,00</b> \u2014 angsuran membesar dengan rasio 1,1.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Pinjaman Rp 1.000.000,00 dilunasi dengan anuitas Rp 250.000,00 per bulan dan suku bunga 10% per bulan. Besar <b>bunga pada pembayaran ke-4</b> adalah\u2026',
+ opts:['Rp 30.385,00','Rp 50.350,00','Rp 68.500,00','Rp 100.000,00'],
+ ans:1,
+ exp:'Angsuran-4 = 181.500 \u00D7 1,1 = Rp 199.650.<br>Bunga-4 = A \u2212 angsuran-4 = Rp 250.000 \u2212 Rp 199.650 = <b>Rp 50.350,00</b>.<br>Perhatikan bunga terus mengecil: 100.000 \u2192 85.000 \u2192 68.500 \u2192 50.350.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Pinjaman Rp 5.000.000,00 dilunasi dengan anuitas tahunan Rp 1.500.000,00 dengan suku bunga 10% per tahun. <b>Sisa pinjaman setelah pembayaran ke-2</b> adalah\u2026',
+ opts:['Rp 2.000.000,00','Rp 2.500.000,00','Rp 3.100.000,00','Rp 2.900.000,00'],
+ ans:3,
+ exp:'Bunga-1 = 10% \u00D7 5.000.000 = 500.000 \u2192 angsuran-1 = 1.000.000, sisa = 4.000.000.<br>Bunga-2 = 10% \u00D7 4.000.000 = 400.000 \u2192 angsuran-2 = 1.100.000.<br>Total angsuran = 2.100.000, sehingga sisa = 5.000.000 \u2212 2.100.000 = <b>Rp 2.900.000,00</b>.'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Pinjaman Rp 1.000.000,00 akan dilunasi dengan anuitas tahunan selama 2 tahun dengan suku bunga 10% per tahun. Jika (1,10)<sup>2</sup> = 1,21, besar <b>anuitas</b> tersebut adalah\u2026',
+ opts:['Rp 500.000,00','Rp 576.190,48','Rp 523.809,52','Rp 610.000,00'],
+ ans:1,
+ exp:'A = M\u00B7i\u00B7(1+i)<sup>n</sup> / ((1+i)<sup>n</sup> \u2212 1) = 1.000.000 \u00D7 0,1 \u00D7 1,21 / (1,21 \u2212 1) = 121.000 / 0,21 \u2248 <b>Rp 576.190,48</b>.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Sebuah pinjaman dilunasi dengan anuitas Rp 300.000,00 per bulan. Jika bunga pada angsuran pertama sebesar Rp 75.000,00 dengan suku bunga 5% per bulan, <b>besar pinjaman awal</b> adalah\u2026',
+ opts:['Rp 1.250.000,00','Rp 1.500.000,00','Rp 2.250.000,00','Rp 3.750.000,00'],
+ ans:1,
+ exp:'Bunga pertama dihitung dari pinjaman awal: bunga-1 = i \u00D7 M.<br>Maka M = bunga-1 / i = 75.000 / 0,05 = <b>Rp 1.500.000,00</b>.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Pinjaman Rp 4.000.000,00 dilunasi dengan anuitas bulanan dengan suku bunga 5% per bulan. Jika angsuran pertamanya Rp 800.000,00, maka <b>besar anuitas dan angsuran ke-3</b> berturut-turut adalah\u2026',
+ opts:['Rp 1.000.000,00 dan Rp 882.000,00','Rp 1.000.000,00 dan Rp 840.000,00','Rp 950.000,00 dan Rp 882.000,00','Rp 1.000.000,00 dan Rp 926.100,00'],
+ ans:0,
+ exp:'Bunga-1 = 5% \u00D7 4.000.000 = 200.000, sehingga A = 800.000 + 200.000 = <b>Rp 1.000.000,00</b>.<br>Angsuran-2 = 800.000 \u00D7 1,05 = 840.000; angsuran-3 = 840.000 \u00D7 1,05 = <b>Rp 882.000,00</b>.'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Pinjaman Pak Joko dilunasi dengan anuitas Rp 400.000,00 per bulan dan suku bunga 2% per bulan. Jika bunga pada pembayaran ke-3 sebesar Rp 38.076,00, maka <b>sisa pinjaman tepat setelah pembayaran ke-2</b> adalah\u2026',
+ opts:['Rp 1.903.800,00','Rp 1.925.000,00','Rp 1.865.720,00','Rp 2.000.000,00'],
+ ans:0,
+ exp:'Bunga ke-3 dihitung dari sisa pinjaman setelah pembayaran ke-2: bunga-3 = 2% \u00D7 sisa.<br>Maka sisa = 38.076 / 0,02 = <b>Rp 1.903.800,00</b>. Berpikir terbalik (mencari sisa dari bunga) adalah kunci soal ini.'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Pada pembayaran ke-6 dari suatu pelunasan anuitas, angsurannya Rp 193.260,50 dan bunganya Rp 31.739,50. Perhatikan pernyataan berikut:<br>(1) Anuitas pinjaman itu Rp 225.000,00.<br>(2) Bunga pembayaran ke-7 pasti lebih kecil dari Rp 31.739,50.<br>Pernyataan yang benar adalah\u2026',
+ opts:['(1) saja','(2) saja','(1) dan (2)','Tidak ada yang benar'],
+ ans:2,
+ exp:'(1) A = angsuran + bunga = 193.260,50 + 31.739,50 = Rp 225.000,00 \u2014 dan anuitas memang selalu tetap \u2713<br>(2) Ansuran terus membesar, sehingga angsuran-7 &gt; angsuran-6, dan bunga-7 = A \u2212 angsuran-7 &lt; bunga-6 \u2713 Jadi keduanya benar.'}
+]};
+QUIZ.nilai={title:'Nilai Sekarang & Nilai Masa Depan',acc:'#2563eb',qs:[
+{lvl:'C4 \u00B7 Analisis',
+ q:'Manakah pernyataan yang <b>paling tepat</b> tentang <b>nilai sekarang</b> (present value)?',
+ opts:['Nilai sekarang adalah nilai uang masa depan yang "ditarik" ke waktu sekarang melalui proses diskonto.','Nilai sekarang selalu lebih besar daripada nilai masa depannya.','Nilai sekarang tidak dipengaruhi oleh suku bunga sama sekali.','Nilai sekarang hanya berlaku untuk skema bunga tunggal.'],
+ ans:0,
+ exp:'Nilai sekarang (PV) = nilai uang masa depan yang didiskontokan: PV = FV/(1+i)<sup>n</sup> (majemuk). Karena dibagi faktor bunga yang selalu &gt; 1, PV selalu <b>lebih kecil</b> dari FV, dan besarnya bergantung pada i dan n. Diskonto berlaku juga untuk skema majemuk.'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Modal Rp 1.000.000,00 diinvestasikan dengan bunga majemuk 10% per tahun. <b>Nilai masa depan</b> investasi itu setelah 2 tahun adalah\u2026',
+ opts:['Rp 1.200.000,00','Rp 1.210.000,00','Rp 1.331.000,00','Rp 1.100.000,00'],
+ ans:1,
+ exp:'FV = M(1+i)<sup>n</sup> = 1.000.000 \u00D7 (1,1)<sup>2</sup> = 1.000.000 \u00D7 1,21 = <b>Rp 1.210.000,00</b>.<br>(Rp 1.331.000 adalah nilai setelah 3 tahun; Rp 1.200.000 adalah hasil bunga tunggal.)'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Pak Damar akan menerima warisan Rp 13.310.000,00 yang baru cair 3 tahun lagi. Dengan tingkat diskonto 10% per tahun, <b>nilai sekarang</b> warisan itu adalah\u2026',
+ opts:['Rp 9.970.000,00','Rp 10.610.000,00','Rp 13.310.000,00','Rp 10.000.000,00'],
+ ans:3,
+ exp:'PV = FV/(1+i)<sup>n</sup> = 13.310.000/(1,1)<sup>3</sup> = 13.310.000/1,331 = <b>Rp 10.000.000,00</b>.'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Nilai sekarang dari Rp 22.050.000,00 yang akan dibayar 2 tahun lagi dengan tingkat diskonto 5% per tahun adalah\u2026',
+ opts:['Rp 20.000.000,00','Rp 20.950.000,00','Rp 19.950.000,00','Rp 21.000.000,00'],
+ ans:0,
+ exp:'PV = 22.050.000/(1,05)<sup>2</sup> = 22.050.000/1,1025 = <b>Rp 20.000.000,00</b>.'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Bu Sari memilih dua tawaran: menerima Rp 10.000.000,00 sekarang, atau Rp 11.500.000,00 dua tahun lagi. Uangnya dapat diinvestasikan dengan bunga majemuk 7% per tahun. Keputusan yang <b>rasional</b> adalah\u2026',
+ opts:['Menerima sekarang, karena uang tunai hari ini selalu lebih menguntungkan.','Menerima 2 tahun lagi, karena Rp 10.000.000 hanya menjadi Rp 11.449.000 setelah 2 tahun \u2014 kurang dari Rp 11.500.000.','Menerima 2 tahun lagi, karena nominalnya lebih besar tanpa perlu dihitung.','Keduanya bernilai sama, jadi pilih yang mana saja.'],
+ ans:1,
+ exp:'Nilai masa depan Rp 10.000.000 = 10.000.000 \u00D7 (1,07)<sup>2</sup> = 10.000.000 \u00D7 1,1449 = Rp 11.449.000 &lt; Rp 11.500.000.<br>Jadi menerima <b>Rp 11.500.000 dua tahun lagi</b> lebih menguntungkan \u2014 keputusan tepat didasarkan pada pembandingan nilai, bukan hanya nominal.'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Berapa uang yang harus <b>ditabung sekarang</b> agar setelah 4 tahun terkumpul Rp 14.641.000,00 dengan bunga majemuk 10% per tahun?',
+ opts:['Rp 10.000.000,00','Rp 10.464.100,00','Rp 9.990.000,00','Rp 10.500.000,00'],
+ ans:0,
+ exp:'PV = FV/(1+i)<sup>n</sup> = 14.641.000/(1,1)<sup>4</sup> = 14.641.000/1,4641 = <b>Rp 10.000.000,00</b>.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Modal Rp 1.000.000,00 dengan suku bunga 10% per tahun. Selisih nilai masa depan setelah 2 tahun antara skema <b>majemuk</b> dan skema <b>tunggal</b> adalah\u2026',
+ opts:['Rp 0,00','Rp 10.000,00','Rp 100.000,00','Rp 21.000,00'],
+ ans:1,
+ exp:'Majemuk: 1.000.000 \u00D7 (1,1)<sup>2</sup> = 1.210.000. Tunggal: 1.000.000 \u00D7 (1 + 0,1\u00D72) = 1.200.000.<br>Selisih = 1.210.000 \u2212 1.200.000 = <b>Rp 10.000,00</b> \u2014 itulah "bunga atas bunga" pada tahun kedua.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Mobil dibeli Rp 200.000.000,00 dan nilainya menyusut 10% per tahun (rasio penyusutan tetap). <b>Nilai mobil 3 tahun lagi</b> adalah\u2026',
+ opts:['Rp 145.800.000,00','Rp 150.000.000,00','Rp 162.000.000,00','Rp 140.000.000,00'],
+ ans:0,
+ exp:'Penyusutan = "bunga negatif" dengan rasio 0,9: Nilai = 200.000.000 \u00D7 (0,9)<sup>3</sup> = 200.000.000 \u00D7 0,729 = <b>Rp 145.800.000,00</b>. Ini juga bentuk nilai masa depan dari barisan geometri.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Sejumlah uang ditabung dengan bunga majemuk 20% per tahun. Setelah 2 tahun saldonya menjadi Rp 7.200.000,00. <b>Jumlah awal dan total bunga</b> yang diperoleh adalah\u2026',
+ opts:['Rp 4.800.000,00 dan Rp 2.400.000,00','Rp 5.500.000,00 dan Rp 1.700.000,00','Rp 5.000.000,00 dan Rp 2.200.000,00','Rp 5.000.000,00 dan Rp 2.000.000,00'],
+ ans:2,
+ exp:'M(1,2)<sup>2</sup> = 7.200.000 \u2192 1,44M = 7.200.000 \u2192 M = 5.000.000.<br>Total bunga = 7.200.000 \u2212 5.000.000 = <b>Rp 2.200.000,00</b>. Perhatikan: bunga bukan 40% dari 7,2 juta!'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Bank A menawarkan deposito 12% per tahun dengan <b>bunga majemuk</b>; Bank B menawarkan 12% per tahun dengan <b>bunga tunggal</b>, keduanya untuk 3 tahun. Pernyataan yang <b>paling tepat</b> adalah\u2026',
+ opts:['Bank A lebih menguntungkan karena bunga tahun-tahun sebelumnya ikut berbunga.','Bank B lebih menguntungkan untuk jangka waktu panjang.','Keduanya menghasilkan nilai akhir yang sama karena suku bunganya sama.','Bunga tunggal selalu menghasilkan lebih banyak.'],
+ ans:0,
+ exp:'Majemuk: (1,12)<sup>3</sup> \u2248 1,4049 \u2192 tumbuh \u00B140,49%. Tunggal: 1 + 0,12\u00D73 = 1,36 \u2192 tumbuh 36%.<br>Selisihnya adalah bunga yang ikut berbunga. Untuk i &gt; 0 dan jangka panjang, bunga majemuk selalu unggul.'}
+]};
+
+QUIZ.tunggal={title:'Lama Menabung (Bunga Tunggal)',acc:'#d97706',qs:[
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Modal Rp 1.000.000,00 ditabung dengan bunga tunggal 10% per tahun. Berapa <b>lama waktu</b> agar tabungan menjadi Rp 1.500.000,00?',
+ opts:['4 tahun','5 tahun','6 tahun','10 tahun'],
+ ans:1,
+ exp:'Bunga dibutuhkan B = 1.500.000 \u2212 1.000.000 = 500.000.<br>Bunga per tahun = 10% \u00D7 1.000.000 = 100.000.<br>n = B/(M\u00B7i) = 500.000/100.000 = <b>5 tahun</b>.'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Bu Lina menabung Rp 2.000.000,00 dengan bunga tunggal 8% per tahun. Berapa lama agar <b>bunga</b> yang diperoleh mencapai Rp 480.000,00?',
+ opts:['2 tahun','2,5 tahun','3 tahun','4 tahun'],
+ ans:2,
+ exp:'n = B/(M\u00B7i) = 480.000/(2.000.000 \u00D7 0,08) = 480.000/160.000 = <b>3 tahun</b>.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Modal Rp 3.000.000,00 ditabung dengan bunga tunggal 12% per tahun. Agar menjadi Rp 3.540.000,00, lama menabung adalah\u2026',
+ opts:['12 bulan','15 bulan','18 bulan','24 bulan'],
+ ans:2,
+ exp:'B = 3.540.000 \u2212 3.000.000 = 540.000; bunga per tahun = 12% \u00D7 3.000.000 = 360.000.<br>n = 540.000/360.000 = 1,5 tahun = <b>18 bulan</b>. Jangan lupa mengubah satuan sesuai pertanyaan!'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Modal Rp 4.000.000,00 menjadi Rp 5.600.000,00 setelah 2 tahun dengan bunga tunggal. <b>Suku bunga</b> per tahunnya adalah\u2026',
+ opts:['15%','18%','25%','20%'],
+ ans:3,
+ exp:'B = 5.600.000 \u2212 4.000.000 = 1.600.000.<br>i = B/(M\u00B7n) = 1.600.000/(4.000.000 \u00D7 2) = 0,2 = <b>20% per tahun</b>.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Setelah 2 tahun menabung dengan bunga tunggal 8% per tahun, tabungan Rara menjadi Rp 5.800.000,00. <b>Tabungan awal</b> Rara adalah\u2026',
+ opts:['Rp 5.000.000,00','Rp 5.200.000,00','Rp 4.800.000,00','Rp 5.500.000,00'],
+ ans:0,
+ exp:'M<sub>n</sub> = M(1 + i\u00B7n) \u2192 5.800.000 = M(1 + 0,08\u00D72) = 1,16M.<br>M = 5.800.000/1,16 = <b>Rp 5.000.000,00</b>.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Pak Budi menabung Rp 2.000.000,00 dengan bunga tunggal 10% per tahun untuk membeli sepeda motor bekas seharga Rp 2.600.000,00 (tidak ada uang lain). Berapa <b>lama minimal</b> ia harus menabung?',
+ opts:['2 tahun','2,5 tahun','3 tahun','4 tahun'],
+ ans:2,
+ exp:'Uang yang harus ditambah oleh bunga = 2.600.000 \u2212 2.000.000 = 600.000.<br>Bunga per tahun = 10% \u00D7 2.000.000 = 200.000.<br>n = 600.000/200.000 = <b>3 tahun</b>. Soal HOTS: target belanja diterjemahkan dulu menjadi target bunga.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Sinta menabung Rp 2.000.000,00 dengan bunga tunggal 0,5% <b>per bulan</b>. Berapa <b>bulan</b> agar tabungannya menjadi Rp 2.240.000,00?',
+ opts:['20 bulan','22 bulan','24 bulan','30 bulan'],
+ ans:2,
+ exp:'B = 2.240.000 \u2212 2.000.000 = 240.000; bunga per bulan = 0,5% \u00D7 2.000.000 = 10.000.<br>n = 240.000/10.000 = <b>24 bulan</b> (2 tahun). Gunakan satuan bunga yang sama dengan satuan waktu yang ditanya.'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Dodi ingin tabungan Rp 1.000.000,00-nya bertambah Rp 540.000,00 dari bunga. Bank P memberi bunga tunggal 6% per tahun; Bank Q memberi 0,45% per bulan. Di bank mana Dodi <b>lebih cepat</b> mencapainya?',
+ opts:['Bank P, karena butuh 9 tahun sedangkan Bank Q 10 tahun.','Bank Q, karena bunganya dihitung lebih sering (per bulan).','Sama saja, karena total bunga yang dibutuhkan sama.','Bank P, karena 6% &gt; 0,45%.'],
+ ans:0,
+ exp:'Bank P: bunga per tahun = 6% \u00D7 1.000.000 = 60.000 \u2192 n = 540.000/60.000 = 9 tahun.<br>Bank Q: bunga per bulan = 0,45% \u00D7 1.000.000 = 4.500 \u2192 n = 540.000/4.500 = 120 bulan = 10 tahun.<br>Jadi <b>Bank P lebih cepat</b> (9 &lt; 10 tahun). Kuncinya: bandingkan dalam satuan yang sama!'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Pak Rudi menabung Rp 5.000.000,00 dengan bunga tunggal 9% per tahun. Berapa lama agar <b>bunganya cukup</b> untuk membayar uang muka (DP) kendaraan sebesar Rp 1.125.000,00?',
+ opts:['24 bulan','27 bulan','30 bulan','36 bulan'],
+ ans:2,
+ exp:'Bunga per tahun = 9% \u00D7 5.000.000 = 450.000.<br>n = 1.125.000/450.000 = 2,5 tahun = <b>30 bulan</b>.'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Saldo tabungan Ibu Marni (bunga tunggal): Tahun 0: Rp 4.000.000,00; Tahun 1: Rp 4.320.000,00; Tahun 2: Rp 4.640.000,00; Tahun 3: Rp 4.960.000,00. Tabungan itu mencapai Rp 5.600.000,00 pada <b>tahun ke-\u2026</b> dan suku bunganya <b>\u2026 per tahun</b>.',
+ opts:['5; 8%','5; 10%','4; 8%','6; 8%'],
+ ans:0,
+ exp:'Pola: saldo naik tetap Rp 320.000 per tahun (barisan aritmetika \u2014 ciri bunga tunggal).<br>i = 320.000/4.000.000 = <b>8%</b>. Butuh tambahan 1.600.000 \u2192 n = 1.600.000/320.000 = <b>5 tahun</b>.<br>Cek: 4.000.000 + 5 \u00D7 320.000 = 5.600.000 \u2713'}
+]};
+QUIZ.majemuk={title:'Aplikasi Barisan: Bunga Majemuk',acc:'#059669',qs:[
+{lvl:'C4 \u00B7 Analisis',
+ q:'Uang Rp 1.000.000,00 dibungakan majemuk 10% per tahun sehingga saldonya: Rp 1.100.000; Rp 1.210.000; Rp 1.331.000; \u2026 Barisan saldo itu adalah barisan\u2026 dan rasionya\u2026',
+ opts:['aritmetika; 110.000','geometri; 1,1','geometri; 10','aritmetika; 1,1'],
+ ans:1,
+ exp:'Setiap saldo = saldo sebelumnya \u00D7 1,1 (saldo baru = saldo lama + 10% \u00D7 saldo lama).<br>Perkalian dengan rasio tetap adalah ciri <b>barisan geometri dengan r = 1 + i = 1,1</b>.'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Modal Rp 1.000.000,00 dengan bunga majemuk 10% per tahun. Nilai tabungan pada <b>akhir tahun ke-4</b> adalah\u2026',
+ opts:['Rp 1.331.000,00','Rp 1.610.510,00','Rp 1.464.100,00','Rp 1.771.561,00'],
+ ans:2,
+ exp:'M<sub>n</sub> = M(1+i)<sup>n</sup> = 1.000.000 \u00D7 (1,1)<sup>4</sup> = 1.000.000 \u00D7 1,4641 = <b>Rp 1.464.100,00</b>.<br>Ini suku ke-5 dari barisan geometri 1.000.000; 1.100.000; 1.210.000; \u2026'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Modal Rp 2.000.000,00 dengan bunga 10% per tahun selama 3 tahun. Selisih saldo akhir antara skema <b>majemuk</b> dan skema <b>tunggal</b> adalah\u2026',
+ opts:['Rp 60.000,00','Rp 6.200,00','Rp 20.000,00','Rp 62.000,00'],
+ ans:3,
+ exp:'Majemuk: 2.000.000 \u00D7 (1,1)<sup>3</sup> = 2.000.000 \u00D7 1,331 = 2.662.000.<br>Tunggal: 2.000.000 \u00D7 (1 + 0,3) = 2.600.000.<br>Selisih = <b>Rp 62.000,00</b> \u2014 hasil bunga yang ikut berbunga selama 3 periode.'},
+{lvl:'C3 \u00B7 Aplikasi',
+ q:'Sepeda motor dibeli Rp 20.000.000,00 dan nilainya menyusut 10% per tahun. <b>Nilai motor setelah 3 tahun</b> adalah\u2026',
+ opts:['Rp 14.580.000,00','Rp 15.000.000,00','Rp 16.200.000,00','Rp 13.122.000,00'],
+ ans:0,
+ exp:'Penyusutan = barisan geometri menurun dengan rasio 0,9:<br>Nilai = 20.000.000 \u00D7 (0,9)<sup>3</sup> = 20.000.000 \u00D7 0,729 = <b>Rp 14.580.000,00</b>.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Modal Rp 3.000.000,00 dibungakan majemuk selama 2 tahun menjadi Rp 3.630.000,00. <b>Suku bunga majemuk</b> per tahunnya adalah\u2026',
+ opts:['5%','10%','15%','21%'],
+ ans:1,
+ exp:'(1+i)<sup>2</sup> = 3.630.000/3.000.000 = 1,21 \u2192 1 + i = 1,1 \u2192 i = <b>10% per tahun</b>.<br>Ini kebalikan soal nilai masa depan: mencari laju pertumbuhan geometrinya.'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Berapa tahun <b>minimal</b> agar modal Rp 1.000.000,00 dengan bunga majemuk 10% per tahun <b>melebihi dua kali lipat</b>? (Petunjuk: (1,1)<sup>7</sup> \u2248 1,949; (1,1)<sup>8</sup> \u2248 2,144)',
+ opts:['7 tahun','8 tahun','10 tahun','12 tahun'],
+ ans:1,
+ exp:'Butuh (1,1)<sup>n</sup> &gt; 2.<br>Karena (1,1)<sup>7</sup> \u2248 1,949 masih di bawah 2 dan (1,1)<sup>8</sup> \u2248 2,144 sudah melewati 2, jawabannya <b>8 tahun</b> (saldo \u2248 Rp 2.143.590).'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Pinjaman daring "Cepat Cair" memakai <b>bunga majemuk 25% per minggu</b> (bunga berbunga). Bu Tuti meminjam Rp 1.000.000,00 dan tidak sanggup membayar sama sekali. <b>Total utang setelah 4 minggu</b> adalah\u2026',
+ opts:['Rp 2.000.000,00','Rp 2.441.406,25','Rp 2.250.000,00','Rp 1.562.500,00'],
+ ans:1,
+ exp:'Utang = 1.000.000 \u00D7 (1,25)<sup>4</sup> = 1.000.000 \u00D7 2,44140625 = <b>Rp 2.441.406,25</b>.<br>Lebih dari dua kali lipat hanya dalam 4 minggu! Inilah bahaya pinjol ilegal: bunga majemuk yang besar membuat utang tumbuh geometrikal dan meledak.'},
+{lvl:'C4 \u00B7 Analisis',
+ q:'Modal Rp 1.000.000,00 dibungakan majemuk 20% per tahun. Setelah berapa tahun nilainya <b>pertama kali melebihi</b> Rp 2.000.000,00? (Petunjuk: (1,2)<sup>3</sup> = 1,728; (1,2)<sup>4</sup> = 2,0736)',
+ opts:['3 tahun','5 tahun','6 tahun','4 tahun'],
+ ans:3,
+ exp:'(1,2)<sup>3</sup> = 1,728 \u2192 saldo Rp 1.728.000 (belum).<br>(1,2)<sup>4</sup> = 2,0736 \u2192 saldo Rp 2.073.600 (sudah melebihi).<br>Jadi <b>4 tahun</b>.'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Anti menabung Rp 2.000.000,00 dengan bunga majemuk 12% per tahun selama 3 tahun. Beni menabung Rp 2.000.000,00 dengan bunga majemuk 21% per tahun selama 2 tahun. Siapa yang <b>saldo akhirnya lebih banyak</b>? (Gunakan (1,12)<sup>3</sup> \u2248 1,405 dan (1,21)<sup>2</sup> = 1,4641)',
+ opts:['Anti, saldonya \u2248 Rp 2.810.000,00','Beni, saldonya Rp 2.928.200,00','Anti, saldonya \u2248 Rp 2.928.200,00','Sama banyak'],
+ ans:1,
+ exp:'Anti: 2.000.000 \u00D7 1,405 \u2248 Rp 2.810.000.<br>Beni: 2.000.000 \u00D7 1,4641 = Rp 2.928.200.<br>Jadi <b>Beni lebih banyak</b> meskipun waktunya lebih pendek \u2014 suku bunga berpengaruh eksponensial terhadap hasil.'},
+{lvl:'C5 \u00B7 Evaluasi',
+ q:'Tabungan berjangka Tuan Krisna: Tahun 1: Rp 5.500.000,00; Tahun 2: Rp 6.050.000,00; Tahun 3: Rp 6.655.000,00. Kesimpulan yang <b>paling lengkap</b> adalah\u2026',
+ opts:['Barisan geometri; modal awal Rp 5.000.000,00 dengan bunga 10% per tahun; saldo tahun ke-5 \u2248 Rp 8.052.550,00','Barisan aritmetika; modal awal Rp 5.000.000,00 dengan bunga 10% per tahun; saldo tahun ke-5 Rp 7.500.000,00','Barisan geometri; modal awal Rp 5.500.000,00 dengan bunga 10% per tahun; saldo tahun ke-5 \u2248 Rp 8.052.550,00','Barisan geometri; modal awal Rp 5.000.000,00 dengan bunga 11% per tahun; saldo tahun ke-5 \u2248 Rp 8.500.000,00'],
+ ans:0,
+ exp:'6.050.000/5.500.000 = 1,1 dan 6.655.000/6.050.000 = 1,1 \u2192 <b>geometri r = 1,1</b> (bunga 10%).<br>Modal awal = 5.500.000/1,1 = 5.000.000.<br>Tahun ke-5 = 5.000.000 \u00D7 (1,1)<sup>5</sup> = 5.000.000 \u00D7 1,61051 = <b>Rp 8.052.550,00</b>.'}
+]};
+
+/* ================= MESIN APLIKASI ================= */
+const $=id=>document.getElementById(id);
+const money=n=>'Rp '+Math.round(n).toLocaleString('id-ID');
+const money2=n=>'Rp '+Number(n).toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2});
+const LETTERS=['A','B','C','D'];
+
+/* --- Navigasi slide --- */
+const slides=[...document.querySelectorAll('.slide')];
+let cur=0;
+function go(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+  $('pbar').style.width=((cur+1)/slides.length*100)+'%';
+  $('counter').textContent=(cur+1)+' / '+slides.length;
+  window.scrollTo({top:0,behavior:'auto'});
+  if(slides[cur].id==='s-score')renderScores();
+}
+function goId(id){const k=slides.findIndex(s=>s.id===id);if(k>=0)go(k);}
+
+/* --- Status kuis --- */
+const qState={};
+Object.keys(QUIZ).forEach(k=>{qState[k]={i:0,score:0,answered:0,done:false,sel:null,checked:false,results:[]};});
+const origBody={};
+
+function qRender(k){
+  const st=qState[k],q=QUIZ[k].qs[st.i];
+  st.sel=null;st.checked=false;
+  $('q-'+k+'-num').textContent=st.i+1;
+  $('q-'+k+'-score').textContent=st.score;
+  $('q-'+k+'-lvl').textContent=q.lvl;
+  $('q-'+k+'-text').innerHTML=q.q;
+  const box=$('q-'+k+'-opts');box.innerHTML='';
+  q.opts.forEach((t,idx)=>{
+    const b=document.createElement('button');
+    b.type='button';b.className='opt';
+    b.innerHTML='<span class="optletter">'+LETTERS[idx]+'</span><span>'+t+'</span>';
+    b.addEventListener('click',()=>{
+      if(st.checked)return;
+      st.sel=idx;
+      [...box.children].forEach((c,j)=>c.classList.toggle('selected',j===idx));
+      $('q-'+k+'-check').disabled=false;
+    });
+    box.appendChild(b);
+  });
+  $('q-'+k+'-exp').style.display='none';
+  $('q-'+k+'-check').disabled=true;
+  $('q-'+k+'-next').disabled=true;
+}
+function qCheck(k){
+  const st=qState[k],q=QUIZ[k].qs[st.i];
+  if(st.sel==null||st.checked)return;
+  st.checked=true;
+  const ok=st.sel===q.ans;
+  if(ok)st.score++;
+  st.answered++;
+  st.results.push(ok);
+  [...$('q-'+k+'-opts').children].forEach((b,j)=>{
+    b.classList.add('locked');
+    if(j===q.ans)b.classList.add('correct');
+    else if(j===st.sel)b.classList.add('wrong');
+  });
+  const eb=$('q-'+k+'-exp');
+  eb.style.display='block';
+  eb.className='expbox '+(ok?'good':'bad');
+  eb.innerHTML=(ok?'<b>Benar! </b>':'<b>Belum tepat. Jawaban yang benar: '+LETTERS[q.ans]+'. </b>')+q.exp;
+  $('q-'+k+'-score').textContent=st.score;
+  $('q-'+k+'-check').disabled=true;
+  const nx=$('q-'+k+'-next');
+  nx.disabled=false;
+  nx.textContent=(st.i===QUIZ[k].qs.length-1)?'Lihat Hasil \u2192':'Soal Berikutnya \u2192';
+  saveProg();
+}
+function qNext(k){
+  const st=qState[k];
+  if(!st.checked)return;
+  if(st.i<QUIZ[k].qs.length-1){st.i++;qRender(k);}
+  else{st.done=true;qResult(k);saveProg();}
+}
+function qResult(k){
+  const st=qState[k],d=QUIZ[k];
+  const p=Math.round(st.score/QUIZ[k].qs.length*100);
+  const msg=st.score>=9?'Luar biasa! Kamu sangat menguasai materi ini.':st.score>=7?'Bagus! Sedikit lagi menuju sempurna.':st.score>=5?'Cukup. Baca ulang bagian teori, lalu coba lagi.':'Ayo pelajari kembali materinya, lalu ulangi latihan ini.';
+  $('q-'+k+'-body').innerHTML='<div class="qresult"><div class="qscore">'+st.score+'<span>/10</span></div><h3>Latihan '+d.title+' selesai</h3><p style="margin-top:6px">'+msg+'</p><p class="qpct">'+p+'% benar</p><button class="btn pri" id="q-'+k+'-retry">Ulangi Latihan</button></div>';
+  $('q-'+k+'-retry').addEventListener('click',()=>qRetry(k));
+}
+function qRetry(k){
+  Object.assign(qState[k],{i:0,score:0,answered:0,done:false,sel:null,checked:false,results:[]});
+  $('q-'+k+'-body').innerHTML=origBody[k];
+  qRender(k);saveProg();
+}
+
+/* --- Penyimpanan lokal --- */
+function saveProg(){
+  try{
+    const d={};
+    for(const k in qState){const s=qState[k];d[k]={score:s.score,answered:s.answered,done:s.done,i:s.i,results:s.results};}
+    localStorage.setItem('mk-tka-v1',JSON.stringify(d));
+  }catch(e){}
+}
+function loadProg(){
+  try{
+    const d=JSON.parse(localStorage.getItem('mk-tka-v1')||'{}');
+    for(const k in d){
+      if(!qState[k])continue;
+      Object.assign(qState[k],{
+        i:Math.min(d[k].i||0,QUIZ[k].qs.length-1),
+        score:d[k].score||0,
+        answered:d[k].answered||0,
+        done:!!d[k].done,
+        results:Array.isArray(d[k].results)?d[k].results:[],
+        sel:null,checked:false
+      });
+    }
+  }catch(e){}
+}
+
+/* --- Halaman nilai --- */
+function renderScores(){
+  const order=['anuitas','nilai','tunggal','majemuk'];
+  let h='<table class="tbl"><tr><th>Materi</th><th>Dijawab</th><th>Benar</th><th>Nilai</th><th>Status</th></tr>';
+  let tc=0;
+  order.forEach(k=>{
+    const s=qState[k],d=QUIZ[k];tc+=s.score;
+    const nilai=Math.round(s.score/QUIZ[k].qs.length*100);
+    h+='<tr><td><b>'+d.title+'</b></td><td>'+s.answered+' / '+QUIZ[k].qs.length+'</td><td>'+s.score+'</td><td><div class="scorebar" style="width:120px;vertical-align:middle"><i style="width:'+nilai+'%;background:'+d.acc+'"></i></div> '+nilai+'</td><td>'+(s.done?'Selesai':'Berjalan')+'</td></tr>';
+  });
+  h+='</table>';
+  $('score-table').innerHTML=h;
+  const pct=Math.round(tc/40*100);
+  const pred=tc>=36?'Istimewa! Kamu siap menghadapi soal HOTS TKA.':tc>=28?'Hebat \u2014 tinggal poles soal yang masih keliru.':tc>=20?'Bagus, lanjutkan latihan pada bagian yang lemah.':'Terus semangat: baca ulang teorinya, lalu kerjakan lagi latihannya.';
+  $('score-overall').innerHTML='<div class="scorebig"><div class="big">'+tc+'<span style="font-size:22px;color:#94a3b8">/40</span></div><div><b>Skor HOTS total: '+pct+'%</b><br><span style="color:#cbd5e1;font-size:14px">'+pred+'</span></div></div>';
+}
+
+/* --- Kalkulator anuitas --- */
+function calcAnuitas(){
+  const M=Math.max(0,+$('an-M').value||0);
+  const ip=Math.max(0,(+$('an-i').value||0)/100);
+  const n=Math.max(1,Math.min(24,Math.round(+$('an-n').value||1)));
+  const f=1+ip;
+  const A=ip===0?M/n:M*ip*Math.pow(f,n)/(Math.pow(f,n)-1);
+  let h='<p class="calcmajor">Anuitas (A) = <b>'+money2(A)+'</b> per periode</p>';
+  h+='<table class="tbl"><tr><th>Periode</th><th>Pembayaran (A)</th><th>Bunga</th><th>Angsuran</th><th>Sisa Pinjaman</th></tr>';
+  let sisa=M;const rows=Math.min(n,8);
+  for(let k=1;k<=rows;k++){
+    const b=sisa*ip,a=A-b;sisa=Math.max(0,sisa-a);
+    h+='<tr><td>'+k+'</td><td>'+money2(A)+'</td><td>'+money2(b)+'</td><td>'+money2(a)+'</td><td>'+money2(sisa)+'</td></tr>';
+  }
+  h+='</table>';
+  if(n>8)h+='<p style="color:#64748b;font-size:12.5px">Tabel disingkat: menampilkan 8 periode pertama dari '+n+'.</p>';
+  $('an-out').innerHTML=h;
+}
+
+/* --- Kalkulator FV/PV --- */
+function calcPV(){
+  const M=Math.max(0,+$('pv-M').value||0);
+  const ip=Math.max(0,(+$('pv-i').value||0)/100);
+  const n=Math.max(1,Math.min(40,Math.round(+$('pv-n').value||1)));
+  const mode=$('pv-mode').value;
+  const FV=mode==='s'?M*(1+ip*n):M*Math.pow(1+ip,n);
+  const PV=ip===0?M:(mode==='s'?M/(1+ip*n):M/Math.pow(1+ip,n));
+  $('pv-out').innerHTML='<div class="twores"><div class="rescard green"><span>Nilai Masa Depan (FV)</span><b>'+money2(FV)+'</b><small>'+money(M)+' dibungakan '+n+' periode \u2014 skema '+(mode==='s'?'tunggal':'majemuk')+'</small></div><div class="rescard blue"><span>Nilai Sekarang (PV)</span><b>'+money2(PV)+'</b><small>'+money(M)+' pada masa depan didiskontokan '+n+' periode</small></div></div>';
+}
+
+/* --- Kalkulator lama menabung --- */
+function calcN(){
+  const M=Math.max(0,+$('tg-M').value||0);
+  const ip=Math.max(0,(+$('tg-i').value||0)/100);
+  const T=Math.max(0,+$('tg-T').value||0);
+  const out=$('tg-out');
+  const B=T-M;
+  if(M<=0||ip<=0||B<=0){out.innerHTML='<p style="color:#b45309;font-weight:600">Isi modal awal, suku bunga, dan target saldo yang lebih besar dari modal.</p>';return;}
+  const ny=B/(M*ip);
+  const yr=Math.floor(ny),bl=Math.round((ny-yr)*12);
+  let durasi;
+  if(bl===12){durasi=(yr+1)+' tahun';}
+  else if(yr===0){durasi=Math.round(ny*12)+' bulan';}
+  else if(bl===0){durasi=yr+' tahun';}
+  else{durasi=yr+' tahun '+bl+' bulan';}
+  let h='<p class="calcmajor">Lama menabung = <b>'+durasi+'</b> ('+ny.toLocaleString('id-ID',{maximumFractionDigits:2})+' tahun)</p>';
+  h+='<p style="font-size:14px;color:#475569">Bunga dibutuhkan: '+money(B)+' \u00B7 bunga per tahun: '+money(M*ip)+' \u2192 n = '+money(B)+' \u00F7 '+money(M*ip)+'</p>';
+  h+='<table class="tbl"><tr><th>Akhir tahun ke</th><th>Saldo (bunga tunggal)</th></tr>';
+  const rows=Math.min(Math.ceil(ny)+1,12);
+  for(let k=0;k<=rows;k++){
+    const saldo=M*(1+ip*k);
+    h+='<tr'+(saldo>=T?' class="hi"':'')+'><td>'+k+'</td><td>'+money(saldo)+'</td></tr>';
+    if(saldo>=T)break;
+  }
+  h+='</table>';
+  out.innerHTML=h;
+}
+
+/* --- Grafik tunggal vs majemuk --- */
+function drawChart(){
+  const M=Math.max(1000,+$('ch-M').value||1000000);
+  const ip=(+$('ch-i').value||10)/100;
+  const n=Math.max(1,Math.min(10,Math.round(+$('ch-n').value||5)));
+  $('ch-iv').textContent=(+$('ch-i').value).toLocaleString('id-ID');
+  $('ch-nv').textContent=n;
+  const max=Math.max(M*Math.pow(1+ip,n),M*(1+ip*n));
+  let h='';
+  for(let k=0;k<=n;k++){
+    const c=M*Math.pow(1+ip,k),s=M*(1+ip*k);
+    h+='<div class="bargroup"><div class="bars"><div class="bar s" style="height:'+(s/max*100)+'%" title="Tunggal: '+money(s)+'"></div><div class="bar c" style="height:'+(c/max*100)+'%" title="Majemuk: '+money(c)+'"></div></div><span>'+k+'</span></div>';
+  }
+  $('chart-bars').innerHTML=h;
+  const c=M*Math.pow(1+ip,n),s=M*(1+ip*n);
+  $('chart-info').innerHTML='<p class="calcmajor">Tahun ke-'+n+': majemuk <b>'+money(c)+'</b> \u00B7 tunggal <b>'+money(s)+'</b> \u00B7 selisih <b class="hl">'+money(c-s)+'</b></p>';
+}
+
+/* --- Inisialisasi --- */
+document.querySelectorAll('[data-goto]').forEach(el=>el.addEventListener('click',()=>goId(el.dataset.goto)));
+$('btn-prev').addEventListener('click',()=>go(cur-1));
+$('btn-next').addEventListener('click',()=>go(cur+1));
+$('btn-menu').addEventListener('click',()=>goId('s-menu'));
+document.addEventListener('keydown',e=>{
+  if(e.target&&/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;
+  if(e.key==='ArrowRight')go(cur+1);
+  if(e.key==='ArrowLeft')go(cur-1);
+});
+for(const k in QUIZ){
+  origBody[k]=$('q-'+k+'-body').innerHTML;
+  $('q-'+k+'-check').addEventListener('click',()=>qCheck(k));
+  $('q-'+k+'-next').addEventListener('click',()=>qNext(k));
+}
+$('an-go').addEventListener('click',calcAnuitas);
+$('pv-go').addEventListener('click',calcPV);
+$('tg-go').addEventListener('click',calcN);
+['ch-i','ch-n','ch-M'].forEach(id=>$(id).addEventListener('input',drawChart));
+$('btn-reset').addEventListener('click',()=>{
+  try{localStorage.removeItem('mk-tka-v1');}catch(e){}
+  for(const k in qState)Object.assign(qState[k],{i:0,score:0,answered:0,done:false,sel:null,checked:false,results:[]});
+  for(const k in QUIZ){$('q-'+k+'-body').innerHTML=origBody[k];qRender(k);}
+  renderScores();
+});
+loadProg();
+for(const k in QUIZ){if(qState[k].done)qResult(k);else qRender(k);}
+drawChart();
+calcAnuitas();
+calcPV();
+calcN();
+go(0);
+</script>
+</body>
+</html>
