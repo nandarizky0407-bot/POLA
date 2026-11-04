@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLA QUEST 🚀 Latihan Seru Pola Bilangan &amp; Pola Gambar — Kelas 3 SD</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --ink:#1e293b;--bg1:#0b1443;--bg2:#31216b;
+  --yellow:#ffd93d;--green:#22c55e;--red:#ef4444;--blue:#3b82f6;
+  --sky:#38bdf8;--orange:#fb923c;--purple:#8b5cf6;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Baloo 2','Comic Sans MS','Chalkboard SE','Segoe UI',sans-serif;
+  background:linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 55%,#1b1040 100%);
+  background-attachment:fixed;color:var(--ink);min-height:100vh;overflow-x:hidden}
+/* ====== dekorasi latar angkasa ====== */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+   radial-gradient(2px 2px at 12% 22%,#ffffff88 50%,transparent 51%),
+   radial-gradient(1.6px 1.6px at 68% 12%,#ffffff66 50%,transparent 51%),
+   radial-gradient(2px 2px at 84% 38%,#ffffff77 50%,transparent 51%),
+   radial-gradient(1.4px 1.4px at 32% 62%,#ffffff55 50%,transparent 51%),
+   radial-gradient(2px 2px at 55% 80%,#ffffff66 50%,transparent 51%),
+   radial-gradient(1.6px 1.6px at 8% 88%,#ffffff55 50%,transparent 51%),
+   radial-gradient(2px 2px at 92% 74%,#ffffff77 50%,transparent 51%),
+   radial-gradient(1.4px 1.4px at 44% 42%,#ffffff44 50%,transparent 51%);
+  animation:twinkle 3.5s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.55}to{opacity:1}}
+.ffloat{position:fixed;font-size:2.1rem;opacity:.45;pointer-events:none;z-index:0;animation:floaty 9s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-24px) rotate(10deg)}}
+/* ====== kerangka ====== */
+#app{position:relative;z-index:1;max-width:840px;margin:0 auto;padding:14px 14px 46px}
+.screen{display:none;animation:fadein .45s ease}
+.screen.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.card{background:#fff;border-radius:24px;padding:20px;box-shadow:0 10px 0 rgba(8,12,40,.35),0 26px 60px rgba(0,0,0,.35)}
+h1,h2,h3{line-height:1.2}
+button{font-family:inherit}
+/* ====== layar awal ====== */
+.start-hero{text-align:center;padding:26px 14px 24px}
+.logo-badge{font-size:66px;display:inline-block;animation:wiggle 3.2s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg) translateY(-6px)}}
+.start-hero h1{font-size:clamp(40px,9vw,62px);color:#fff;letter-spacing:3px;text-shadow:0 6px 0 rgba(0,0,0,.35)}
+.start-hero h1 span{color:var(--yellow)}
+.subtitle{color:#c7d2fe;font-weight:700;margin:4px 0 10px;font-size:16.5px}
+.mascot-big{font-size:88px;line-height:1.1;animation:bounce 2.4s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.bubble{position:relative;background:#eef2ff;border:3px solid #c7d2fe;border-radius:16px;padding:10px 16px;font-weight:700;color:#3730a3;font-size:15.5px;margin-top:10px;display:inline-block;max-width:520px}
+.name-wrap{margin:16px auto 6px;max-width:360px}
+#nameInput{width:100%;font-family:inherit;font-size:19px;font-weight:800;text-align:center;padding:13px 18px;border:3px solid #cbd5e1;border-radius:999px;outline:none;color:var(--ink)}
+#nameInput:focus{border-color:var(--blue);box-shadow:0 0 0 4px #3b82f633}
+.name-hint{color:#94a3b8;font-size:13px;font-weight:700;margin-top:5px}
+.rules{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 6px}
+.rule{background:rgba(9,14,48,.75);border:2px solid rgba(255,255,255,.16);color:#e2e8f0;padding:7px 13px;border-radius:999px;font-weight:700;font-size:13.5px}
+.btn{font-family:inherit;font-weight:800;border:none;border-radius:18px;padding:13px 22px;font-size:18px;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.28);transition:transform .12s,box-shadow .12s;letter-spacing:.3px}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.28)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.btn-primary{background:linear-gradient(180deg,#60a5fa,#3b82f6);color:#fff}
+.btn-success{background:linear-gradient(180deg,#4ade80,#22c55e);color:#053b16}
+.btn-warn{background:linear-gradient(180deg,#fbbf24,#f59e0b);color:#4a2c00}
+.btn-ghost{background:#f1f5f9;color:#334155;box-shadow:0 6px 0 #cbd5e1}
+.btn-big{font-size:22px;padding:16px 36px;border-radius:22px}
+.best-line{color:#a5b4fc;font-weight:700;margin-top:14px;font-size:14.5px}
+/* ====== HUD ====== */
+.hud{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.hud-group{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.chip{background:rgba(9,14,48,.78);border:2px solid rgba(255,255,255,.16);color:#e2e8f0;padding:6px 12px;border-radius:999px;font-weight:800;font-size:13.5px;white-space:nowrap}
+.chip b{color:var(--yellow)}
+.icon-btn{background:rgba(9,14,48,.78);border:2px solid rgba(255,255,255,.16);color:#fff;font-size:16px;border-radius:999px;width:38px;height:38px;cursor:pointer;transition:transform .12s}
+.icon-btn:hover{transform:scale(1.1)}
+.progress-wrap{margin:4px 0 16px}
+.progress{position:relative;height:17px;background:rgba(9,14,48,.65);border-radius:999px;border:2px solid rgba(255,255,255,.18)}
+#progressFill{height:100%;width:0%;background:linear-gradient(90deg,var(--yellow),#4ade80);border-radius:999px;transition:width .5s ease}
+#rocket{position:absolute;top:-15px;left:0;transform:translateX(-50%);font-size:24px;transition:left .5s ease;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}
+#missionLabel{text-align:center;color:#c7d2fe;font-weight:800;font-size:13.5px;margin-top:7px;letter-spacing:.4px}
+/* ====== kartu soal ====== */
+.qcard{margin-bottom:18px}
+.qcard.wrongflash{animation:shake .45s}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.topic-chip{padding:5px 13px;border-radius:999px;font-weight:800;font-size:13.5px}
+.topic-chip.g{background:#ffe4e6;color:#be123c}
+.topic-chip.b{background:#dbeafe;color:#1d4ed8}
+.qnum{color:#64748b;font-weight:800;font-size:14px}
+.qimg{margin:14px 0 4px;padding:14px 10px;background:#f8fafc;border:3px dashed #cbd5e1;border-radius:18px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
+.pbox{background:#fff;border:3px solid #475569;border-radius:16px;padding:8px 10px;display:inline-flex;flex-direction:column;gap:5px;box-shadow:0 4px 0 rgba(30,41,59,.15);min-width:110px;min-height:56px;justify-content:center;align-items:center}
+.prow{display:flex;gap:6px;justify-content:center}
+.pcell{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1}
+.pcell.qm{border:3px dashed #94a3b8;border-radius:10px;color:#94a3b8;font-weight:800;font-size:22px;background:#fffbeb}
+.pline{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;align-items:center}
+.pline .pcell{width:52px;height:52px;background:#fff;border:3px solid #475569;border-radius:14px;font-size:30px;box-shadow:0 4px 0 rgba(30,41,59,.15)}
+.pline .pcell.qm{background:#fffbeb}
+.qtext{font-size:19px;font-weight:700;margin:14px 0 4px;line-height:1.55}
+.qteks{background:#f1f5f9;border-left:6px solid var(--sky);border-radius:12px;padding:12px 14px;font-weight:600;font-size:16.5px;line-height:1.6;margin:10px 0 2px;color:#334155}
+/* pilihan jawaban */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:14px}
+@media (max-width:540px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:3px solid #e2e8f0;background:#f8fafc;border-radius:16px;font-weight:800;font-size:17.5px;color:var(--ink);cursor:pointer;text-align:left;transition:transform .13s,box-shadow .13s;box-shadow:0 4px 0 #d7dfeb;font-family:inherit}
+.opt:hover{transform:translateY(-2px)}
+.opt .letter{width:34px;height:34px;border-radius:10px;background:#1e293b;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15.5px;flex:none}
+.opt.sel{background:#e0edff;border-color:var(--blue);box-shadow:0 4px 0 #93b8f0}
+.opt.ok{background:#dcfce7;border-color:#16a34a;box-shadow:0 4px 0 #86efac;animation:pop .35s}
+.opt.no{background:#fee2e2;border-color:#dc2626;box-shadow:0 4px 0 #fca5a5;animation:shake .4s;opacity:.8}
+.opt.dis{pointer-events:none;opacity:.6}
+.opt.ok.dis,.opt.no.dis{opacity:1}
+.opt.emoji .txt{font-size:36px;line-height:1.2}
+.opt .txt{word-break:break-word}
+.input-row{display:flex;gap:10px;margin-top:16px}
+#ansInput{flex:1;font-family:inherit;font-size:23px;font-weight:800;text-align:center;padding:12px;border:3px solid #cbd5e1;border-radius:16px;outline:none;color:var(--ink);min-width:0}
+#ansInput:focus{border-color:var(--blue);box-shadow:0 0 0 4px #3b82f633}
+#ansInput.right{border-color:#16a34a;background:#f0fdf4}
+#ansInput.shake{animation:shake .4s;border-color:#dc2626}
+.input-hint{color:#94a3b8;font-size:13px;font-weight:700;margin-top:7px;text-align:center}
+/* umpan balik & pembahasan */
+.feedback{display:none;margin-top:14px;padding:13px 16px;border-radius:16px;font-weight:800;font-size:17.5px;line-height:1.45}
+.feedback.ok{display:block;background:#dcfce7;color:#166534;border:3px solid #86efac;animation:pop .35s}
+.feedback.no{display:block;background:#fee2e2;color:#991b1b;border:3px solid #fca5a5;animation:shake .4s}
+.exp-panel{display:none;margin-top:12px;background:#fffbeb;border:3px solid #fcd34d;border-radius:16px;padding:14px 16px}
+.exp-panel h4{color:#92400e;font-size:16.5px;margin-bottom:6px;letter-spacing:.3px}
+.exp-panel p{font-size:16px;line-height:1.6;color:#713f12;font-weight:600}
+.mascot-row{display:flex;align-items:center;gap:12px;margin-top:14px}
+.mascot{font-size:40px;line-height:1;animation:bounce 2.4s ease-in-out infinite;flex:none}
+.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.action-row.center{justify-content:center}
+/* ====== overlay misi ====== */
+.overlay{position:fixed;inset:0;background:rgba(8,14,52,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:50;padding:18px}
+.overlay.active{display:flex}
+.overlay-card{background:#fff;border-radius:28px;padding:32px 26px;text-align:center;max-width:440px;width:100%;animation:pop .5s;box-shadow:0 14px 0 rgba(0,0,0,.3)}
+.mission-emoji{font-size:76px;line-height:1.15;animation:bounce 2s ease-in-out infinite}
+.overlay-card h2{font-size:34px;margin-top:6px;letter-spacing:1px}
+#lvSub{color:var(--purple);font-weight:800;font-size:21px;margin-top:2px}
+#lvMsg{color:#475569;font-weight:700;margin:10px 0 18px;font-size:16px;line-height:1.55}
+/* ====== toast lencana ====== */
+#toastBadge{position:fixed;top:14px;left:50%;transform:translate(-50%,-140px);background:#fff;border-radius:18px;padding:12px 22px;font-weight:800;z-index:60;box-shadow:0 12px 34px rgba(0,0,0,.4);border:3px solid var(--yellow);transition:transform .45s ease;display:flex;gap:10px;align-items:center;font-size:16px;white-space:nowrap}
+#toastBadge.show{transform:translate(-50%,0)}
+#toastBadge .t-em{font-size:30px}
+/* ====== layar akhir ====== */
+.final-hero{text-align:center;padding:26px 16px}
+.trophy{font-size:92px;line-height:1.15;animation:pop .7s}
+.rank{font-size:clamp(26px,6vw,36px);font-weight:800;color:#0b1443;margin:8px 0 2px;letter-spacing:1px;text-shadow:0 3px 0 #ffd93d}
+.fmsg{color:#475569;font-weight:700;font-size:16px;margin-bottom:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px;margin:18px 0 6px}
+.stat{background:#f8fafc;border:3px solid #e2e8f0;border-radius:18px;padding:12px 8px}
+.stat b{font-size:25px;display:block;color:var(--ink)}
+.stat span{font-size:12.5px;color:#64748b;font-weight:800}
+.bh{margin:16px 0 10px;color:#0b1443;letter-spacing:.5px;font-size:20px}
+#screen-final .best-line{color:#64748b}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px}
+.badge-card{background:#fff;border:3px solid #e2e8f0;border-radius:16px;padding:12px 8px;text-align:center}
+.badge-card .b-em{font-size:36px;line-height:1.2}
+.badge-card .b-name{font-weight:800;font-size:14px;margin-top:2px}
+.badge-card .b-desc{font-size:11.5px;color:#64748b;font-weight:700;line-height:1.35;margin-top:2px}
+.badge-card.locked{opacity:.32;filter:grayscale(1)}
+.badge-card.earned{border-color:var(--yellow);box-shadow:0 4px 0 #fbbf24;animation:pop .5s}
+/* ====== layar pengayaan ====== */
+.enrich-head{text-align:center;margin-bottom:16px}
+.enrich-head h2{font-size:30px;color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.3)}
+.enrich-sub{color:#c7d2fe;font-weight:700;margin-top:4px;font-size:15.5px}
+.link-card{display:flex;align-items:center;gap:14px;background:#fff;border-radius:20px;padding:15px 16px;margin-bottom:12px;border:3px solid #e2e8f0;box-shadow:0 6px 0 rgba(8,12,40,.25);text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.link-card:hover{transform:translateY(-3px);box-shadow:0 9px 0 rgba(8,12,40,.25)}
+.lc-emoji{font-size:38px;background:#fef9c3;border:3px solid #fde68a;border-radius:14px;width:66px;height:66px;display:flex;align-items:center;justify-content:center;flex:none}
+.lc-title{font-weight:800;font-size:17px;display:block}
+.lc-sub{font-size:13.5px;color:#64748b;font-weight:700;display:block;margin-top:1px}
+.lc-arrow{margin-left:auto;font-size:24px;font-weight:800;color:#94a3b8}
+.enrich-note{color:#94a3b8;font-weight:700;font-size:13px;text-align:center;margin-top:4px}
+/* ====== konfeti ====== */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
+#confetti i{position:absolute;top:-18px;display:block;border-radius:3px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(760deg)}}
+@keyframes pop{0%{transform:scale(.55);opacity:0}70%{transform:scale(1.09)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<span class="ffloat" style="top:9%;left:4%;animation-delay:.2s">🪐</span>
+<span class="ffloat" style="top:16%;right:6%;animation-delay:1.4s">⭐</span>
+<span class="ffloat" style="top:56%;left:2.5%;animation-delay:2.6s">🛸</span>
+<span class="ffloat" style="top:72%;right:4%;animation-delay:.9s">☄️</span>
+<span class="ffloat" style="top:38%;right:10%;animation-delay:3.4s">🌙</span>
+
+<div id="app">
+
+  <!-- ================= LAYAR AWAL ================= -->
+  <section id="screen-start" class="screen active">
+    <div class="start-hero">
+      <div class="logo-badge">🚀</div>
+      <h1>POLA <span>QUEST</span></h1>
+      <p class="subtitle">Petualangan Seru Pola Bilangan &amp; Pola Gambar · Kelas 3 SD · Bab 3</p>
+      <div class="mascot-big">🤖</div><br>
+      <div class="bubble" id="bubbleStart">Hai, Kadet! Aku <b>ROBO</b>, robot pemandumu! 🤖<br>Ada <b>50 misi soal</b> menantimu. Siap menjadi <b>Master Pola</b>?</div>
+      <div class="name-wrap">
+        <input id="nameInput" type="text" maxlength="16" placeholder="Tulis namamu di sini…" autocomplete="off">
+        <p class="name-hint">✏️ Kosongkan saja kalau tidak mau, Kadet!</p>
+      </div>
+      <div class="rules">
+        <span class="rule">🧭 50 Misi Soal</span>
+        <span class="rule">💎 Kumpulkan Permata</span>
+        <span class="rule">⭐ Raih 3 Bintang</span>
+        <span class="rule">🔥 Jaga Streak</span>
+        <span class="rule">🎖️ Kumpulkan Lencana</span>
+        <span class="rule">💡 Ada Pembahasan</span>
+      </div>
+      <div class="action-row center" style="margin-top:14px">
+        <button class="btn btn-primary btn-big" id="btnStart">🚀 MULAI MISI</button>
+      </div>
+      <div class="action-row center">
+        <button class="btn btn-warn" id="btnStartEnrich">🎁 Slide Pengayaan</button>
+      </div>
+      <p class="best-line" id="bestLine"></p>
+    </div>
+  </section>
+
+  <!-- ================= LAYAR KUIS ================= -->
+  <section id="screen-quiz" class="screen">
+    <div class="hud">
+      <div class="hud-group">
+        <span class="chip" id="hudMission">🌱 Misi 1</span>
+        <span class="chip" id="hudQ">Soal 1/50</span>
+      </div>
+      <div class="hud-group">
+        <span class="chip">💎 <b id="hudScore">0</b></span>
+        <span class="chip">🔥 <b id="hudStreak">0</b></span>
+        <button class="icon-btn" id="btnMute" title="Suara nyala/mati">🔊</button>
+        <button class="icon-btn" id="btnGift" title="Slide Pengayaan">🎁</button>
+        <button class="icon-btn" id="btnRestart" title="Ulangi dari awal">↺</button>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress"><div id="progressFill"></div><div id="rocket">🚀</div></div>
+      <div id="missionLabel">Misi 1 · Kadet Pola 🌱</div>
+    </div>
+
+    <div class="card qcard" id="qcard">
+      <div class="qtop">
+        <span class="topic-chip b" id="qTopic">🔢 Pola Bilangan</span>
+        <span class="qnum" id="qNum">Soal 1 dari 50</span>
+      </div>
+      <div id="qTeks" class="qteks" style="display:none"></div>
+      <div id="qImg" class="qimg"></div>
+      <p class="qtext" id="qText"></p>
+      <div id="optWrap"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="mascot-row">
+        <div class="mascot">🤖</div>
+        <div class="bubble" id="mascotBubble" style="margin-top:0">Cermati polanya dulu, ya! 🔍</div>
+      </div>
+      <div class="exp-panel" id="expPanel">
+        <h4>💡 Pembahasan</h4>
+        <p id="expText"></p>
+      </div>
+      <div class="action-row">
+        <button class="btn btn-primary" id="btnCheck" disabled>✅ Cek Jawaban</button>
+        <button class="btn btn-ghost" id="btnExp" style="display:none">💡 Lihat Pembahasan</button>
+        <button class="btn btn-success" id="btnNext" style="display:none">Soal Berikutnya ➜</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LAYAR AKHIR ================= -->
+  <section id="screen-final" class="screen">
+    <div class="card final-hero">
+      <div class="trophy" id="fTrophy">🏆</div>
+      <div class="rank" id="fRank">MASTER POLA</div>
+      <p class="fmsg" id="fMsg"></p>
+      <div class="stats">
+        <div class="stat"><b id="fScore">0</b><span>💎 PERMATA</span></div>
+        <div class="stat"><b id="fStars">0/150</b><span>⭐ BINTANG</span></div>
+        <div class="stat"><b id="fAcc">0%</b><span>✅ AKURASI</span></div>
+        <div class="stat"><b id="fTime">0:00</b><span>⏱️ WAKTU</span></div>
+      </div>
+      <h3 class="bh">🎖️ Koleksi Lencana</h3>
+      <div class="badges-grid" id="badgesGrid"></div>
+      <p class="best-line" id="fBest"></p>
+      <div class="action-row center">
+        <button class="btn btn-primary btn-big" id="btnReplay">🔄 Main Lagi</button>
+        <button class="btn btn-success btn-big" id="btnToEnrich">🎁 Lanjut Pengayaan</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LAYAR PENGAYAAN ================= -->
+  <section id="screen-enrich" class="screen">
+    <div class="enrich-head">
+      <h2>🎁 Ruang Pengayaan</h2>
+      <p class="enrich-sub">Mau belajar makin jago? Klik salah satu tombol di bawah, ya!</p>
+    </div>
+    <div class="card">
+      <a class="link-card" href="https://nandarizky0407-bot.github.io/POLA/polabilangan.html" target="_blank" rel="noopener">
+        <span class="lc-emoji">📘</span>
+        <span><span class="lc-title">Materi Pola Bilangan</span><span class="lc-sub">Belajar ulang pola bilangan dengan cara seru</span></span>
+        <span class="lc-arrow">➜</span>
+      </a>
+      <a class="link-card" href="https://nandarizky0407-bot.github.io/POLA/polagambar.html" target="_blank" rel="noopener">
+        <span class="lc-emoji">🎨</span>
+        <span><span class="lc-title">Materi Pola Gambar</span><span class="lc-sub">Belajar ulang pola gambar dengan cara seru</span></span>
+        <span class="lc-arrow">➜</span>
+      </a>
+      <a class="link-card" href="https://wayground.com/activity/admin/quiz/6a926c42d8be15b2660b0777" target="_blank" rel="noopener">
+        <span class="lc-emoji">🎮</span>
+        <span><span class="lc-title">Kuis Latihan Pola</span><span class="lc-sub">Uji kemampuanmu di kuis latihan interaktif</span></span>
+        <span class="lc-arrow">➜</span>
+      </a>
+      <p class="enrich-note">🔗 Tautan terbuka di tab baru. Minta pendampingan guru atau orang tua, ya! 😊</p>
+      <div class="action-row center">
+        <button class="btn btn-ghost" id="btnBackEnrich">⬅ Kembali</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- overlay kenaikan misi -->
+<div class="overlay" id="overlayLevel">
+  <div class="overlay-card">
+    <div class="mission-emoji" id="lvEmoji">🚀</div>
+    <h2 id="lvTitle">MISI 1</h2>
+    <p id="lvSub">Kadet Pola</p>
+    <p id="lvMsg">Selamat datang, Kadet!</p>
+    <button class="btn btn-primary btn-big" id="btnLvNext">Lanjut Misi! 💪</button>
+  </div>
+</div>
+
+<!-- toast lencana -->
+<div id="toastBadge"><span class="t-em">🎖️</span><span id="toastText">Lencana baru!</span></div>
+
+<!-- kontainer konfeti -->
+<div id="confetti"></div>
+<script>
+// ============ HELPER VISUAL POLA ============
+function boxRow(cells){
+  return '<div class="prow">' + cells.map(function(c){
+    return '<span class="pcell' + (c === '?' ? ' qm' : '') + '">' + c + '</span>';
+  }).join('') + '</div>';
+}
+// kotak berisi baris-baris objek; rows: array (tiap item bisa string atau array string)
+function box(rows, cls){
+  rows = rows.map(function(r){ return Array.isArray(r) ? r : [r]; });
+  return '<div class="pbox ' + (cls || '') + '">' + rows.map(boxRow).join('') + '</div>';
+}
+// baris panjang pola berulang
+function line(cells){
+  return '<div class="pline">' + cells.map(function(c){
+    return '<span class="pcell' + (c === '?' ? ' qm' : '') + '">' + c + '</span>';
+  }).join('') + '</div>';
+}
+// ulang array n kali
+function rep(arr, n){
+  var out = [];
+  for (var i = 0; i < n; i++) out = out.concat(arr);
+  return out;
+}
+function many(em, n){
+  var out = [];
+  for (var i = 0; i < n; i++) out.push(em);
+  return out;
+}
+
+</script>
+<script>
+// ============ DATA SOAL 1-15 (berdasarkan file SOAL LATIHAN SUMATIF BAB 3) ============
+const QUESTIONS = [
+
+// ---- SOAL 1: pola segitiga 1,3,5 -> 7
+{ t:'G', type:'mc',
+  img: box([['🔺']]) + box([['🔺','🔺','🔺']]) + box([['🔺','🔺','🔺','🔺','🔺']]) + box(['?']),
+  q:'Perhatikan pola gambar di atas! Banyak segitiga pada kotak selanjutnya adalah …',
+  opts:['6','7','8','9'], ans:1,
+  exp:'Banyak segitiga bertambah 2 setiap kotak: 1, 3, 5, 7 (pola bilangan ganjil). Jadi 5 + 2 = <b>7</b>. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 2: pola bola 10,8,?,4 -> 6
+{ t:'G', type:'mc',
+  img: box([many('⚽',5), many('⚽',5)]) + box([many('⚽',4), many('⚽',4)]) + box(['?']) + box([many('⚽',2), many('⚽',2)]),
+  q:'Banyak bola pada kotak yang kosong adalah …',
+  opts:['4','5','6','7'], ans:2,
+  exp:'Banyak bola berkurang 2 setiap kotak: 10, 8, 6, 4. Jadi kotak kosong berisi 8 − 2 = <b>6</b> bola. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 3: pola bunga berulang
+{ t:'G', type:'mc', emoji:true,
+  img: line(['🌹','🌼','🌻','🌷','🌹','🌼','?','🌷']),
+  q:'Selanjutnya adalah gambar bunga …',
+  opts:['🌹','🌼','🌻','🌷'], ans:2,
+  exp:'Pola bunga berulang: mawar 🌹 → melati 🌼 → matahari 🌻 → tulip 🌷. Setelah melati 🌼 selalu muncul matahari 🌻. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 4: pola titik kuning 8,6,4 -> 2
+{ t:'G', type:'mc',
+  img: box([many('🟡',4), many('🟡',4)]) + box([many('🟡',3), many('🟡',3)]) + box([many('🟡',2), many('🟡',2)]) + box(['?']),
+  q:'Jumlah titik kuning pada kotak selanjutnya adalah …',
+  opts:['0','1','2','3'], ans:2,
+  exp:'Banyak titik berkurang 2 setiap kotak: 8, 6, 4, 2. Jadi 4 − 2 = <b>2</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 5: pola bola voli piramida 16,12,8 -> 4
+{ t:'G', type:'mc',
+  img: box([['🏐'], ['🏐','🏐','🏐'], ['🏐','🏐','🏐','🏐','🏐'], ['🏐','🏐','🏐','🏐','🏐','🏐','🏐']]) +
+       box([many('🏐',5), many('🏐',7)]) +
+       box([many('🏐',3), many('🏐',5)]) +
+       box(['?']),
+  q:'Perhatikan banyak bola pada setiap kotak! Pola gambar selanjutnya adalah kotak dengan bola sebanyak …',
+  opts:['6','5','4','3'], ans:2,
+  exp:'Banyak bola berkurang 4 setiap kotak: 16, 12, 8, 4. Jadi 8 − 4 = <b>4</b> bola. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 6: pola selisih 4
+{ t:'B', type:'mc',
+  img:'',
+  q:'Pola bilangan dengan selisih 4 adalah …',
+  opts:['6, 10, 12, 16','6, 10, 14, 18','6, 11, 15, 18','6, 11, 15, 19'], ans:1,
+  exp:'Selisih 4 artinya setiap bilangan bertambah 4: 6 + 4 = 10, 10 + 4 = 14, 14 + 4 = 18. Yang benar: <b>6, 10, 14, 18</b>. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 7: teks kursi gedung
+{ t:'B', type:'mc',
+  img:'',
+  teks:'Di suatu gedung serba guna terdapat lima baris kursi. Pada baris paling depan tersedia 20 kursi, baris kedua tersedia 30 kursi. Pada baris ke-3 tersedia 40 kursi.',
+  q:'Jumlah kursi pada baris ke-5 adalah …',
+  opts:['50','60','70','80'], ans:1,
+  exp:'Pola banyak kursi bertambah 10: 20, 30, 40, 50, 60. Baris ke-4 = 50 kursi, baris ke-5 = 40 + 10 = <b>60</b> kursi. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 8: 2,4,6,8 -> 10
+{ t:'B', type:'mc',
+  img:'',
+  q:'Perhatikan pola bilangan berikut!<br><b>2, 4, 6, 8, …</b><br>Pola bilangan yang tepat untuk melengkapi adalah …',
+  opts:['9','10','11','12'], ans:1,
+  exp:'Polanya loncat 2 (bilangan genap): 2, 4, 6, 8, 10. Jadi 8 + 2 = <b>10</b>. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 9: 20,17,14,11 -> 8 dan 5
+{ t:'B', type:'mc',
+  img:'',
+  q:'Perhatikan pola bilangan berikut!<br><b>20, 17, 14, 11, …</b><br>Dua bilangan selanjutnya dari pola tersebut adalah …',
+  opts:['9 dan 6','8 dan 5','10 dan 8','7 dan 4'], ans:1,
+  exp:'Polanya berkurang 3: 11 − 3 = 8, lalu 8 − 3 = 5. Jadi dua bilangan berikutnya <b>8 dan 5</b>. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 10: 5,10,15,20 -> 25,30,35
+{ t:'B', type:'mc',
+  img:'',
+  q:'Tiga bilangan berikut dari pola bilangan <b>5, 10, 15, 20, …</b> adalah …',
+  opts:['25, 30, 35','22, 24, 26','21, 22, 23','30, 40, 50'], ans:0,
+  exp:'Polanya loncat 5: 20 + 5 = 25, 25 + 5 = 30, 30 + 5 = 35. Jawaban: <b>A</b>.' },
+
+// ---- SOAL 11: pola apel membesar (isian)
+{ t:'G', type:'input',
+  img: box([['🍎','🍎']]) + box(['?']) + box([many('🍎',3), many('🍎',3)]) + box([many('🍎',4), many('🍎',4)]),
+  q:'Perhatikan pola gambar di atas! Banyak apel untuk melengkapi kotak kedua adalah …',
+  ans:'4',
+  exp:'Pola apel membesar bertambah 2: 2, 4, 6, 8. Jadi kotak kedua berisi 2 + 2 = <b>4</b> apel.' },
+
+// ---- SOAL 12: pola persegi biru mengecil 12,8,4 -> kosong
+{ t:'G', type:'mc',
+  img: box([many('🟦',4), many('🟦',4), many('🟦',4)]) + box([many('🟦',4), many('🟦',4)]) + box([many('🟦',2), many('🟦',2)]) + box(['?']),
+  q:'Perhatikan pola gambar di atas! Pola gambar selanjutnya adalah …',
+  opts:['8 persegi 🟦','6 persegi 🟦','Kotak kosong (0 persegi)','2 persegi 🟦'], ans:2,
+  exp:'Banyak persegi berkurang 4: 12, 8, 4, 0. Jadi 4 − 4 = 0, kotak selanjutnya <b>kosong</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 13: loncat 12 (isian)
+{ t:'B', type:'input',
+  img:'',
+  q:'Perhatikan pola bilangan berikut!<br><b>12, 24, 36, 48, 60</b><br>Bilangan tersebut termasuk pola bilangan loncat …',
+  ans:'12',
+  exp:'24 − 12 = 12, 36 − 24 = 12, 48 − 36 = 12, 60 − 48 = 12. Setiap bilangan melompat 12, jadi pola loncat <b>12</b>.' },
+
+// ---- SOAL 14: teks cokelat Ibu
+{ t:'B', type:'mc',
+  img:'',
+  teks:'Ibu mempunyai banyak cokelat yang dikumpulkan di dalam tempat dengan jumlah yang berbeda. Kumpulan pertama ada 9 batang, kumpulan kedua 7 batang, kumpulan ketiga 5 batang.',
+  q:'Pola bilangan yang tepat untuk banyak cokelat Ibu adalah …',
+  opts:['9, 7, 5, 3, 1','9, 7, 5, 4, 3','9, 8, 7, 6, 5','9, 6, 3, 1'], ans:0,
+  exp:'Setiap kumpulan berkurang 2 batang: 9, 7, 5, lalu 5 − 2 = 3 dan 3 − 2 = 1. Jadi polanya <b>9, 7, 5, 3, 1</b>. Jawaban: <b>A</b>.' },
+
+// ---- SOAL 15: teks Andi menabung
+{ t:'B', type:'mc',
+  img:'',
+  teks:'Andi seorang anak rajin menabung di celengan selama 10 bulan berturut-turut dengan peningkatan antar bulan tetap. Pada bulan pertama Andi menabung Rp50.000. Bulan kedua Rp100.000. Bulan ketiga Rp150.000.',
+  q:'Banyak tabungan Andi pada bulan ke-10 adalah …',
+  opts:['Rp400.000','Rp450.000','Rp500.000','Rp550.000'], ans:2,
+  exp:'Tabungan bertambah Rp50.000 setiap bulan: bulan ke-4 = Rp200.000, ke-5 = Rp250.000 … bulan ke-10 = 10 × Rp50.000 = <b>Rp500.000</b>. Jawaban: <b>C</b>.' }
+
+];
+
+</script>
+<script>
+// ============ DATA SOAL 16-50 (35 soal baru, setipe dengan file) ============
+QUESTIONS.push(
+
+// ---- SOAL 16: selang-seling buah
+{ t:'G', type:'mc', emoji:true,
+  img: line(['🍎','🍐','🍎','🍐','🍎','?']),
+  q:'Buah apa yang tepat untuk melengkapi pola di atas?',
+  opts:['🍎','🍐','🍌','🍇'], ans:1,
+  exp:'Polanya berselang-seling: apel 🍎 → pear 🍐 → apel 🍎 → pear 🍐. Setelah 🍎 muncul 🍐. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 17: kendaraan bergantian
+{ t:'G', type:'mc', emoji:true,
+  img: line(['🚗','🚌','🚗','🚌','🚗','?']),
+  q:'Pola gambar selanjutnya adalah …',
+  opts:['🚗','🚕','🚙','🚌'], ans:3,
+  exp:'Mobil dan bus muncul bergantian: 🚗 → 🚌 → 🚗 → 🚌. Setelah 🚗 adalah 🚌. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 18: 3 bintang 1 bulan
+{ t:'G', type:'mc', emoji:true,
+  img: line(['⭐','⭐','⭐','🌙','⭐','⭐','⭐','🌙','⭐','⭐','⭐','?']),
+  q:'Gambar yang tepat untuk melengkapi pola di atas adalah …',
+  opts:['⭐','☀️','🌙','☄️'], ans:2,
+  exp:'Pola berulang: 3 bintang ⭐⭐⭐ lalu 1 bulan 🌙. Setelah tiga bintang berikutnya selalu muncul 🌙. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 19: piring garpu
+{ t:'G', type:'mc', emoji:true,
+  img: line(['🍽️','🍴','🍽️','🍴','🍽️','?']),
+  q:'Pola gambar selanjutnya adalah …',
+  opts:['🍽️','🥄','🍴','🍳'], ans:2,
+  exp:'Piring dan garpu muncul bergantian. Setelah 🍽️ selalu muncul 🍴. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 20: pola warna berulang
+{ t:'G', type:'mc', emoji:true,
+  img: line(['🟥','🟦','🟨','🟥','🟦','🟨','🟥','?']),
+  q:'Warna apa yang tepat untuk melengkapi pola di atas?',
+  opts:['🟥','🟨','🟦','🟩'], ans:2,
+  exp:'Urutan warna berulang: merah 🟥 → biru 🟦 → kuning 🟨. Setelah merah 🟥 adalah biru 🟦. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 21: ikan 2-1
+{ t:'G', type:'mc', emoji:true,
+  img: line(['🐟','🐟','🐠','🐟','🐟','🐠','🐟','🐟','?']),
+  q:'Pola gambar selanjutnya adalah …',
+  opts:['🐟','🦈','🐙','🐠'], ans:3,
+  exp:'Pola berulang: 2 ikan biru 🐟🐟 lalu 1 ikan oranye 🐠. Setelah 🐟🐟 muncul 🐠. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 22: anak ayam membesar (isian)
+{ t:'G', type:'input',
+  img: box([['🐤','🐤']]) + box([many('🐤',2), many('🐤',2)]) + box([many('🐤',3), many('🐤',3)]) + box(['?']),
+  q:'Banyak anak ayam pada kotak selanjutnya adalah …',
+  ans:'8',
+  exp:'Banyak anak ayam bertambah 2 setiap kotak: 2, 4, 6, 8. Jadi 6 + 2 = <b>8</b>.' },
+
+// ---- SOAL 23: balon mengecil (isian)
+{ t:'G', type:'input',
+  img: box([many('🎈',5), many('🎈',4)]) + box([many('🎈',4), many('🎈',3)]) + box([many('🎈',3), many('🎈',2)]) + box(['?']),
+  q:'Banyak balon pada kotak selanjutnya adalah …',
+  ans:'3',
+  exp:'Banyak balon berkurang 2 setiap kotak: 9, 7, 5, 3. Jadi 5 − 2 = <b>3</b> balon.' },
+
+// ---- SOAL 24: panah berputar
+{ t:'G', type:'mc', emoji:true,
+  img: line(['⬆️','➡️','⬇️','⬆️','➡️','?']),
+  q:'Perhatikan pola panah yang berputar! Panah selanjutnya adalah …',
+  opts:['⬆️','➡️','⬇️','⬅️'], ans:2,
+  exp:'Panah berputar seperti jarum jam: atas ⬆️ → kanan ➡️ → bawah ⬇️ → kiri ⬅️, lalu diulang. Setelah ➡️ (kanan) adalah ⬇️ (bawah). Jawaban: <b>C</b>.' },
+
+// ---- SOAL 25: cokelat permen
+{ t:'G', type:'mc', emoji:true,
+  img: line(['🍫','🍫','🍫','🍬','🍫','🍫','🍫','🍬','🍫','🍫','🍫','?']),
+  q:'Pola gambar selanjutnya adalah …',
+  opts:['🍫','🍪','🍭','🍬'], ans:3,
+  exp:'Pola berulang: 3 cokelat 🍫🍫🍫 lalu 1 permen 🍬. Setelah tiga cokelat muncul 🍬. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 26: lingkaran bertambah
+{ t:'G', type:'mc', emoji:true,
+  img: box([['🔵']]) + box([['🔵','🔴']]) + box([['🔵','🔴','🔵']]) + box(['?']),
+  q:'Perhatikan pola lingkaran di atas! Pola gambar selanjutnya adalah …',
+  opts:['🔵🔴🔵🔴','🔵🔴🔵','🔴🔵🔴🔵','🔵🔵🔴🔴'], ans:0,
+  exp:'Setiap kotak lingkaran bertambah satu dan warnanya bergantian mulai dari biru: 🔵 → 🔵🔴 → 🔵🔴🔵 → <b>🔵🔴🔵🔴</b>. Jawaban: <b>A</b>.' },
+
+// ---- SOAL 27: manik manik
+{ t:'G', type:'mc', emoji:true,
+  img: line(['🔴','🔵','🔵','🔴','🔵','🔵','🔴','?']),
+  q:'Manik manik disusun dengan pola di atas. Manik selanjutnya adalah …',
+  opts:['🟣','🔵','🔴','🟠'], ans:1,
+  exp:'Pola manik berulang: merah 🔴 → biru 🔵 → biru 🔵. Setelah 🔴 adalah 🔵. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 28: ganjil loncat 2
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>1, 3, 5, 7, …</b>',
+  opts:['8','10','9','11'], ans:2,
+  exp:'Pola bilangan ganjil, loncat 2: 1, 3, 5, 7, 9. Jadi 7 + 2 = <b>9</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 29: loncat 10
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>10, 20, 30, 40, …</b>',
+  opts:['45','60','50','100'], ans:2,
+  exp:'Polanya loncat 10: 40 + 10 = <b>50</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 30: loncat 2 dari 12
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>12, 14, 16, 18, …</b>',
+  opts:['19','22','24','20'], ans:3,
+  exp:'Polanya loncat 2: 18 + 2 = <b>20</b>. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 31: mundur 1
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>9, 8, 7, 6, …</b>',
+  opts:['4','5','7','8'], ans:1,
+  exp:'Polanya berkurang 1 (mundur): 6 − 1 = <b>5</b>. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 32: mundur 5
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>30, 25, 20, 15, …</b>',
+  opts:['12','14','10','5'], ans:2,
+  exp:'Polanya berkurang 5: 15 − 5 = <b>10</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 33: loncat berapa (4)
+{ t:'B', type:'mc',
+  img:'',
+  q:'Perhatikan pola bilangan berikut!<br><b>4, 8, 12, 16, 20</b><br>Bilangan tersebut termasuk pola bilangan loncat …',
+  opts:['2','3','4','5'], ans:2,
+  exp:'Selisihnya selalu 4: 8 − 4 = 4, 12 − 8 = 4, 16 − 12 = 4, 20 − 16 = 4. Jadi pola loncat <b>4</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 34: loncat berapa (6)
+{ t:'B', type:'mc',
+  img:'',
+  q:'Perhatikan pola bilangan berikut!<br><b>6, 12, 18, 24, 30</b><br>Bilangan tersebut termasuk pola bilangan loncat …',
+  opts:['5','7','6','8'], ans:2,
+  exp:'Selisihnya selalu 6: 12 − 6 = 6, 18 − 12 = 6, 24 − 18 = 6. Jadi pola loncat <b>6</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 35: selisih 5
+{ t:'B', type:'mc',
+  img:'',
+  q:'Pola bilangan dengan selisih 5 adalah …',
+  opts:['5, 10, 15, 20','5, 10, 16, 21','5, 9, 13, 17','5, 15, 25, 30'], ans:0,
+  exp:'Selisih 5 artinya bertambah 5 terus-menerus: 5 + 5 = 10, 10 + 5 = 15, 15 + 5 = 20. Yang cocok: <b>5, 10, 15, 20</b>. Jawaban: <b>A</b>.' },
+
+// ---- SOAL 36: loncat 5 dari 50
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>50, 55, 60, 65, …</b>',
+  opts:['68','72','75','70'], ans:3,
+  exp:'Polanya bertambah 5: 65 + 5 = <b>70</b>. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 37: mundur 10
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>100, 90, 80, 70, …</b>',
+  opts:['75','65','60','50'], ans:2,
+  exp:'Polanya berkurang 10: 70 − 10 = <b>60</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 38: loncat 3 dari 2
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>2, 5, 8, 11, …</b>',
+  opts:['12','13','14','15'], ans:2,
+  exp:'Polanya bertambah 3: 11 + 3 = <b>14</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 39: loncat 5 dari 15
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>15, 20, 25, 30, …</b>',
+  opts:['32','33','35','40'], ans:2,
+  exp:'Polanya bertambah 5: 30 + 5 = <b>35</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 40: mundur 2
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>21, 19, 17, 15, …</b>',
+  opts:['14','12','13','11'], ans:2,
+  exp:'Polanya berkurang 2: 15 − 2 = <b>13</b>. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 41: loncat 100
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>200, 300, 400, …</b>',
+  opts:['410','420','450','500'], ans:3,
+  exp:'Polanya bertambah 100: 400 + 100 = <b>500</b>. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 42: loncat berapa (3)
+{ t:'B', type:'mc',
+  img:'',
+  q:'Perhatikan pola bilangan berikut!<br><b>3, 6, 9, 12, 15</b><br>Bilangan tersebut termasuk pola bilangan loncat …',
+  opts:['2','4','6','3'], ans:3,
+  exp:'Selisihnya selalu 3: 6 − 3 = 3, 9 − 6 = 3, 12 − 9 = 3. Jadi pola loncat <b>3</b>. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 43: pola hari
+{ t:'B', type:'mc',
+  img:'',
+  q:'Dina berlatih renang dengan jadwal berselang 2 hari: <b>Senin, Rabu, Jumat, …</b><br>Hari latihan berikutnya adalah …',
+  opts:['Sabtu','Ahad','Senin','Selasa'], ans:1,
+  exp:'Polanya melompat 2 hari: Senin → Rabu → Jumat → <b>Ahad (Minggu)</b>. Jawaban: <b>B</b>.' },
+
+// ---- SOAL 44: loncat 2 dari 11
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>11, 13, 15, 17, …</b>',
+  opts:['18','20','21','19'], ans:3,
+  exp:'Polanya bertambah 2: 17 + 2 = <b>19</b>. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 45: mundur 5 dari 45
+{ t:'B', type:'mc',
+  img:'',
+  q:'Lengkapi pola bilangan berikut!<br><b>45, 40, 35, 30, …</b>',
+  opts:['25','20','28','26'], ans:0,
+  exp:'Polanya berkurang 5: 30 − 5 = <b>25</b>. Jawaban: <b>A</b>.' },
+
+// ---- SOAL 46: tantangan loncat 7
+{ t:'B', type:'mc', challenge:true,
+  img:'',
+  q:'⭐ SOAL TANTANGAN ⭐<br>Lengkapi pola bilangan berikut!<br><b>7, 14, 21, 28, …</b>',
+  opts:['32','34','35','36'], ans:2,
+  exp:'Polanya loncat 7: 28 + 7 = <b>35</b>. Ini sama dengan perkalian 7: 7, 14, 21, 28, 35 (7 × 5 = 35). Jawaban: <b>C</b>.' },
+
+// ---- SOAL 47: tantangan dikali 2
+{ t:'B', type:'mc', challenge:true,
+  img:'',
+  q:'⭐ SOAL TANTANGAN ⭐<br>Lengkapi pola bilangan berikut!<br><b>1, 2, 4, 8, …</b>',
+  opts:['10','12','14','16'], ans:3,
+  exp:'Polanya menjadi dua kali lipat (dikali 2): 1 × 2 = 2, 2 × 2 = 4, 4 × 2 = 8, 8 × 2 = <b>16</b>. Jawaban: <b>D</b>.' },
+
+// ---- SOAL 48: teks buku perpustakaan
+{ t:'B', type:'mc',
+  img:'',
+  teks:'Di rak perpustakaan, buku disusun menjadi beberapa tumpukan. Tumpukan pertama berisi 6 buku, tumpukan kedua 8 buku, tumpukan ketiga 10 buku, tumpukan keempat 12 buku.',
+  q:'Banyak buku pada tumpukan berikutnya adalah …',
+  opts:['13','16','14','18'], ans:2,
+  exp:'Banyak buku bertambah 2 setiap tumpukan: 6, 8, 10, 12, 14. Jadi 12 + 2 = <b>14</b> buku. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 49: tantangan loncat 10 dari 7
+{ t:'B', type:'mc', challenge:true,
+  img:'',
+  q:'⭐ SOAL TANTANGAN ⭐<br>Rafi bermain loncat angka 10 dimulai dari 7: <b>7, 17, 27, …</b><br>Angka selanjutnya adalah …',
+  opts:['28','30','37','47'], ans:2,
+  exp:'Loncat 10: 27 + 10 = <b>37</b>. Satuannya tetap 7, puluhannya bertambah 1: 7, 17, 27, 37. Jawaban: <b>C</b>.' },
+
+// ---- SOAL 50: teks kelereng Rudi
+{ t:'B', type:'mc',
+  img:'',
+  teks:'Rudi membawa 30 kelereng. Setiap kali selesai bermain, kelerengnya berkurang 3. Jumlah kelereng Rudi membentuk pola: 30, 27, 24, …',
+  q:'Banyak kelereng Rudi setelah bermain berikutnya adalah …',
+  opts:['20','22','23','21'], ans:3,
+  exp:'Polanya berkurang 3: 24 − 3 = <b>21</b> kelereng. Jawaban: <b>D</b>.' }
+
+);
+
+</script>
+<script>
+// ============ KONFIGURASI MISI & LENCANA ============
+const MISSIONS = [
+  { no:1, name:'Kadet Pola',      emoji:'🌱', msg:'Selamat datang di Misi 1! Cermati polanya dan hitung dengan teliti, Kadet!' },
+  { no:2, name:'Penjelajah Pola', emoji:'🔍', msg:'Hebat, kamu naik level! Polanya makin menantang. Jangan menyerah, Penjelajah!' },
+  { no:3, name:'Kapten Pola',     emoji:'🚀', msg:'Setengah perjalanan sudah dilewati! Kapten selalu teliti, teruslah melaju!' },
+  { no:4, name:'Komandan Pola',   emoji:'🛡️', msg:'Hampir di puncak, Komandan! Pertahankan fokusmu!' },
+  { no:5, name:'Master Pola',     emoji:'👑', msg:'Ini dia misi terakhir! Raih gelar Master Pola! Semangat!' }
+];
+const TOTAL = QUESTIONS.length; // 50
+const TOTAL_G = QUESTIONS.filter(function(q){ return q.t === 'G'; }).length;
+const TOTAL_B = TOTAL - TOTAL_G;
+const MAX_STARS = TOTAL * 3;
+
+const BADGES = {
+  fire:   { e:'🔥', n:'Api Semangat',      d:'Benar 5 kali berturut-turut' },
+  target: { e:'🎯', n:'Tepat Sasaran',     d:'10 jawaban benar langsung' },
+  brave:  { e:'💪', n:'Pantang Menyerah',  d:'5 soal berhasil setelah salah' },
+  img:    { e:'🖼️', n:'Ahli Pola Gambar',  d:'Semua soal pola gambar benar' },
+  num:    { e:'🔢', n:'Ahli Pola Bilangan',d:'Semua soal pola bilangan benar' },
+  legend: { e:'🏆', n:'Legenda Pola',      d:'Selesai dengan akurasi 90% ke atas' }
+};
+
+const SAY_OK = ['Hebat sekali! 🎉','Kamu jago! 💪','Benar! Kamu keren! 😎','Mantap! 🚀','Otakmu luar biasa! 🧠','Keren, lanjutkan! ✨'];
+const SAY_NO = ['Belum tepat, ayo coba lagi! 💪','Hampir benar! Perhatikan polanya lagi ya 🔍','Semangat! Kamu pasti bisa! 🌟','Coba hitung pelan-pelan lagi 🙂'];
+const TIPS   = ['Cermati polanya dulu, ya! 🔍','Hitung dengan pelan-pelan 🧮','Cari selisihnya, itu kuncinya! 🔑','Kamu pasti bisa, Kadet! 💪'];
+
+// ============ STATUS PERMAINAN ============
+var S = {};
+function resetState(){
+  S = {
+    i: 0, score: 0, stars: 0, streak: 0, bestStreak: 0,
+    firstTry: 0, comebacks: 0, correct: 0, wrongs: 0,
+    attempts: 0, solved: false, revealed: false, sel: -1,
+    badges: [], topicOk: { G: [], B: [] },
+    t0: Date.now(), muted: false, name: 'Juara', fromScreen: 'screen-start'
+  };
+}
+resetState();
+
+// ============ ELEMEN ============
+function $(id){ return document.getElementById(id); }
+var el = {
+  start: $('screen-start'), quiz: $('screen-quiz'), final: $('screen-final'), enrich: $('screen-enrich'),
+  bubbleStart: $('bubbleStart'), nameInput: $('nameInput'), bestLine: $('bestLine'),
+  hudMission: $('hudMission'), hudQ: $('hudQ'), hudScore: $('hudScore'), hudStreak: $('hudStreak'),
+  progressFill: $('progressFill'), rocket: $('rocket'), missionLabel: $('missionLabel'),
+  qcard: $('qcard'), qTopic: $('qTopic'), qNum: $('qNum'), qTeks: $('qTeks'), qImg: $('qImg'), qText: $('qText'),
+  optWrap: $('optWrap'), feedback: $('feedback'), mascotBubble: $('mascotBubble'),
+  expPanel: $('expPanel'), expText: $('expText'),
+  btnCheck: $('btnCheck'), btnExp: $('btnExp'), btnNext: $('btnNext'),
+  overlayLevel: $('overlayLevel'), lvEmoji: $('lvEmoji'), lvTitle: $('lvTitle'), lvSub: $('lvSub'), lvMsg: $('lvMsg'), btnLvNext: $('btnLvNext'),
+  toastBadge: $('toastBadge'), toastText: $('toastText'),
+  fTrophy: $('fTrophy'), fRank: $('fRank'), fMsg: $('fMsg'), fScore: $('fScore'), fStars: $('fStars'),
+  fAcc: $('fAcc'), fTime: $('fTime'), badgesGrid: $('badgesGrid'), fBest: $('fBest'),
+  btnStart: $('btnStart'), btnStartEnrich: $('btnStartEnrich'),
+  btnMute: $('btnMute'), btnGift: $('btnGift'), btnRestart: $('btnRestart'),
+  btnReplay: $('btnReplay'), btnToEnrich: $('btnToEnrich'), btnBackEnrich: $('btnBackEnrich')
+};
+
+// ============ SUARA (Web Audio) ============
+var AC = null;
+function ac(){
+  if (!AC) {
+    try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { AC = null; }
+  }
+  return AC;
+}
+function tone(f, d, type, delay, vol){
+  if (S.muted) return;
+  var c = ac(); if (!c) return;
+  var o = c.createOscillator(), g = c.createGain();
+  o.type = type || 'sine'; o.frequency.value = f;
+  o.connect(g); g.connect(c.destination);
+  var t = c.currentTime + (delay || 0);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol || 0.2, t + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+  o.start(t); o.stop(t + d + 0.05);
+}
+function sClick(){ tone(600, 0.08, 'triangle', 0, 0.14); }
+function sCorrect(){ tone(523,0.12,'sine',0,0.24); tone(659,0.12,'sine',0.1,0.24); tone(784,0.22,'sine',0.2,0.24); }
+function sWrong(){ tone(220,0.22,'sawtooth',0,0.1); tone(160,0.28,'sawtooth',0.12,0.1); }
+function sLevel(){ [523,659,784,1047].forEach(function(f,i){ tone(f,0.15,'square',i*0.12,0.16); }); }
+function sBadge(){ tone(880,0.12,'sine',0,0.2); tone(1175,0.16,'sine',0.1,0.2); }
+function sFinish(){ [523,659,784,1047,784,1047,1319].forEach(function(f,i){ tone(f,0.18,'sine',i*0.14,0.2); }); }
+
+// ============ KONFETI ============
+var CONF_COLORS = ['#ffd93d','#4ade80','#38bdf8','#fb7185','#a78bfa','#fb923c'];
+function confetti(n){
+  var box = $('confetti');
+  for (var i = 0; i < (n || 60); i++){
+    var p = document.createElement('i');
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.background = CONF_COLORS[i % CONF_COLORS.length];
+    p.style.animationDelay = (Math.random() * 0.35) + 's';
+    p.style.animationDuration = (1.4 + Math.random() * 1.3) + 's';
+    var w = 6 + Math.random() * 8;
+    p.style.width = w + 'px';
+    p.style.height = (w * 0.55) + 'px';
+    p.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+    box.appendChild(p);
+    (function(node){ setTimeout(function(){ node.remove(); }, 3000); })(p);
+  }
+}
+
+// ============ NAVIGASI LAYAR ============
+function showScreen(id){
+  ['screen-start','screen-quiz','screen-final','screen-enrich'].forEach(function(s){
+    $(s).classList.remove('active');
+  });
+  $(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ============ MASKOT ============
+function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+function say(text){ el.mascotBubble.innerHTML = text; }
+
+// ============ RENDER SOAL ============
+function missionOf(i){ return MISSIONS[Math.min(Math.floor(i / 10), MISSIONS.length - 1)]; }
+
+function renderHud(){
+  var m = missionOf(S.i);
+  el.hudMission.textContent = m.emoji + ' Misi ' + m.no;
+  el.hudQ.textContent = 'Soal ' + (S.i + 1) + '/' + TOTAL;
+  el.hudScore.textContent = S.score;
+  el.hudStreak.textContent = S.streak;
+  var pct = Math.round((S.i / TOTAL) * 100);
+  el.progressFill.style.width = pct + '%';
+  el.rocket.style.left = pct + '%';
+  el.missionLabel.textContent = 'Misi ' + m.no + ' · ' + m.name + ' ' + m.emoji;
+}
+
+function renderQuestion(){
+  var q = QUESTIONS[S.i];
+  S.attempts = 0; S.solved = false; S.revealed = false; S.sel = -1;
+  renderHud();
+
+  el.qTopic.textContent = (q.t === 'G' ? '🖼️ Pola Gambar' : '🔢 Pola Bilangan');
+  el.qTopic.className = 'topic-chip ' + (q.t === 'G' ? 'g' : 'b');
+  el.qNum.textContent = 'Soal ' + (S.i + 1) + ' dari ' + TOTAL;
+  el.qNum.style.color = q.challenge ? '#b45309' : '#64748b';
+
+  if (q.teks){ el.qTeks.style.display = 'block'; el.qTeks.innerHTML = '📖 ' + q.teks; }
+  else { el.qTeks.style.display = 'none'; }
+
+  if (q.img){ el.qImg.style.display = 'flex'; el.qImg.innerHTML = q.img; }
+  else { el.qImg.style.display = 'none'; }
+
+  el.qText.innerHTML = q.q;
+  el.feedback.className = 'feedback'; el.feedback.innerHTML = '';
+  el.expPanel.style.display = 'none';
+  el.btnCheck.style.display = ''; el.btnCheck.disabled = true;
+  el.btnExp.style.display = 'none';
+  el.btnNext.style.display = 'none';
+  el.btnNext.innerHTML = (S.i === TOTAL - 1) ? 'Lihat Hasil 🏁' : 'Soal Berikutnya ➜';
+  say(TIPS[S.i % TIPS.length]);
+
+  if (q.type === 'mc'){
+    var letters = ['A','B','C','D'];
+    // acak posisi pilihan agar tidak bisa dihafal
+    S.shuffled = q.opts.map(function(_, k){ return k; });
+    for (var sh = S.shuffled.length - 1; sh > 0; sh--){
+      var sj = Math.floor(Math.random() * (sh + 1));
+      var st = S.shuffled[sh]; S.shuffled[sh] = S.shuffled[sj]; S.shuffled[sj] = st;
+    }
+    el.optWrap.innerHTML = '<div class="opts">' + S.shuffled.map(function(origIdx, pos){
+      return '<button type="button" class="opt' + (q.emoji ? ' emoji' : '') + '" data-i="' + pos + '">' +
+             '<span class="letter">' + letters[pos] + '</span><span class="txt">' + q.opts[origIdx] + '</span></button>';
+    }).join('') + '</div>';
+    Array.prototype.forEach.call(el.optWrap.querySelectorAll('.opt'), function(btn){
+      btn.addEventListener('click', function(){ selectOpt(btn); });
+    });
+  } else {
+    el.optWrap.innerHTML =
+      '<div class="input-row"><input id="ansInput" type="text" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="Ketik angkanya…">' +
+      '</div><p class="input-hint">✏️ Tulis hanya angkanya, lalu tekan Cek Jawaban ya!</p>';
+    var inp = $('ansInput');
+    inp.addEventListener('input', function(){
+      el.btnCheck.disabled = inp.value.trim() === '';
+      inp.classList.remove('shake');
+    });
+    inp.addEventListener('keydown', function(ev){
+      if (ev.key === 'Enter' && !el.btnCheck.disabled) checkAnswer();
+    });
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function correctPos(){
+  return S.shuffled.indexOf(QUESTIONS[S.i].ans);
+}
+function selectOpt(btn){
+  if (S.solved || S.revealed) return;
+  sClick();
+  S.sel = parseInt(btn.getAttribute('data-i'), 10);
+  Array.prototype.forEach.call(el.optWrap.querySelectorAll('.opt'), function(b){
+    b.classList.remove('sel');
+  });
+  btn.classList.add('sel');
+  el.btnCheck.disabled = false;
+}
+
+// ============ CEK JAWABAN ============
+function parseNum(v){
+  var n = parseInt(String(v).replace(/[^\d]/g, ''), 10);
+  return isNaN(n) ? null : n;
+}
+function isCorrect(q){
+  if (q.type === 'mc') return S.sel === correctPos();
+  var inp = $('ansInput');
+  return inp && parseNum(inp.value) === parseNum(q.ans);
+}
+function lockOptions(){
+  Array.prototype.forEach.call(el.optWrap.querySelectorAll('.opt'), function(b){
+    b.classList.add('dis');
+  });
+}
+
+function checkAnswer(){
+  var q = QUESTIONS[S.i];
+  if (S.solved || S.revealed) return;
+  var ok = isCorrect(q);
+  if (ok){
+    S.solved = true;
+    var pts = (S.attempts === 0) ? 10 : (S.attempts === 1 ? 5 : 2);
+    var st  = (S.attempts === 0) ? 3  : (S.attempts === 1 ? 2 : 1);
+    S.score += pts; S.stars += st; S.correct++;
+    if (q.t === 'G' || q.t === 'B') S.topicOk[q.t].push(S.i);
+    if (S.attempts === 0){ S.firstTry++; S.streak++; S.bestStreak = Math.max(S.bestStreak, S.streak); }
+    else { S.comebacks++; S.streak = 0; }
+
+    var starStr = '';
+    for (var i = 0; i < 3; i++) starStr += (i < st ? '⭐' : '☆');
+    el.feedback.className = 'feedback ok';
+    el.feedback.innerHTML = '🎉 <b>Benar!</b> +' + pts + ' permata &nbsp;' + starStr;
+
+    if (q.type === 'mc'){
+      var cp = correctPos();
+      Array.prototype.forEach.call(el.optWrap.querySelectorAll('.opt'), function(b){
+        b.classList.add('dis');
+        if (parseInt(b.getAttribute('data-i'), 10) === cp) b.classList.add('ok');
+      });
+    } else {
+      var inp = $('ansInput');
+      if (inp){ inp.disabled = true; inp.classList.add('right'); }
+    }
+
+    el.btnCheck.style.display = 'none';
+    el.btnExp.style.display = 'none';
+    el.btnNext.style.display = '';
+    showExp();
+    say(pick(SAY_OK));
+    sCorrect();
+    confetti(55);
+    renderHud();
+    checkBadges();
+  } else {
+    S.attempts++; S.wrongs++; S.streak = 0;
+    renderHud();
+    sWrong();
+    el.qcard.classList.remove('wrongflash');
+    void el.qcard.offsetWidth;
+    el.qcard.classList.add('wrongflash');
+    if (q.type === 'mc'){
+      Array.prototype.forEach.call(el.optWrap.querySelectorAll('.opt'), function(b){
+        if (parseInt(b.getAttribute('data-i'), 10) === S.sel){ b.classList.add('no','dis'); b.classList.remove('sel'); }
+      });
+      S.sel = -1;
+      el.btnCheck.disabled = true;
+    } else {
+      var inp2 = $('ansInput');
+      if (inp2){ inp2.classList.add('shake'); inp2.value = ''; }
+      el.btnCheck.disabled = true;
+    }
+    if (S.attempts >= 3){
+      el.feedback.className = 'feedback no';
+      el.feedback.innerHTML = '😅 Sudah 3 kali mencoba. Tidak apa-apa, yuk kita pelajari pembahasannya!';
+      revealAnswer(false);
+    } else {
+      el.feedback.className = 'feedback no';
+      el.feedback.innerHTML = '❌ <b>Belum tepat.</b> Coba lagi ya, kamu masih punya kesempatan!';
+      el.btnExp.style.display = '';
+      say(pick(SAY_NO));
+    }
+  }
+}
+
+function revealAnswer(byButton){
+  var q = QUESTIONS[S.i];
+  if (S.solved || S.revealed) return;
+  S.revealed = true;
+  el.feedback.className = 'feedback no';
+  var correctTxt = (q.type === 'mc')
+    ? 'Jawaban yang benar: <b>' + String.fromCharCode(65 + correctPos()) + '. ' + q.opts[q.ans] + '</b>'
+    : 'Jawaban yang benar: <b>' + q.ans + '</b>';
+  el.feedback.innerHTML = (byButton ? '💡 Yuk kita pelajari bersama!<br>' : '') + correctTxt;
+  if (q.type === 'mc'){
+    var cp2 = correctPos();
+    Array.prototype.forEach.call(el.optWrap.querySelectorAll('.opt'), function(b){
+      b.classList.add('dis');
+      if (parseInt(b.getAttribute('data-i'), 10) === cp2) b.classList.add('ok');
+    });
+  } else {
+    var inp = $('ansInput');
+    if (inp){ inp.disabled = true; inp.value = q.ans; inp.classList.remove('shake'); }
+  }
+  el.btnCheck.style.display = 'none';
+  el.btnExp.style.display = 'none';
+  el.btnNext.style.display = '';
+  showExp();
+  say('Tidak apa-apa, dari pembahasan kita jadi tahu polanya! 💡');
+  sClick();
+}
+
+function showExp(){
+  // hapus rujukan huruf statis karena posisi pilihan diacak
+  el.expText.innerHTML = QUESTIONS[S.i].exp.replace(/\s*Jawaban:\s*<b>[A-D]<\/b>\.?\s*$/, '');
+  el.expPanel.style.display = 'block';
+}
+
+function nextQuestion(){
+  sClick();
+  S.i++;
+  if (S.i >= TOTAL){ finish(); return; }
+  if (S.i % 10 === 0){ showLevel(S.i / 10); }
+  else { renderQuestion(); }
+}
+
+// ============ OVERLAY MISI ============
+function showLevel(mi){
+  var m = MISSIONS[mi];
+  el.lvEmoji.textContent = m.emoji;
+  el.lvTitle.textContent = 'MISI ' + m.no;
+  el.lvSub.textContent = m.name;
+  el.lvMsg.textContent = m.msg;
+  el.overlayLevel.classList.add('active');
+  sLevel();
+  confetti(40);
+}
+el.btnLvNext.addEventListener('click', function(){
+  sClick();
+  el.overlayLevel.classList.remove('active');
+  renderQuestion();
+});
+
+// ============ LENCANA ============
+function earnBadge(key){
+  if (S.badges.indexOf(key) !== -1) return;
+  S.badges.push(key);
+  var b = BADGES[key];
+  el.toastText.innerHTML = 'Lencana baru: <b>' + b.n + '</b>!';
+  el.toastBadge.querySelector('.t-em').textContent = b.e;
+  el.toastBadge.classList.add('show');
+  sBadge();
+  setTimeout(function(){ el.toastBadge.classList.remove('show'); }, 3200);
+}
+function checkBadges(){
+  if (S.streak >= 5) earnBadge('fire');
+  if (S.firstTry >= 10) earnBadge('target');
+  if (S.comebacks >= 5) earnBadge('brave');
+  if (S.topicOk.G.length === TOTAL_G) earnBadge('img');
+  if (S.topicOk.B.length === TOTAL_B) earnBadge('num');
+}
+
+// ============ SELESAI ============
+function fmtTime(ms){
+  var s = Math.floor(ms / 1000);
+  var m = Math.floor(s / 60);
+  return m + ':' + ('0' + (s % 60)).slice(-2);
+}
+function finish(){
+  var acc = Math.round((S.correct / TOTAL) * 100);
+  var used = Date.now() - S.t0;
+  if (acc >= 90) earnBadge('legend');
+  var rank, trophy, msg;
+  if (acc >= 90){ trophy = '🏆'; rank = 'GRAND MASTER POLA'; msg = 'Luar biasa, ' + S.name + '! Kamu Master Pola sejati! 🎉'; }
+  else if (acc >= 75){ trophy = '🥇'; rank = 'MASTER POLA'; msg = 'Hebat sekali, ' + S.name + '! Sedikit lagi menuju puncak!'; }
+  else if (acc >= 50){ trophy = '🥈'; rank = 'PETUALANG POLA'; msg = 'Bagus, ' + S.name + '! Terus berlatih agar jadi Master Pola!'; }
+  else { trophy = '🥉'; rank = 'KADET POLA'; msg = 'Jangan menyerah, ' + S.name + '! Ulangi misinya, pasti makin jago!'; }
+  el.fTrophy.textContent = trophy;
+  el.fRank.textContent = rank;
+  el.fMsg.textContent = msg;
+  el.fScore.textContent = S.score;
+  el.fStars.textContent = S.stars + '/' + MAX_STARS;
+  el.fAcc.textContent = acc + '%';
+  el.fTime.textContent = fmtTime(used);
+  el.badgesGrid.innerHTML = Object.keys(BADGES).map(function(k){
+    var b = BADGES[k], got = S.badges.indexOf(k) !== -1;
+    return '<div class="badge-card ' + (got ? 'earned' : 'locked') + '">' +
+           '<div class="b-em">' + b.e + '</div><div class="b-name">' + b.n + '</div>' +
+           '<div class="b-desc">' + b.d + '</div></div>';
+  }).join('');
+  var best = null;
+  try { best = JSON.parse(localStorage.getItem('polaQuestBest') || 'null'); } catch (e) {}
+  if (!best || S.score > best.score){
+    best = { name: S.name, score: S.score, stars: S.stars };
+    try { localStorage.setItem('polaQuestBest', JSON.stringify(best)); } catch (e) {}
+    el.fBest.textContent = '🎊 Rekor baru! Skor terbaikmu sekarang: ' + best.score + ' permata';
+  } else {
+    el.fBest.textContent = '🏅 Skor terbaik: ' + best.name + ' — ' + best.score + ' permata';
+  }
+  showScreen('screen-final');
+  sFinish();
+  confetti(150);
+  setTimeout(function(){ confetti(90); }, 700);
+  setTimeout(function(){ confetti(90); }, 1400);
+}
+
+// ============ MULAI / ULANG ============
+function startGame(){
+  var nm = (el.nameInput.value || '').trim();
+  S.name = nm || 'Juara';
+  el.bubbleStart.innerHTML = 'Siap bertualang, <b>' + S.name + '</b>? Ayo bantu ROBO menaklukkan 50 pola! 🤖💪';
+  ac(); // aktifkan audio lewat sentuhan pengguna
+  sClick();
+  resetState();
+  S.name = nm || 'Juara';
+  showScreen('screen-quiz');
+  showLevel(0);
+}
+
+// ============ PENGAYAAN ============
+function openEnrich(from){
+  S.fromScreen = from;
+  sClick();
+  showScreen('screen-enrich');
+}
+
+// ============ EVENT ============
+el.btnStart.addEventListener('click', startGame);
+el.nameInput.addEventListener('keydown', function(ev){ if (ev.key === 'Enter') startGame(); });
+el.btnCheck.addEventListener('click', checkAnswer);
+el.btnExp.addEventListener('click', function(){ sClick(); revealAnswer(true); });
+el.btnNext.addEventListener('click', nextQuestion);
+el.btnReplay.addEventListener('click', function(){
+  sClick();
+  resetState();
+  showScreen('screen-quiz');
+  showLevel(0);
+});
+el.btnToEnrich.addEventListener('click', function(){ openEnrich('screen-final'); });
+el.btnStartEnrich.addEventListener('click', function(){ openEnrich('screen-start'); });
+el.btnGift.addEventListener('click', function(){ openEnrich('screen-quiz'); });
+el.btnBackEnrich.addEventListener('click', function(){ sClick(); showScreen(S.fromScreen || 'screen-start'); });
+el.btnMute.addEventListener('click', function(){
+  S.muted = !S.muted;
+  el.btnMute.textContent = S.muted ? '🔇' : '🔊';
+  if (!S.muted) sClick();
+});
+el.btnRestart.addEventListener('click', function(){
+  if (window.confirm('Ulangi petualangan dari awal?')){
+    sClick();
+    resetState();
+    showScreen('screen-start');
+  }
+});
+
+// ============ REKOR TERSIMPAN ============
+(function(){
+  var best = null;
+  try { best = JSON.parse(localStorage.getItem('polaQuestBest') || 'null'); } catch (e) {}
+  if (best && best.score > 0){
+    el.bestLine.textContent = '🏅 Rekor terbaik: ' + best.name + ' — ' + best.score + ' permata, ' + best.stars + ' bintang';
+  }
+  var savedName = '';
+  try { savedName = localStorage.getItem('polaQuestName') || ''; } catch (e) {}
+  if (savedName) el.nameInput.value = savedName;
+  el.nameInput.addEventListener('input', function(){
+    try { localStorage.setItem('polaQuestName', el.nameInput.value.trim()); } catch (e) {}
+  });
+})();
+
+</script>
+</body>
+</html>
