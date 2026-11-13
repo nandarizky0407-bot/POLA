@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pola Bilangan — Matematika Kelas 4 SD | Kurikulum Merdeka</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --purple:#6c5ce7;--yellow:#fdcb6e;--green:#00b894;--orange:#e17055;
+ --blue:#0984e3;--pink:#e84393;--teal:#00b5ad;--amber:#f39c12;
+ --ink:#2d3436;--paper:#fffdf7;
+}
+html{scroll-behavior:smooth}
+body{
+ font-family:'Comic Sans MS','Comic Sans','Chalkboard SE','Segoe UI Rounded','Segoe UI',Verdana,sans-serif;
+ background:linear-gradient(160deg,#fef9e7 0%,#fdeff2 45%,#eaf4fd 100%);
+ color:var(--ink);min-height:100vh;
+}
+/* ===== HEADER ===== */
+header{
+ position:fixed;top:0;left:0;right:0;height:64px;z-index:50;
+ display:flex;align-items:center;gap:12px;padding:0 16px;
+ background:rgba(255,255,255,.92);backdrop-filter:blur(6px);
+ box-shadow:0 2px 10px rgba(0,0,0,.10);
+}
+.htitle{font-size:19px;font-weight:bold;white-space:nowrap}
+.htitle small{font-weight:normal;color:#636e72;font-size:14px}
+.hbtn{
+ border:none;cursor:pointer;font-size:20px;width:44px;height:44px;border-radius:50%;
+ background:#f1f2f6;transition:.2s;flex-shrink:0;
+}
+.hbtn:hover{background:var(--yellow);transform:scale(1.08)}
+#bar{flex:1;height:12px;background:#e9eaee;border-radius:99px;overflow:hidden;min-width:60px}
+#barfill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#fdcb6e,#e84393,#6c5ce7);transition:width .35s}
+.pill{background:#f1f2f6;border-radius:99px;padding:6px 14px;font-size:14px;font-weight:bold;white-space:nowrap}
+.pill.gold{background:linear-gradient(90deg,#ffeaa7,#fdcb6e)}
+/* ===== SLIDES ===== */
+main{padding:76px 0 110px}
+.slide{display:none;max-width:960px;margin:0 auto;padding:26px 20px 30px}
+.slide.active{display:block;animation:pop .45s ease}
+@keyframes pop{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+h1{font-size:56px;text-align:center;letter-spacing:2px;color:var(--purple);text-shadow:2px 3px 0 #ffeaa7}
+h2{font-size:30px;margin:6px 0 16px;color:var(--ink);border-bottom:4px dashed var(--acc,var(--purple));display:inline-block;padding-bottom:6px}
+h3{font-size:21px;margin:8px 0}
+p,li{font-size:18px;line-height:1.65}
+.card{background:#fff;border-radius:18px;padding:18px 22px;box-shadow:0 4px 14px rgba(0,0,0,.08);margin:14px 0}
+.center{text-align:center}
+.def{border-left:8px solid var(--acc,var(--purple));background:#f3f0ff;padding:16px 18px;border-radius:12px;font-size:19px}
+.tip{background:#fff8dc;border:2px dashed var(--yellow);border-radius:14px;padding:14px 16px;margin:14px 0}
+.tip b{color:#b7791f}
+.chip{display:inline-block;background:var(--acc,var(--purple));color:#fff;border-radius:99px;padding:5px 16px;font-size:15px;font-weight:bold;margin-right:8px;vertical-align:middle}
+.big-emoji{font-size:48px;line-height:1}
+/* ===== BUTTONS ===== */
+.btn{
+ display:inline-block;border:none;cursor:pointer;color:#fff;font-weight:bold;
+ font-family:inherit;font-size:18px;padding:12px 26px;border-radius:99px;
+ background:linear-gradient(135deg,var(--acc,var(--purple)),#5f27cd);
+ box-shadow:0 4px 0 rgba(0,0,0,.18);transition:.15s;margin:6px 4px;
+}
+.btn:hover{transform:translateY(-2px) scale(1.03)}
+.btn:active{transform:translateY(1px)}
+.btn.big{font-size:22px;padding:16px 36px}
+.btn.ghost{background:#fff;color:var(--acc,var(--purple));border:3px solid var(--acc,var(--purple));box-shadow:none}
+.btn.small{font-size:15px;padding:8px 18px}
+/* ===== COVER ===== */
+.cover{text-align:center;padding:60px 10px 30px}
+.cover-emoji{font-size:64px;margin-bottom:8px}
+.cover-sub{font-size:22px;color:#636e72;margin:14px 0}
+.badges{margin:18px 0}
+.badge{display:inline-block;background:#fff;border:2px solid var(--purple);color:var(--purple);
+ border-radius:99px;padding:8px 18px;margin:4px;font-weight:bold;font-size:16px}
+/* ===== REVEAL ===== */
+.reveal button{margin:10px 0}
+.reveal-ans{display:none;font-size:22px;font-weight:bold;color:var(--green);animation:pop .3s ease}
+.reveal-ans.show{display:block}
+/* ===== LATIHAN ===== */
+.qcard{background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 4px 12px rgba(0,0,0,.07);margin:16px 0}
+.qhead{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.qnum{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--acc,var(--purple));color:#fff;
+ display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:17px}
+.qtext{font-size:18px;padding-top:4px}
+.seqbox{background:#f4f6f8;border:2px solid #e4e7eb;border-radius:12px;padding:12px 14px;
+ font-size:22px;font-weight:bold;text-align:center;margin:8px 0;letter-spacing:1px}
+.qrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qinput{font-family:inherit;font-size:20px;padding:10px 14px;border:3px solid #dfe6e9;border-radius:12px;
+ width:150px;text-align:center;outline:none;transition:.2s}
+.qinput:focus{border-color:var(--acc,var(--purple))}
+.feedback{display:none;padding:10px 14px;border-radius:10px;margin-top:12px;font-weight:bold;font-size:17px}
+.feedback.ok{display:block;background:#e6fff5;color:#00875a;border:2px solid #55efc4}
+.feedback.no{display:block;background:#ffeaea;color:#c0392b;border:2px solid #fab1a0}
+.pembahasan{display:none;background:#f0f7ff;border-left:6px solid var(--blue);padding:12px 14px;
+ border-radius:10px;margin-top:12px;font-size:16.5px;line-height:1.6}
+.pembahasan.show{display:block;animation:pop .3s ease}
+.sec-score{background:var(--acc,var(--purple));color:#fff;border-radius:99px;display:inline-block;
+ padding:7px 20px;font-weight:bold;font-size:16px;margin:6px 0}
+.complete-banner{display:none;background:linear-gradient(90deg,#ffeaa7,#fdcb6e);border-radius:16px;
+ padding:16px;font-size:20px;font-weight:bold;text-align:center;margin:16px 0;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.complete-banner.show{display:block;animation:pop .4s ease}
+/* ===== OPSI PILIHAN ===== */
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.opt{font-family:inherit;font-size:22px;font-weight:bold;padding:16px;border-radius:14px;cursor:pointer;
+ border:3px solid #dfe6e9;background:#f8f9fa;transition:.15s;color:var(--ink)}
+.opt:hover{border-color:var(--acc,var(--purple));transform:scale(1.04)}
+.opt.selected{border-color:var(--purple);background:#f3f0ff}
+.opt.correct{border-color:var(--green);background:#e6fff5;color:#00875a}
+.opt.wrong{border-color:var(--orange);background:#ffeaea;color:#c0392b}
+.opt:disabled{cursor:default}
+/* ===== GAME ===== */
+.gamehud{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+ font-size:18px;font-weight:bold}
+.lives{font-size:24px}
+.timerbar{height:14px;background:#e9eaee;border-radius:99px;overflow:hidden;margin:12px 0}
+#g-timerfill{height:100%;width:100%;background:linear-gradient(90deg,#00b894,#fdcb6e);transition:width .1s linear}
+.seq-big{font-size:36px;text-align:center;font-weight:bold;background:#fff;padding:22px 16px;border-radius:18px;
+ box-shadow:0 4px 14px rgba(0,0,0,.10);margin:10px 0;letter-spacing:2px}
+.g-type{text-align:center;font-size:16px;font-weight:bold;color:#636e72}
+/* ===== VISUAL MATERI ===== */
+.stairs{display:flex;align-items:flex-end;gap:8px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.stair{width:60px;background:linear-gradient(var(--acc,var(--purple)),var(--acc2,#5f27cd));color:#fff;
+ text-align:center;font-weight:bold;font-size:20px;border-radius:10px 10px 0 0;padding-top:8px}
+.stair.ghost{opacity:.45;border:3px dashed #fff}
+.dots-row{display:flex;gap:26px;justify-content:center;align-items:flex-end;margin:16px 0;flex-wrap:wrap}
+.dotgrid{display:grid;gap:5px;background:#f4f6f8;padding:10px;border-radius:12px;border:2px solid #e4e7eb}
+.dot{width:16px;height:16px;background:var(--acc,var(--purple));border-radius:50%}
+.dot-label{text-align:center;font-weight:bold;margin-top:6px;font-size:18px}
+.numline{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.nl{padding:9px 12px;border-radius:10px;background:#dfe6e9;font-weight:bold;font-size:19px}
+.nl.on{background:var(--acc,var(--purple));color:#fff}
+.nl.skip{background:#ffeaa7;color:#a09400;position:relative}
+.nl.skip::after{content:"✗";font-size:12px;position:absolute;top:-2px;right:-2px;color:#d63031}
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+.fnode{background:#fff;border:3px solid var(--acc,var(--purple));color:var(--ink);font-weight:bold;
+ font-size:20px;padding:10px 16px;border-radius:12px;box-shadow:0 3px 8px rgba(0,0,0,.08)}
+.fnode.gold{background:var(--acc,var(--purple));color:#fff}
+.farrow{color:var(--pink);font-weight:bold;font-size:17px;white-space:nowrap}
+/* ===== GOAL CARDS ===== */
+.goal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.goal{background:#fff;border-radius:16px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,.08);
+ border-top:6px solid var(--acc,var(--purple));font-size:17px}
+.goal .ge{font-size:34px}
+/* ===== KESIMPULAN ===== */
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.sum{background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 4px 12px rgba(0,0,0,.08);font-size:16px;
+ border-left:8px solid var(--acc,var(--purple))}
+.sum b{color:var(--acc,var(--purple));font-size:17.5px}
+.sum .ex{color:#636e72;font-size:15.5px}
+/* ===== REFLEKSI ===== */
+.moods{display:flex;gap:10px;justify-content:center;margin:14px 0;flex-wrap:wrap}
+.moodbtn{font-size:40px;background:#fff;border:3px solid #dfe6e9;border-radius:16px;cursor:pointer;
+ padding:8px 14px;transition:.15s}
+.moodbtn:hover{transform:scale(1.15)}
+.moodbtn.on{border-color:var(--yellow);background:#fff8dc}
+.selfcheck{display:inline-block;background:#fff;border:2px solid #b2bec3;color:#636e72;border-radius:99px;
+ padding:8px 18px;margin:6px 6px 0 0;cursor:pointer;font-size:16px;font-weight:bold;transition:.2s;user-select:none}
+.selfcheck.done{background:#e6fff5;border-color:var(--green);color:#00875a;text-decoration:line-through}
+.writing-line{border-bottom:2px dashed #b2bec3;height:36px;margin:6px 0}
+/* ===== NAV BOTTOM ===== */
+.navbar{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:12px;
+ align-items:center;background:rgba(255,255,255,.95);padding:9px 14px;border-radius:999px;
+ box-shadow:0 6px 20px rgba(0,0,0,.18);z-index:60;max-width:94vw}
+.navbtn{border:none;cursor:pointer;font-size:20px;font-weight:bold;width:48px;height:48px;border-radius:50%;
+ background:linear-gradient(135deg,var(--purple),#5f27cd);color:#fff;transition:.15s;flex-shrink:0}
+.navbtn:hover{transform:scale(1.12)}
+.navinfo{font-size:15px;font-weight:bold;color:#636e72;max-width:320px;text-align:center;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ===== MENU ===== */
+#menu-overlay{position:fixed;inset:0;background:rgba(45,52,54,.55);z-index:80;display:none;
+ align-items:center;justify-content:center;padding:20px}
+#menu-overlay.open{display:flex}
+.menu-panel{background:#fff;border-radius:20px;max-width:640px;width:100%;max-height:82vh;overflow:auto;padding:20px}
+.menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:20px}
+.menu-group{font-weight:bold;color:var(--purple);margin:12px 0 4px;font-size:15px;text-transform:uppercase;letter-spacing:1px}
+.menu-item{display:block;width:100%;text-align:left;font-family:inherit;font-size:16.5px;background:#f8f9fa;
+ border:none;border-radius:10px;padding:10px 14px;margin:5px 0;cursor:pointer;transition:.15s}
+.menu-item:hover{background:#f3f0ff;transform:translateX(4px)}
+.menu-item.cur{background:var(--purple);color:#fff;font-weight:bold}
+/* ===== CONFETTI ===== */
+.confetti{position:fixed;top:-50px;font-size:28px;z-index:99;pointer-events:none;animation:fall 2.4s linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(420deg);opacity:.7}}
+/* ===== MISC ===== */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){
+ h1{font-size:38px}h2{font-size:24px}.seq-big{font-size:26px}
+ .opts{grid-template-columns:1fr}.goal-grid,.sum-grid,.grid2{grid-template-columns:1fr}
+ .qinput{width:120px}.navinfo{max-width:130px}
+ .htitle{font-size:15px}.htitle small{display:none}
+ .stair{width:46px;font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <button id="btn-menu" class="hbtn" title="Daftar slide">📚</button>
+ <div class="htitle">🔢 Pola Bilangan <small>• Matematika Kelas 4 SD</small></div>
+ <div id="bar"><div id="barfill"></div></div>
+ <div id="counter" class="pill">1/23</div>
+ <div id="score" class="pill gold" title="Total jawaban benar">⭐ 0</div>
+</header>
+
+<main id="stage">
+
+<!-- 0. COVER -->
+<section class="slide active" data-title="🏠 Cover" data-group="Awal">
+ <div class="cover">
+  <div class="cover-emoji">🔢🎯✨</div>
+  <h1>POLA BILANGAN</h1>
+  <p class="cover-sub">Menemukan Aturan Angka dengan Seru!</p>
+  <div class="badges">
+   <span class="badge">📘 Matematika</span>
+   <span class="badge">🎒 Kelas 4 SD</span>
+   <span class="badge">🌟 Kurikulum Merdeka — Fase B</span>
+  </div>
+  <div class="card" style="max-width:520px;margin:24px auto">
+   <p>Ayo jadi <b>detektif pola</b> 🔍! Hari ini kita akan belajar mengenali
+   <b>7 jenis pola bilangan</b>, mengerjakan <b>70 latihan soal</b>,
+   bermain <b>game</b>, dan menyelesaikan <b>exit ticket</b>. Siap?</p>
+  </div>
+  <button class="btn big" data-go="1">Mulai Belajar ➜</button>
+ </div>
+</section>
+
+<!-- 1. APERSEPSI -->
+<section class="slide" data-title="🔮 Apersepsi" data-group="Awal">
+ <h2>🔮 Apersepsi: Coba Perhatikan!</h2>
+ <div class="card">
+  <p>📖 <b>Cerita:</b> Pagi ini Nadia berangkat sekolah pada pukul <b>6.00</b>.
+  Besok ia berangkat pukul 6.00 lagi. Lusa juga pukul 6.00. Nadia juga menghitung
+  jarinya: 1 tangan ada <b>5</b> jari, 2 tangan ada <b>10</b> jari, 3 tangan ada <b>15</b> jari…</p>
+ </div>
+ <div class="grid2">
+  <div class="card reveal">
+   <h3>📅 Hari dalam seminggu</h3>
+   <div class="seqbox">Senin, Selasa, Rabu, Kamis, ...</div>
+   <button class="btn small" onclick="doReveal(this)">Lihat Jawaban 👀</button>
+   <div class="reveal-ans">Jumat 🎉</div>
+  </div>
+  <div class="card reveal">
+   <h3>👐 Menghitung jari</h3>
+   <div class="seqbox">5, 10, 15, 20, ...</div>
+   <button class="btn small" onclick="doReveal(this)">Lihat Jawaban 👀</button>
+   <div class="reveal-ans">25 (ditambah 5 terus!) 🎉</div>
+  </div>
+  <div class="card reveal">
+   <h3>🪜 Naik tangga</h3>
+   <div class="seqbox">Anak tangga ke-1, ke-2, ke-3, ke-4, ...</div>
+   <button class="btn small" onclick="doReveal(this)">Lihat Jawaban 👀</button>
+   <div class="reveal-ans">ke-5 (bilangannya naik 1 terus!) 🎉</div>
+  </div>
+  <div class="card reveal">
+   <h3>🕯️ Lilin yang menyala</h3>
+   <div class="seqbox">Pukul 1 ada 1 lilin, pukul 2 ada 2 lilin, pukul 3 ada 3 lilin, pukul 4 ada ...</div>
+   <button class="btn small" onclick="doReveal(this)">Lihat Jawaban 👀</button>
+   <div class="reveal-ans">4 lilin 🎉</div>
+  </div>
+ </div>
+ <div class="tip">
+  ❓ <b>Pertanyaan pemantik:</b> Apa persamaan dari keempat contoh di atas?<br>
+  <i>Yap! Semuanya tersusun mengikuti <b>aturan</b> yang teratur — itulah yang disebut <b>POLA</b>.
+  Hari ini kita belajar <b>Pola Bilangan</b>! 🎯</i>
+ </div>
+ <button class="btn" data-go="2">Lanjut: Tujuan Pembelajaran ➜</button>
+</section>
+
+<!-- 2. TUJUAN PEMBELAJARAN -->
+<section class="slide" data-title="🎯 Tujuan Pembelajaran" data-group="Awal">
+ <h2>🎯 Tujuan Pembelajaran</h2>
+ <p>Setelah belajar hari ini, kamu diharapkan bisa:</p>
+ <div class="goal-grid">
+  <div class="goal" style="--acc:#6c5ce7"><span class="ge">🔎</span><br><b>Menemukan aturan</b><br>Mengenali dan menemukan aturan dari suatu pola bilangan.</div>
+  <div class="goal" style="--acc:#00b894"><span class="ge">✍️</span><br><b>Melengkapi pola</b><br>Menentukan bilangan yang hilang atau berikutnya dalam suatu pola.</div>
+  <div class="goal" style="--acc:#e84393"><span class="ge">🧩</span><br><b>Mengenal 7 jenis pola</b><br>Membesar, mengecil, kuadrat, loncat, dikali, bertingkat, dan Fibonacci.</div>
+  <div class="goal" style="--acc:#f39c12"><span class="ge">🌈</span><br><b>Menggunakan pola</b><br>Menerapkan pola bilangan dalam kehidupan sehari-hari dan permainan.</div>
+ </div>
+ <div class="tip">🗺️ <b>Peta petualangan hari ini:</b>
+  <span class="chip" style="--acc:#00b894">📈 Membesar</span>
+  <span class="chip" style="--acc:#e17055">📉 Mengecil</span>
+  <span class="chip" style="--acc:#6c5ce7">⬛ Kuadrat</span>
+  <span class="chip" style="--acc:#0984e3">🦘 Loncat</span>
+  <span class="chip" style="--acc:#e84393">✖️ Dikali</span>
+  <span class="chip" style="--acc:#00b5ad">🪜 Bertingkat</span>
+  <span class="chip" style="--acc:#f39c12">🌻 Fibonacci</span>
+  lalu <b>Game 🎮</b> dan <b>Exit Ticket 🎟️</b>!
+ </div>
+ <button class="btn" data-go="3">Lanjut: Apa itu Pola Bilangan? ➜</button>
+</section>
+
+<!-- 3. APA ITU POLA BILANGAN -->
+<section class="slide" data-title="❓ Apa itu Pola Bilangan?" data-group="Pengenalan">
+ <h2>❓ Apa itu Pola Bilangan?</h2>
+ <div class="def" style="--acc:#6c5ce7">
+  <b>Pola bilangan</b> adalah kumpulan bilangan yang tersusun mengikuti <b>aturan tertentu</b>.
+  Jika kita tahu aturannya, kita bisa <b>menebak bilangan berikutnya</b> dengan tepat!
+ </div>
+ <div class="card">
+  <h3>👀 Pola ada di sekitar kita</h3>
+  <p>🗓️ Hari-hari dalam seminggu &nbsp;•&nbsp; 👐 Jari tangan &nbsp;•&nbsp; 🪜 Anak tangga &nbsp;•&nbsp;
+  🌸 Kelopak bunga &nbsp;•&nbsp; 🏠 Nomor rumah di jalan</p>
+ </div>
+ <div class="card">
+  <h3>🎮 Tebak Cepat! Klik untuk melihat jawabannya</h3>
+  <div class="reveal"><div class="seqbox">2, 4, 6, 8, ...</div>
+   <button class="btn small" onclick="doReveal(this)">Lihat 👀</button>
+   <div class="reveal-ans">10 — bilangannya naik 2 terus ➕</div></div>
+  <div class="reveal"><div class="seqbox">10, 9, 8, 7, ...</div>
+   <button class="btn small" onclick="doReveal(this)">Lihat 👀</button>
+   <div class="reveal-ans">6 — bilangannya turun 1 terus ➖</div></div>
+  <div class="reveal"><div class="seqbox">1, 2, 3, 4, ...</div>
+   <button class="btn small" onclick="doReveal(this)">Lihat 👀</button>
+   <div class="reveal-ans">5 — bilangannya naik 1 terus ➕</div></div>
+ </div>
+ <div class="tip">
+  🔑 <b>Ingat!</b> Setiap pola punya <b>ATURAN</b>. Cara jitu menemukan aturan:
+  <b>kurangkan (atau bandingkan) dua bilangan yang bersebelahan</b>, lalu lihat apakah
+  hasilnya <b>sama terus</b> atau <b>berubah dengan cara tertentu</b>.
+ </div>
+ <button class="btn" data-go="4">Lanjut: Pola Membesar ➜</button>
+</section>
+
+<!-- 4. POLA MEMBESAR -->
+<section class="slide acc-g" data-title="📈 Pola Membesar" data-group="Materi 1">
+ <h2>📈 Pola Membesar</h2>
+ <div class="def" style="--acc:#00b894">
+  <b>Pola membesar</b> adalah pola yang bilangannya <b>semakin besar</b> (naik),
+  karena setiap langkah <b>ditambah</b> dengan bilangan yang sama.
+ </div>
+ <div class="card">
+  <h3>Contoh:</h3>
+  <div class="seqbox">2, 4, 6, 8, 10, 12, ... &nbsp; <span style="font-weight:normal;font-size:17px">(aturan: <b>+2</b>)</span></div>
+  <div class="seqbox">5, 10, 15, 20, ... &nbsp; <span style="font-weight:normal;font-size:17px">(aturan: <b>+5</b>)</span></div>
+ </div>
+ <div class="stairs">
+  <div class="stair" style="height:48px">2</div>
+  <div class="stair" style="height:66px">4</div>
+  <div class="stair" style="height:84px">6</div>
+  <div class="stair" style="height:102px">8</div>
+  <div class="stair ghost" style="height:120px">?</div>
+ </div>
+ <div class="tip">💡 <b>Cara jitu:</b> Kurangkan dua bilangan bersebelahan!
+  4−2=2, 6−4=2, 8−6=2 → selisihnya selalu <b>2</b>, jadi aturannya <b>+2</b>.
+  Kalau selisihnya sama terus, berarti pola membesar dengan penjumlahan.</div>
+ <button class="btn" data-go="5">Ayo Latihan (10 Soal) ➜</button>
+</section>
+
+<!-- 5. LATIHAN POLA MEMBESAR -->
+<section class="slide acc-g" data-title="✏️ Latihan: Pola Membesar" data-group="Materi 1">
+ <h2>✏️ Latihan: Pola Membesar</h2>
+ <p>Isi kotak jawaban dengan <b>angka saja</b>, lalu tekan <b>✅ Cek Jawaban</b> untuk melihat hasil dan pembahasannya.</p>
+ <div class="sec-score" id="score-membesar">Benar: 0/10</div>
+ <div id="q-membesar"></div>
+ <div class="complete-banner" id="done-membesar">🏆 Hebat! Kamu sudah menguasai Pola Membesar!</div>
+ <button class="btn" data-go="6">Lanjut: Pola Mengecil ➜</button>
+</section>
+
+<!-- 6. POLA MENGECIL -->
+<section class="slide acc-o" data-title="📉 Pola Mengecil" data-group="Materi 2">
+ <h2>📉 Pola Mengecil</h2>
+ <div class="def" style="--acc:#e17055">
+  <b>Pola mengecil</b> adalah pola yang bilangannya <b>semakin kecil</b> (turun),
+  karena setiap langkah <b>dikurangi</b> dengan bilangan yang sama.
+ </div>
+ <div class="card">
+  <h3>Contoh:</h3>
+  <div class="seqbox">20, 18, 16, 14, 12, ... &nbsp; <span style="font-weight:normal;font-size:17px">(aturan: <b>−2</b>)</span></div>
+  <div class="seqbox">50, 45, 40, 35, ... &nbsp; <span style="font-weight:normal;font-size:17px">(aturan: <b>−5</b>)</span></div>
+ </div>
+ <div class="stairs">
+  <div class="stair ghost" style="height:120px">20</div>
+  <div class="stair" style="height:102px">18</div>
+  <div class="stair" style="height:84px">16</div>
+  <div class="stair" style="height:66px">14</div>
+  <div class="stair" style="height:48px">12</div>
+ </div>
+ <div class="tip">💡 <b>Cara jitu:</b> Hitung selisihnya! 20−18=2, 18−16=2, 16−14=2 →
+  aturannya <b>−2</b>. Kalau bilangan turun dengan selisih yang sama terus, itu pola mengecil.</div>
+ <button class="btn" data-go="7">Ayo Latihan (10 Soal) ➜</button>
+</section>
+
+<!-- 7. LATIHAN POLA MENGECIL -->
+<section class="slide acc-o" data-title="✏️ Latihan: Pola Mengecil" data-group="Materi 2">
+ <h2>✏️ Latihan: Pola Mengecil</h2>
+ <p>Isi kotak jawaban dengan <b>angka saja</b>, lalu tekan <b>✅ Cek Jawaban</b>.</p>
+ <div class="sec-score" id="score-mengecil">Benar: 0/10</div>
+ <div id="q-mengecil"></div>
+ <div class="complete-banner" id="done-mengecil">🏆 Hebat! Kamu sudah menguasai Pola Mengecil!</div>
+ <button class="btn" data-go="8">Lanjut: Pola Kuadrat ➜</button>
+</section>
+
+<!-- 8. POLA KUADRAT -->
+<section class="slide acc-p" data-title="⬛ Pola Kuadrat" data-group="Materi 3">
+ <h2>⬛ Pola Kuadrat</h2>
+ <div class="def" style="--acc:#6c5ce7">
+  <b>Pola kuadrat</b> adalah pola yang bilangannya merupakan hasil <b>perkalian bilangan dengan dirinya sendiri</b>:
+  1×1, 2×2, 3×3, 4×4, ... Bilangan ini disebut <b>bilangan kuadrat</b>, karena titik-titiknya bisa
+  disusun membentuk <b>persegi</b>!
+ </div>
+ <div class="dots-row">
+  <div><div class="dotgrid" style="grid-template-columns:repeat(1,16px)"><span class="dot"></span></div><div class="dot-label">1×1 = 1</div></div>
+  <div><div class="dotgrid" style="grid-template-columns:repeat(2,16px)"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="dot-label">2×2 = 4</div></div>
+  <div><div class="dotgrid" style="grid-template-columns:repeat(3,16px)"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="dot-label">3×3 = 9</div></div>
+  <div><div class="dotgrid" style="grid-template-columns:repeat(4,16px)"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="dot-label">4×4 = 16</div></div>
+ </div>
+ <div class="card">
+  <div class="seqbox">1, 4, 9, 16, 25, 36, 49, 64, 81, 100</div>
+  <p class="center">1×1, 2×2, 3×3, 4×4, 5×5, 6×6, 7×7, 8×8, 9×9, 10×10</p>
+ </div>
+ <div class="tip">💡 <b>Cara jitu:</b> Lihat apakah bilangannya hasil 1×1, 2×2, 3×3, ...
+  Hafalan cepat: 1, 4, 9, 16, 25, 36, 49, 64, 81, 100. Kalau kamu hafal, pola kuadrat jadi mudah dikenali!</div>
+ <button class="btn" data-go="9">Ayo Latihan (10 Soal) ➜</button>
+</section>
+
+<!-- 9. LATIHAN POLA KUADRAT -->
+<section class="slide acc-p" data-title="✏️ Latihan: Pola Kuadrat" data-group="Materi 3">
+ <h2>✏️ Latihan: Pola Kuadrat</h2>
+ <p>Isi kotak jawaban dengan <b>angka saja</b>, lalu tekan <b>✅ Cek Jawaban</b>.</p>
+ <div class="sec-score" id="score-kuadrat">Benar: 0/10</div>
+ <div id="q-kuadrat"></div>
+ <div class="complete-banner" id="done-kuadrat">🏆 Hebat! Kamu sudah menguasai Pola Kuadrat!</div>
+ <button class="btn" data-go="10">Lanjut: Pola Loncat 1 Bilangan ➜</button>
+</section>
+
+<!-- 10. POLA LONCAT -->
+<section class="slide acc-b" data-title="🦘 Pola Loncat 1 Bilangan" data-group="Materi 4">
+ <h2>🦘 Pola Loncat 1 Bilangan</h2>
+ <div class="def" style="--acc:#0984e3">
+  <b>Pola loncat 1 bilangan</b> adalah pola yang aturannya ditemukan dengan <b>melompati satu suku</b>:
+  ada aturan yang konsisten dari <b>suku ke-1 → ke-3 → ke-5 → ke-7</b>, dan aturan (yang bisa berbeda)
+  dari <b>suku ke-2 → ke-4 → ke-6 → ke-8</b>. Seperti <b>dua kanguru yang bergiliran melompat</b>! 🦘🦘
+ </div>
+ <div class="card">
+  <h3>Contoh: 4, 9, 5, 10, 6, 11, ...</h3>
+  <div class="flow">
+   <span class="fnode" style="border-color:#0984e3;background:#eaf4fd">4</span>
+   <span class="fnode" style="border-color:#e84393;background:#fdeff2">9</span>
+   <span class="fnode" style="border-color:#0984e3;background:#eaf4fd">5</span>
+   <span class="fnode" style="border-color:#e84393;background:#fdeff2">10</span>
+   <span class="fnode" style="border-color:#0984e3;background:#eaf4fd">6</span>
+   <span class="fnode" style="border-color:#e84393;background:#fdeff2">11</span>
+  </div>
+  <p class="center"><b style="color:#0984e3">🔵 Kanguru A — suku ke-1, 3, 5, 7</b> &nbsp;•&nbsp; <b style="color:#e84393">🔴 Kanguru B — suku ke-2, 4, 6</b></p>
+ </div>
+ <div class="grid2">
+  <div class="card">
+   <h3>🦘 Lompatan Kanguru A<br><span style="font-size:15px;color:#636e72">(suku ke-1 → ke-3 → ke-5 → ke-7)</span></h3>
+   <div class="flow">
+    <span class="fnode">4</span><span class="farrow">+1 ➜</span>
+    <span class="fnode">5</span><span class="farrow">+1 ➜</span>
+    <span class="fnode">6</span><span class="farrow">+1 ➜</span>
+    <span class="fnode gold">7</span>
+   </div>
+   <p class="center">Aturan A: <b>+1</b></p>
+  </div>
+  <div class="card">
+   <h3>🦘 Lompatan Kanguru B<br><span style="font-size:15px;color:#636e72">(suku ke-2 → ke-4 → ke-6)</span></h3>
+   <div class="flow">
+    <span class="fnode">9</span><span class="farrow">+1 ➜</span>
+    <span class="fnode">10</span><span class="farrow">+1 ➜</span>
+    <span class="fnode gold">11</span>
+   </div>
+   <p class="center">Aturan B: <b>+1</b></p>
+  </div>
+ </div>
+ <div class="card">
+  <h3>Contoh lain — kedua kanguru bisa punya aturan berbeda!</h3>
+  <div class="seqbox">10, 1, 20, 2, 30, 3, ...</div>
+  <p class="center">Kanguru A: 10, 20, 30 (<b>+10</b>) &nbsp;•&nbsp; Kanguru B: 1, 2, 3 (<b>+1</b>)</p>
+ </div>
+ <div class="tip">💡 <b>Cara jitu:</b> Beri tanda bergantian A-B-A-B pada suku-suku.
+  Suku ke-1, ke-3, ke-5, ... mengikuti <b>aturan Kanguru A</b>; suku ke-2, ke-4, ke-6, ... mengikuti
+  <b>aturan Kanguru B</b>. Untuk mencari suku berikutnya, lihat <b>kanguru mana yang giliran melompat</b>!
+  Contoh: pada 4, 9, 5, 10, 6, ..., suku berikutnya adalah giliran Kanguru A: 4→5→6→<b>7</b>.</div>
+ <button class="btn" data-go="11">Ayo Latihan (10 Soal) ➜</button>
+</section>
+
+<!-- 11. LATIHAN POLA LONCAT -->
+<section class="slide acc-b" data-title="✏️ Latihan: Pola Loncat 1 Bilangan" data-group="Materi 4">
+ <h2>✏️ Latihan: Pola Loncat 1 Bilangan</h2>
+ <p>Isi kotak jawaban dengan <b>angka saja</b>, lalu tekan <b>✅ Cek Jawaban</b>.</p>
+ <div class="sec-score" id="score-loncat">Benar: 0/10</div>
+ <div id="q-loncat"></div>
+ <div class="complete-banner" id="done-loncat">🏆 Hebat! Kamu sudah menguasai Pola Loncat!</div>
+ <button class="btn" data-go="12">Lanjut: Pola Dikali ➜</button>
+</section>
+
+<!-- 12. POLA DIKALI -->
+<section class="slide acc-pk" data-title="✖️ Pola Dikali" data-group="Materi 5">
+ <h2>✖️ Pola Dikali</h2>
+ <div class="def" style="--acc:#e84393">
+  <b>Pola dikali</b> adalah pola yang bilangan berikutnya diperoleh dengan <b>mengalikan</b>
+  bilangan sebelumnya dengan <b>bilangan yang sama</b>. Bilangannya membesar <b>jauh lebih cepat</b>
+  daripada pola membesar biasa!
+ </div>
+ <div class="flow">
+  <span class="fnode">1</span><span class="farrow">×2 ➜</span>
+  <span class="fnode">2</span><span class="farrow">×2 ➜</span>
+  <span class="fnode">4</span><span class="farrow">×2 ➜</span>
+  <span class="fnode">8</span><span class="farrow">×2 ➜</span>
+  <span class="fnode gold">16</span>
+ </div>
+ <div class="card">
+  <h3>Contoh lain:</h3>
+  <div class="seqbox">1, 3, 9, 27, ... (aturan: <b>×3</b>)</div>
+  <div class="seqbox">5, 10, 20, 40, ... (aturan: <b>×2</b>)</div>
+ </div>
+ <div class="tip">💡 <b>Awas tertukar!</b> 2, 4, 6, 8 itu <b>+2</b> (dijumlah 2).
+  Tapi 2, 4, 8, 16 itu <b>×2</b> (dikali 2). Cara membedakannya: cek selisih —
+  kalau selisihnya makin besar, coba <b>bagikan</b> dua bilangan bersebelahan; kalau hasilnya sama terus, itu pola dikali!</div>
+ <button class="btn" data-go="13">Ayo Latihan (10 Soal) ➜</button>
+</section>
+
+<!-- 13. LATIHAN POLA DIKALI -->
+<section class="slide acc-pk" data-title="✏️ Latihan: Pola Dikali" data-group="Materi 5">
+ <h2>✏️ Latihan: Pola Dikali</h2>
+ <p>Isi kotak jawaban dengan <b>angka saja</b>, lalu tekan <b>✅ Cek Jawaban</b>.</p>
+ <div class="sec-score" id="score-dikali">Benar: 0/10</div>
+ <div id="q-dikali"></div>
+ <div class="complete-banner" id="done-dikali">🏆 Hebat! Kamu sudah menguasai Pola Dikali!</div>
+ <button class="btn" data-go="14">Lanjut: Pola Bertingkat ➜</button>
+</section>
+
+<!-- 14. POLA BERTINGKAT -->
+<section class="slide acc-t" data-title="🪜 Pola Bertingkat (Aritmatika)" data-group="Materi 6">
+ <h2>🪜 Pola Bertingkat <span style="font-size:19px;color:#636e72">(Barisan Aritmatika Bertingkat)</span></h2>
+ <div class="def" style="--acc:#00b5ad">
+  <b>Pola bertingkat</b> adalah pola yang <b>selisihnya ikut berubah teratur</b> — seperti anak tangga yang
+  makin tinggi. Contoh: 1, 2, 4, 7, 11 memiliki selisih <b>+1, +2, +3, +4</b> — selisihnya naik 1 terus!
+ </div>
+ <div class="flow">
+  <span class="fnode">1</span><span class="farrow">+1 ➜</span>
+  <span class="fnode">2</span><span class="farrow">+2 ➜</span>
+  <span class="fnode">4</span><span class="farrow">+3 ➜</span>
+  <span class="fnode">7</span><span class="farrow">+4 ➜</span>
+  <span class="fnode gold">11</span>
+ </div>
+ <div class="card">
+  <h3>Contoh lain:</h3>
+  <div class="seqbox">1, 3, 6, 10, 15, ... (selisih: <b>+2, +3, +4, +5, ...</b>)</div>
+  <div class="seqbox">2, 4, 8, 14, 22, ... (selisih: <b>+2, +4, +6, +8, ...</b>)</div>
+ </div>
+ <div class="tip">💡 <b>Cara jitu:</b> Kalau selisih antar bilangan <b>TIDAK sama terus</b>,
+  jangan bingung! Tulis semua selisihnya (+1, +2, +3, ...), temukan pola dari <b>selisihnya</b>,
+  lalu gunakan untuk melanjutkan. Ini pola "dua lapis": bilangannya satu lapis, selisihnya lapis kedua.</div>
+ <button class="btn" data-go="15">Ayo Latihan (10 Soal) ➜</button>
+</section>
+
+<!-- 15. LATIHAN POLA BERTINGKAT -->
+<section class="slide acc-t" data-title="✏️ Latihan: Pola Bertingkat" data-group="Materi 6">
+ <h2>✏️ Latihan: Pola Bertingkat</h2>
+ <p>Isi kotak jawaban dengan <b>angka saja</b>, lalu tekan <b>✅ Cek Jawaban</b>.</p>
+ <div class="sec-score" id="score-bertingkat">Benar: 0/10</div>
+ <div id="q-bertingkat"></div>
+ <div class="complete-banner" id="done-bertingkat">🏆 Hebat! Kamu sudah menguasai Pola Bertingkat!</div>
+ <button class="btn" data-go="16">Lanjut: Pola Fibonacci ➜</button>
+</section>
+
+<!-- 16. POLA FIBONACCI -->
+<section class="slide acc-y" data-title="🌻 Pola Fibonacci" data-group="Materi 7">
+ <h2>🌻 Pola Fibonacci</h2>
+ <div class="def" style="--acc:#f39c12">
+  <b>Pola Fibonacci</b> adalah pola yang bilangan berikutnya merupakan <b>jumlah dua bilangan di depannya</b>
+  (dua bilangan sebelumnya). Contoh: 1, 1, 2, 3, 5, 8 — karena 1+1=2, 1+2=3, 2+3=5, 3+5=8.
+ </div>
+ <div class="flow">
+  <span class="fnode">1</span><span class="fnode">1</span><span class="farrow">1+1 ➜</span>
+  <span class="fnode">2</span><span class="farrow">1+2 ➜</span>
+  <span class="fnode">3</span><span class="farrow">2+3 ➜</span>
+  <span class="fnode">5</span><span class="farrow">3+5 ➜</span>
+  <span class="fnode gold">8</span>
+ </div>
+ <div class="card">
+  <h3>🌻 Fibonacci ada di alam!</h3>
+  <p>🌸 Jumlah kelopak bunga sering berupa bilangan Fibonacci (3, 5, 8, 13...).
+  🌻 Biji di kepala bunga matahari, 🍍 sisik nanas, dan 🐚 cangkang siput juga membentuk
+  pola Fibonacci. Keren, ya — matematika tumbuh di alam!</p>
+ </div>
+ <div class="tip">💡 <b>Cara jitu:</b> Pilih dua bilangan bersebelahan, <b>jumlahkan</b>,
+  lalu bandingkan dengan bilangan setelahnya. Kalau cocok terus-menerus → itu Fibonacci!
+  Contoh: pada 3, 5, 8, 13 → 3+5=8 ✓ dan 5+8=13 ✓</div>
+ <button class="btn" data-go="17">Ayo Latihan (10 Soal) ➜</button>
+</section>
+
+<!-- 17. LATIHAN POLA FIBONACCI -->
+<section class="slide acc-y" data-title="✏️ Latihan: Pola Fibonacci" data-group="Materi 7">
+ <h2>✏️ Latihan: Pola Fibonacci</h2>
+ <p>Isi kotak jawaban dengan <b>angka saja</b>, lalu tekan <b>✅ Cek Jawaban</b>.</p>
+ <div class="sec-score" id="score-fibonacci">Benar: 0/10</div>
+ <div id="q-fibonacci"></div>
+ <div class="complete-banner" id="done-fibonacci">🏆 Hebat! Kamu sudah menguasai Pola Fibonacci!</div>
+ <button class="btn" data-go="18">Lanjut: Game 🎮 ➜</button>
+</section>
+
+<!-- 18. GAME -->
+<section class="slide" data-title="🎮 Game: Tantangan Pola" data-group="Game">
+ <h2>🎮 Game: Tantangan Pola</h2>
+ <div id="game-start" class="card center">
+  <div class="big-emoji">🚀🎯</div>
+  <h3>Selamat datang di Tantangan Pola!</h3>
+  <p>Selesaikan <b>8 ronde</b> pertanyaan kilat. Setiap jawaban benar bernilai <b>+10 poin</b>.<br>
+  Kamu punya <b>3 nyawa</b> ❤️ dan <b>15 detik</b> waktu untuk setiap ronde.<br>
+  Semua jenis pola hari ini akan muncul. Berani? Ayo!</p>
+  <button class="btn big" id="btn-game-start">Mulai Game ▶</button>
+ </div>
+ <div id="game-play" hidden>
+  <div class="gamehud card">
+   <span id="g-round">Ronde 1/8</span>
+   <span class="lives" id="g-lives">❤️❤️❤️</span>
+   <span id="g-score">⭐ Poin: 0</span>
+  </div>
+  <div class="timerbar"><div id="g-timerfill"></div></div>
+  <div class="card center">
+   <div class="g-type" id="g-type"></div>
+   <div class="seq-big" id="g-seq"></div>
+   <div class="opts" id="g-opts"></div>
+   <div class="feedback" id="g-feedback"></div>
+  </div>
+ </div>
+ <div id="game-end" hidden class="card center">
+  <div class="big-emoji" id="g-end-emoji">🏆</div>
+  <h3 id="g-end-title">Game Selesai!</h3>
+  <p id="g-end-score"></p>
+  <div id="g-stars" style="font-size:42px;margin:8px 0"></div>
+  <p id="g-end-msg"></p>
+  <div>
+   <button class="btn" id="btn-game-replay">🔁 Main Lagi</button>
+   <button class="btn ghost" data-go="19">Lanjut ke Exit Ticket ➜</button>
+  </div>
+ </div>
+</section>
+
+<!-- 19. EXIT TICKET -->
+<section class="slide" data-title="🎟️ Exit Ticket" data-group="Penutup">
+ <h2>🎟️ Exit Ticket: 3 Soal Kilat</h2>
+ <p>Sebelum pulang, buktikan pemahamanmu! Pilih jawaban yang benar, lalu tekan <b>✅ Cek Jawaban</b>.</p>
+ <div id="exit-list"></div>
+ <div class="complete-banner" id="exit-done">🎟️ Exit ticket selesai! Kamu siap melanjutkan ke materi berikutnya. Kerja bagus! 🌟</div>
+ <button class="btn" data-go="20">Lanjut: Kesimpulan ➜</button>
+</section>
+
+<!-- 20. KESIMPULAN -->
+<section class="slide" data-title="📌 Kesimpulan" data-group="Penutup">
+ <h2>📌 Kesimpulan</h2>
+ <div class="def" style="--acc:#6c5ce7">
+  <b>Pola bilangan</b> = kumpulan bilangan yang mengikuti <b>aturan tertentu</b>.
+  Kuncinya: bandingkan bilangan yang bersebelahan untuk menemukan aturannya!
+ </div>
+ <div class="sum-grid">
+  <div class="sum" style="--acc:#00b894"><b>📈 Pola Membesar</b><br>Ditambah bilangan yang sama.<br><span class="ex">2, 4, 6, 8 → +2</span></div>
+  <div class="sum" style="--acc:#e17055"><b>📉 Pola Mengecil</b><br>Dikurangi bilangan yang sama.<br><span class="ex">20, 18, 16 → −2</span></div>
+  <div class="sum" style="--acc:#6c5ce7"><b>⬛ Pola Kuadrat</b><br>Hasil perkalian bilangan dengan dirinya sendiri.<br><span class="ex">1, 4, 9, 16 → 1×1, 2×2, 3×3</span></div>
+  <div class="sum" style="--acc:#0984e3"><b>🦘 Pola Loncat 1 Bilangan</b><br>Aturan konsisten suku ke-1→3→5 dan ke-2→4→6 (dua kanguru bergantian).<br><span class="ex">4, 9, 5, 10, 6, 11 → A: 4,5,6 (+1) • B: 9,10,11 (+1)</span></div>
+  <div class="sum" style="--acc:#e84393"><b>✖️ Pola Dikali</b><br>Dikali bilangan yang sama, membesar cepat.<br><span class="ex">1, 2, 4, 8 → ×2</span></div>
+  <div class="sum" style="--acc:#00b5ad"><b>🪜 Pola Bertingkat</b><br>Selisihnya ikut berubah teratur.<br><span class="ex">1, 2, 4, 7, 11 → +1, +2, +3, +4</span></div>
+  <div class="sum" style="--acc:#f39c12"><b>🌻 Pola Fibonacci</b><br>Jumlah dua bilangan sebelumnya.<br><span class="ex">1, 1, 2, 3, 5, 8 → 3+5=8</span></div>
+  <div class="sum" style="--acc:#fdcb6e"><b>🔑 Kunci Emas</b><br>Temukan aturannya, maka kamu bisa menebak bilangan berikutnya!<br><span class="ex">Selisih ➕ ➖, perkalian ✖️, atau penjumlahan dua bilangan.</span></div>
+ </div>
+ <button class="btn" data-go="21">Lanjut: Refleksi ➜</button>
+</section>
+
+<!-- 21. REFLEKSI -->
+<section class="slide" data-title="🪞 Refleksi" data-group="Penutup">
+ <h2>🪞 Refleksi Diri</h2>
+ <div class="card center">
+  <h3>1. Bagaimana perasaanmu belajar hari ini?</h3>
+  <div class="moods">
+   <button class="moodbtn" onclick="setMood(this,'Senang mendengarnya! Semoga kamu makin semangat belajar pola bilangan! 🎉')">🤩</button>
+   <button class="moodbtn" onclick="setMood(this,'Kabar baik! Ayo pertahankan semangatmu! 😊')">🙂</button>
+   <button class="moodbtn" onclick="setMood(this,'Tidak apa-apa. Kadang ada materi yang mudah dan sulit — wajar! 💪')">😐</button>
+   <button class="moodbtn" onclick="setMood(this,'Tidak masalah! Kamu boleh meminta bantuan Bapak/Ibu Guru untuk mengulang materi. 🤝')">😢</button>
+  </div>
+  <div id="mood-msg" style="font-size:17px;color:#636e72;min-height:24px"></div>
+ </div>
+ <div class="card">
+  <h3>2. Centang kemampuan yang sudah kamu kuasai!</h3>
+  <span class="selfcheck" onclick="this.classList.toggle('done')">✅ Menemukan aturan pola bilangan</span>
+  <span class="selfcheck" onclick="this.classList.toggle('done')">✅ Pola membesar &amp; mengecil</span>
+  <span class="selfcheck" onclick="this.classList.toggle('done')">✅ Pola kuadrat</span>
+  <span class="selfcheck" onclick="this.classList.toggle('done')">✅ Pola loncat 1 bilangan</span>
+  <span class="selfcheck" onclick="this.classList.toggle('done')">✅ Pola dikali</span>
+  <span class="selfcheck" onclick="this.classList.toggle('done')">✅ Pola bertingkat</span>
+  <span class="selfcheck" onclick="this.classList.toggle('done')">✅ Pola Fibonacci</span>
+ </div>
+ <div class="card">
+  <h3>3. Ceritakan pengalamanmu! (tulis di buku tulismu)</h3>
+  <p>🖊️ a. Pola mana yang paling <b>mudah</b> untukmu? Mengapa?</p>
+  <div class="writing-line"></div><div class="writing-line"></div>
+  <p>🖊️ b. Pola mana yang paling <b>sulit</b> untukmu? Bagian mana yang membuatmu bingung?</p>
+  <div class="writing-line"></div><div class="writing-line"></div>
+  <p>🖊️ c. Di mana kamu menemukan <b>pola bilangan</b> di rumah atau sekitarmu?</p>
+  <div class="writing-line"></div><div class="writing-line"></div>
+ </div>
+ <button class="btn" data-go="22">Lanjut: Penutup ➜</button>
+</section>
+
+<!-- 22. THANK YOU -->
+<section class="slide" data-title="🌟 Terima Kasih" data-group="Penutup">
+ <div class="cover">
+  <div class="cover-emoji">🌟🎉👋</div>
+  <h1 style="font-size:44px">THANK YOU<br>FOR TODAY!</h1>
+  <p class="cover-sub">Terima kasih sudah belajar <b>Pola Bilangan</b> bersama hari ini!<br>
+  Kamu kini seorang <b>Detektif Pola</b> yang hebat 🔍✨</p>
+  <div class="badges">
+   <span class="badge">📈 Membesar</span>
+   <span class="badge">📉 Mengecil</span>
+   <span class="badge">⬛ Kuadrat</span>
+   <span class="badge">🦘 Loncat</span>
+   <span class="badge">✖️ Dikali</span>
+   <span class="badge">🪜 Bertingkat</span>
+   <span class="badge">🌻 Fibonacci</span>
+  </div>
+  <div class="tip" style="max-width:560px;margin:20px auto">
+  🏠 <b>Tantangan di rumah:</b> Temukan satu pola bilangan di sekitarmu
+  (nomor rumah, tangga, kalender) dan tuliskan aturannya!</div>
+  <div>
+   <button class="btn" data-go="0">🏠 Ulangi dari Awal</button>
+   <button class="btn ghost" data-go="18">🎮 Main Game Lagi</button>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<nav class="navbar">
+ <button class="navbtn" id="btn-prev" title="Slide sebelumnya">◀</button>
+ <div class="navinfo" id="nav-title">Cover</div>
+ <button class="navbtn" id="btn-next" title="Slide berikutnya">▶</button>
+</nav>
+
+<div id="menu-overlay">
+ <div class="menu-panel">
+  <div class="menu-head"><b>📖 Daftar Slide</b><button id="btn-menu-close" class="hbtn">✖</button></div>
+  <div id="menu-list"></div>
+ </div>
+</div>
+
+<script>
+"use strict";
+
+/* ================= DATA LATIHAN (10 soal per materi) ================= */
+const LAT = {
+ membesar: [
+  {q:'2, 4, 6, 8, ___', a:'10', p:'Aturannya <b>ditambah 2</b> (+2). Lihat: 2+2=4, 4+2=6, 6+2=8. Jadi 8+2 = <b>10</b>.'},
+  {q:'5, 10, 15, 20, ___', a:'25', p:'Aturannya <b>ditambah 5</b> (+5): 5+5=10, 10+5=15, 15+5=20. Jadi 20+5 = <b>25</b>.'},
+  {q:'3, 6, 9, 12, ___', a:'15', p:'Aturannya <b>ditambah 3</b> (+3): 3+3=6, 6+3=9, 9+3=12. Jadi 12+3 = <b>15</b>.'},
+  {q:'12, 15, 18, 21, ___', a:'24', p:'Aturannya <b>ditambah 3</b> (+3): 12+3=15, 15+3=18, 18+3=21. Jadi 21+3 = <b>24</b>.'},
+  {q:'7, 9, 11, 13, ___', a:'15', p:'Aturannya <b>ditambah 2</b> (+2): 7+2=9, 9+2=11, 11+2=13. Jadi 13+2 = <b>15</b>.'},
+  {q:'10, 20, 30, 40, ___', a:'50', p:'Aturannya <b>ditambah 10</b> (+10): 10+10=20, 20+10=30, 30+10=40. Jadi 40+10 = <b>50</b>.'},
+  {q:'4, 8, 12, 16, ___', a:'20', p:'Aturannya <b>ditambah 4</b> (+4): 4+4=8, 8+4=12, 12+4=16. Jadi 16+4 = <b>20</b>.'},
+  {q:'25, 30, 35, 40, ___', a:'45', p:'Aturannya <b>ditambah 5</b> (+5): 25+5=30, 30+5=35, 35+5=40. Jadi 40+5 = <b>45</b>.'},
+  {q:'6, 12, 18, 24, ___', a:'30', p:'Aturannya <b>ditambah 6</b> (+6): 6+6=12, 12+6=18, 18+6=24. Jadi 24+6 = <b>30</b>.'},
+  {q:'100, 200, 300, ___', a:'400', p:'Aturannya <b>ditambah 100</b> (+100): 100+100=200, 200+100=300. Jadi 300+100 = <b>400</b>.'}
+ ],
+ mengecil: [
+  {q:'20, 18, 16, 14, ___', a:'12', p:'Aturannya <b>dikurangi 2</b> (−2): 20−2=18, 18−2=16, 16−2=14. Jadi 14−2 = <b>12</b>.'},
+  {q:'50, 45, 40, 35, ___', a:'30', p:'Aturannya <b>dikurangi 5</b> (−5): 50−5=45, 45−5=40, 40−5=35. Jadi 35−5 = <b>30</b>.'},
+  {q:'30, 27, 24, 21, ___', a:'18', p:'Aturannya <b>dikurangi 3</b> (−3): 30−3=27, 27−3=24, 24−3=21. Jadi 21−3 = <b>18</b>.'},
+  {q:'100, 90, 80, 70, ___', a:'60', p:'Aturannya <b>dikurangi 10</b> (−10): 100−10=90, 90−10=80, 80−10=70. Jadi 70−10 = <b>60</b>.'},
+  {q:'15, 13, 11, 9, ___', a:'7', p:'Aturannya <b>dikurangi 2</b> (−2): 15−2=13, 13−2=11, 11−2=9. Jadi 9−2 = <b>7</b>.'},
+  {q:'40, 36, 32, 28, ___', a:'24', p:'Aturannya <b>dikurangi 4</b> (−4): 40−4=36, 36−4=32, 32−4=28. Jadi 28−4 = <b>24</b>.'},
+  {q:'60, 50, 40, 30, ___', a:'20', p:'Aturannya <b>dikurangi 10</b> (−10): 60−10=50, 50−10=40, 40−10=30. Jadi 30−10 = <b>20</b>.'},
+  {q:'99, 89, 79, 69, ___', a:'59', p:'Aturannya <b>dikurangi 10</b> (−10): 99−10=89, 89−10=79, 79−10=69. Jadi 69−10 = <b>59</b>.'},
+  {q:'25, 22, 19, 16, ___', a:'13', p:'Aturannya <b>dikurangi 3</b> (−3): 25−3=22, 22−3=19, 19−3=16. Jadi 16−3 = <b>13</b>.'},
+  {q:'48, 42, 36, 30, ___', a:'24', p:'Aturannya <b>dikurangi 6</b> (−6): 48−6=42, 42−6=36, 36−6=30. Jadi 30−6 = <b>24</b>.'}
+ ],
+ kuadrat: [
+  {q:'1, 4, 9, 16, ___', a:'25', p:'Ini bilangan kuadrat: 1×1=1, 2×2=4, 3×3=9, 4×4=16. Berikutnya 5×5 = <b>25</b>.'},
+  {q:'1, 4, 9, 16, 25, ___', a:'36', p:'Bilangan kuadrat: 1×1, 2×2, 3×3, 4×4, 5×5=25. Berikutnya 6×6 = <b>36</b>.'},
+  {q:'4, 9, 16, 25, ___', a:'36', p:'Mulai dari 2×2: 2×2=4, 3×3=9, 4×4=16, 5×5=25. Berikutnya 6×6 = <b>36</b>.'},
+  {q:'1, 9, 25, 49, ___', a:'81', p:'Ini kuadrat bilangan ganjil: 1×1=1, 3×3=9, 5×5=25, 7×7=49. Berikutnya 9×9 = <b>81</b>.'},
+  {q:'4, 16, 36, 64, ___', a:'100', p:'Ini kuadrat bilangan genap: 2×2=4, 4×4=16, 6×6=36, 8×8=64. Berikutnya 10×10 = <b>100</b>.'},
+  {q:'1, 4, 9, 16, 25, 36, 49, ___', a:'64', p:'Bilangan kuadrat berurutan. Setelah 7×7=49, berikutnya 8×8 = <b>64</b>.'},
+  {q:'9, 16, 25, 36, ___', a:'49', p:'Mulai dari 3×3: 3×3=9, 4×4=16, 5×5=25, 6×6=36. Berikutnya 7×7 = <b>49</b>.'},
+  {q:'25, 36, 49, 64, ___', a:'81', p:'Mulai dari 5×5: 5×5=25, 6×6=36, 7×7=49, 8×8=64. Berikutnya 9×9 = <b>81</b>.'},
+  {q:'Persegi ke-1 berisi 1 titik, ke-2 berisi 4 titik, ke-3 berisi 9 titik. Berapa titik pada persegi ke-6?', a:'36', p:'Polanya bilangan kuadrat: ke-1 = 1×1, ke-2 = 2×2, ke-3 = 3×3, ... Maka ke-6 = 6×6 = <b>36</b>.'},
+  {q:'1, 4, 9, 16, 25, 36, 49, 64, 81, ___', a:'100', p:'Bilangan kuadrat sampai 9×9=81. Berikutnya 10×10 = <b>100</b>.'}
+ ],
+ loncat: [
+  {q:'4, 9, 5, 10, 6, 11, ___', a:'7', p:'Kanguru A (suku ke-1, 3, 5, 7): 4→5→6, aturannya <b>+1</b>. Suku berikutnya adalah giliran Kanguru A: 6+1 = <b>7</b>. (Kanguru B: 9→10→11, juga +1.)'},
+  {q:'2, 10, 4, 12, 6, 14, ___', a:'8', p:'Kanguru A (suku ke-1, 3, 5): 2→4→6, aturannya <b>+2</b>. Giliran A berikutnya: 6+2 = <b>8</b>. (Kanguru B: 10→12→14, juga +2.)'},
+  {q:'1, 8, 3, 10, 5, 12, ___', a:'7', p:'Kanguru A: 1→3→5, aturannya <b>+2</b>. Giliran A berikutnya: 5+2 = <b>7</b>. (Kanguru B: 8→10→12, +2.)'},
+  {q:'20, 5, 22, 7, 24, 9, ___', a:'26', p:'Kanguru A: 20→22→24, aturannya <b>+2</b>. Giliran A berikutnya: 24+2 = <b>26</b>. (Kanguru B: 5→7→9, +2.)'},
+  {q:'5, 1, 10, 2, 15, 3, ___', a:'20', p:'Kanguru A: 5→10→15, aturannya <b>+5</b>. Giliran A berikutnya: 15+5 = <b>20</b>. (Kanguru B: 1→2→3, +1.)'},
+  {q:'7, 4, 9, 6, 11, 8, ___', a:'13', p:'Kanguru A: 7→9→11, aturannya <b>+2</b>. Giliran A berikutnya: 11+2 = <b>13</b>. (Kanguru B: 4→6→8, +2.)'},
+  {q:'Pada pola 12, 3, 14, 5, 16, 7, ..., setiap loncatan suku ke-1 → ke-3 → ke-5 naik sebesar ___', a:'2', p:'Suku ke-1 → ke-3 → ke-5 (Kanguru A): 12→14→16. Naiknya 14−12 = 2 dan 16−14 = 2, jadi aturannya <b>+2</b>. (Kanguru B: 3→5→7, juga +2.)'},
+  {q:'3, 20, 6, 23, 9, 26, ___', a:'12', p:'Kanguru A: 3→6→9, aturannya <b>+3</b>. Giliran A berikutnya: 9+3 = <b>12</b>. (Kanguru B: 20→23→26, +3.)'},
+  {q:'100, 1, 90, 2, 80, 3, ___', a:'70', p:'Kanguru A: 100→90→80, aturannya <b>−10</b> (menurun). Giliran A berikutnya: 80−10 = <b>70</b>. (Kanguru B: 1→2→3, +1.)'},
+  {q:'Pola 9, 6, 11, 8, 13, 10, 15, .... Suku ke-8 adalah ___', a:'12', p:'Suku ke-8 termasuk Kanguru B (suku ke-2, 4, 6, 8): 6→8→10→<b>12</b>, aturannya +2. (Kanguru A: 9→11→13→15, +2.)'}
+ ],
+ dikali: [
+  {q:'1, 2, 4, 8, ___', a:'16', p:'Aturannya <b>dikali 2</b> (×2): 1×2=2, 2×2=4, 4×2=8. Jadi 8×2 = <b>16</b>.'},
+  {q:'2, 4, 8, 16, ___', a:'32', p:'Aturannya <b>×2</b>: 2×2=4, 4×2=8, 8×2=16. Jadi 16×2 = <b>32</b>.'},
+  {q:'1, 3, 9, 27, ___', a:'81', p:'Aturannya <b>dikali 3</b> (×3): 1×3=3, 3×3=9, 9×3=27. Jadi 27×3 = <b>81</b>.'},
+  {q:'3, 6, 12, 24, ___', a:'48', p:'Aturannya <b>×2</b>: 3×2=6, 6×2=12, 12×2=24. Jadi 24×2 = <b>48</b>.'},
+  {q:'5, 10, 20, 40, ___', a:'80', p:'Aturannya <b>×2</b>: 5×2=10, 10×2=20, 20×2=40. Jadi 40×2 = <b>80</b>.'},
+  {q:'1, 5, 25, ___', a:'125', p:'Aturannya <b>dikali 5</b> (×5): 1×5=5, 5×5=25. Jadi 25×5 = <b>125</b>.'},
+  {q:'4, 12, 36, ___', a:'108', p:'Aturannya <b>dikali 3</b> (×3): 4×3=12, 12×3=36. Jadi 36×3 = <b>108</b>.'},
+  {q:'2, 6, 18, 54, ___', a:'162', p:'Aturannya <b>×3</b>: 2×3=6, 6×3=18, 18×3=54. Jadi 54×3 = <b>162</b>.'},
+  {q:'1, 2, 4, 8, 16, 32, ___', a:'64', p:'Aturannya <b>×2</b> terus: 32×2 = <b>64</b>.'},
+  {q:'10, 20, 40, 80, ___', a:'160', p:'Aturannya <b>×2</b>: 10×2=20, 20×2=40, 40×2=80. Jadi 80×2 = <b>160</b>.'}
+ ],
+ bertingkat: [
+  {q:'1, 2, 4, 7, 11, ___', a:'16', p:'Selisihnya: +1, +2, +3, +4 (naik 1 terus). Berikutnya +5: 11+5 = <b>16</b>.'},
+  {q:'2, 3, 5, 8, 12, ___', a:'17', p:'Selisihnya: +1, +2, +3, +4. Berikutnya +5: 12+5 = <b>17</b>.'},
+  {q:'1, 3, 6, 10, 15, ___', a:'21', p:'Selisihnya: +2, +3, +4, +5. Berikutnya +6: 15+6 = <b>21</b>.'},
+  {q:'3, 4, 6, 9, 13, ___', a:'18', p:'Selisihnya: +1, +2, +3, +4. Berikutnya +5: 13+5 = <b>18</b>.'},
+  {q:'2, 4, 8, 14, 22, ___', a:'32', p:'Selisihnya: +2, +4, +6, +8 (bilangan genap). Berikutnya +10: 22+10 = <b>32</b>.'},
+  {q:'5, 6, 8, 11, 15, ___', a:'20', p:'Selisihnya: +1, +2, +3, +4. Berikutnya +5: 15+5 = <b>20</b>.'},
+  {q:'1, 2, 4, 7, 11, 16, ___', a:'22', p:'Selisihnya: +1, +2, +3, +4, +5. Berikutnya +6: 16+6 = <b>22</b>.'},
+  {q:'20, 21, 23, 26, 30, ___', a:'35', p:'Selisihnya: +1, +2, +3, +4. Berikutnya +5: 30+5 = <b>35</b>.'},
+  {q:'1, 4, 8, 13, 19, ___', a:'26', p:'Selisihnya: +3, +4, +5, +6. Berikutnya +7: 19+7 = <b>26</b>.'},
+  {q:'4, 5, 7, 10, 14, ___', a:'19', p:'Selisihnya: +1, +2, +3, +4. Berikutnya +5: 14+5 = <b>19</b>.'}
+ ],
+ fibonacci: [
+  {q:'1, 1, 2, 3, 5, ___', a:'8', p:'Aturan Fibonacci: jumlahkan <b>dua bilangan sebelumnya</b>. 3+5 = <b>8</b>.'},
+  {q:'1, 1, 2, 3, 5, 8, ___', a:'13', p:'Jumlahkan dua bilangan di depannya: 5+8 = <b>13</b>.'},
+  {q:'2, 2, 4, 6, 10, ___', a:'16', p:'Cek: 2+2=4, 2+4=6, 4+6=10. Berikutnya 6+10 = <b>16</b>.'},
+  {q:'1, 1, 2, 3, 5, 8, 13, ___', a:'21', p:'Jumlahkan dua bilangan sebelumnya: 8+13 = <b>21</b>.'},
+  {q:'3, 5, 8, 13, 21, ___', a:'34', p:'Cek: 3+5=8, 5+8=13, 8+13=21. Berikutnya 13+21 = <b>34</b>.'},
+  {q:'1, 4, 5, 9, 14, ___', a:'23', p:'Cek: 1+4=5, 4+5=9, 5+9=14. Berikutnya 9+14 = <b>23</b>.'},
+  {q:'2, 3, 5, 8, 13, ___', a:'21', p:'Cek: 2+3=5, 3+5=8, 5+8=13. Berikutnya 8+13 = <b>21</b>.'},
+  {q:'4, 4, 8, 12, 20, ___', a:'32', p:'Cek: 4+4=8, 4+8=12, 8+12=20. Berikutnya 12+20 = <b>32</b>.'},
+  {q:'1, 1, 2, 3, 5, 8, 13, 21, 34, ___', a:'55', p:'Jumlahkan dua bilangan sebelumnya: 21+34 = <b>55</b>.'},
+  {q:'5, 8, 13, 21, 34, ___', a:'55', p:'Cek: 5+8=13, 8+13=21, 13+21=34. Berikutnya 21+34 = <b>55</b>.'}
+ ]
+};
+
+const LAT_TITLES = {
+ membesar:'Pola Membesar', mengecil:'Pola Mengecil', kuadrat:'Pola Kuadrat',
+ loncat:'Pola Loncat 1 Bilangan', dikali:'Pola Dikali',
+ bertingkat:'Pola Bertingkat', fibonacci:'Pola Fibonacci'
+};
+
+/* ================= DATA GAME (8 ronde) ================= */
+const GAME = [
+ {seq:'3, 6, 9, 12, ?',      opts:['14','15','16'],  ans:1, type:'Pola Membesar (+3)'},
+ {seq:'20, 18, 16, 14, ?',   opts:['13','12','11'],  ans:1, type:'Pola Mengecil (−2)'},
+ {seq:'4, 9, 5, 10, 6, ?',    opts:['10','11','12'],  ans:1, type:'Loncat 1 Bilangan (A: +1, B: +1)'},
+ {seq:'1, 4, 9, 16, ?',      opts:['20','24','25'],  ans:2, type:'Pola Kuadrat'},
+ {seq:'5, 10, 20, 40, ?',    opts:['50','60','80'],  ans:2, type:'Pola Dikali (×2)'},
+ {seq:'1, 2, 4, 7, 11, ?',   opts:['15','16','17'],  ans:1, type:'Pola Bertingkat'},
+ {seq:'1, 1, 2, 3, 5, ?',    opts:['6','7','8'],     ans:2, type:'Pola Fibonacci'},
+ {seq:'2, 6, 18, 54, ?',     opts:['108','162','216'], ans:1, type:'Pola Dikali (×3)'}
+];
+const GAME_TIME = 15;
+
+/* ================= DATA EXIT TICKET (3 soal) ================= */
+const EXIT = [
+ {q:'Pola 4, 8, 12, 16, .... Bilangan berikutnya adalah ...',
+  opts:['18','20','22'], ans:1,
+  p:'Selisihnya selalu <b>+4</b> (4+4=8, 8+4=12, 12+4=16). Jadi 16+4 = <b>20</b>. Ini pola membesar.'},
+ {q:'Pola 1, 2, 4, 7, 11, .... Bilangan berikutnya adalah ...',
+  opts:['15','16','17'], ans:1,
+  p:'Selisihnya bertingkat: <b>+1, +2, +3, +4</b>. Berikutnya selisihnya +5, jadi 11+5 = <b>16</b>.'},
+ {q:'Pola 1, 1, 2, 3, 5, .... Bilangan berikutnya adalah ...',
+  opts:['6','7','8'], ans:2,
+  p:'Aturan Fibonacci: jumlahkan dua bilangan sebelumnya → 3+5 = <b>8</b>.'}
+];
+
+/* ================= NAVIGASI SLIDE ================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+const barfill = document.getElementById('barfill');
+const counterEl = document.getElementById('counter');
+const scoreEl = document.getElementById('score');
+const navTitle = document.getElementById('nav-title');
+const menuOverlay = document.getElementById('menu-overlay');
+let cur = 0;
+
+function go(i){
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  slides[cur].classList.remove('active');
+  cur = i;
+  slides[cur].classList.add('active');
+  window.scrollTo(0, 0);
+  barfill.style.width = (cur / (slides.length - 1) * 100) + '%';
+  counterEl.textContent = (cur + 1) + '/' + slides.length;
+  navTitle.textContent = slides[cur].dataset.title;
+  stopGameTimer();
+  resumeGame();
+  closeMenu();
+  refreshMenu();
+}
+document.querySelectorAll('[data-go]').forEach(b =>
+  b.addEventListener('click', () => go(+b.dataset.go)));
+document.getElementById('btn-prev').addEventListener('click', () => go(cur - 1));
+document.getElementById('btn-next').addEventListener('click', () => go(cur + 1));
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){ closeMenu(); return; }
+  const t = e.target;
+  if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
+  if(e.key === 'ArrowRight') go(cur + 1);
+  else if(e.key === 'ArrowLeft') go(cur - 1);
+});
+
+/* ================= MENU DAFTAR SLIDE ================= */
+function buildMenu(){
+  const list = document.getElementById('menu-list');
+  let lastGroup = null;
+  slides.forEach((s, idx) => {
+    const grp = s.dataset.group || 'Lainnya';
+    if(grp !== lastGroup){
+      lastGroup = grp;
+      const h = document.createElement('div');
+      h.className = 'menu-group';
+      h.textContent = grp;
+      list.appendChild(h);
+    }
+    const b = document.createElement('button');
+    b.className = 'menu-item';
+    b.dataset.idx = idx;
+    b.textContent = (idx + 1) + '. ' + s.dataset.title;
+    b.addEventListener('click', () => go(idx));
+    list.appendChild(b);
+  });
+}
+function refreshMenu(){
+  document.querySelectorAll('.menu-item').forEach(b =>
+    b.classList.toggle('cur', +b.dataset.idx === cur));
+}
+function openMenu(){ menuOverlay.classList.add('open'); }
+function closeMenu(){ menuOverlay.classList.remove('open'); }
+document.getElementById('btn-menu').addEventListener('click', openMenu);
+document.getElementById('btn-menu-close').addEventListener('click', closeMenu);
+menuOverlay.addEventListener('click', e => { if(e.target === menuOverlay) closeMenu(); });
+
+/* ================= UTIL ================= */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function isAns(u, a){
+  const s = String(u).trim().replace(/[\s,]/g, '');
+  const t = String(a).trim();
+  if(s === '') return false;
+  if(s === t) return true;
+  const nu = Number(s), nt = Number(t);
+  return !isNaN(nu) && !isNaN(nt) && nu === nt;
+}
+function isSeq(s){ return /^[0-9][0-9 ,_\-…\.]*$/.test(String(s).trim()); }
+function burst(emojis, n){
+  emojis = emojis || ['🎉','⭐','✨'];
+  n = n || 12;
+  for(let k = 0; k < n; k++){
+    const s = document.createElement('span');
+    s.className = 'confetti';
+    s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    s.style.left = (4 + Math.random() * 90) + 'vw';
+    s.style.animationDelay = (Math.random() * 0.6) + 's';
+    s.style.fontSize = (20 + Math.random() * 18) + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 3300);
+  }
+}
+function doReveal(btn){
+  const ans = btn.parentElement.querySelector('.reveal-ans');
+  if(ans) ans.classList.add('show');
+  btn.disabled = true;
+  btn.textContent = '👍 Keren!';
+}
+function setMood(btn, msg){
+  document.querySelectorAll('.moodbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('mood-msg').textContent = msg;
+}
+
+/* ================= SKOR GLOBAL ================= */
+const correctSet = new Set();
+function updateScorePill(){ scoreEl.textContent = '⭐ ' + correctSet.size; }
+
+/* ================= RENDER LATIHAN (10 soal per materi) ================= */
+function renderLatihan(){
+  Object.keys(LAT).forEach(key => {
+    const box = document.getElementById('q-' + key);
+    if(!box) return;
+    LAT[key].forEach((it, i) => {
+      const id = key + '-' + i;
+      const card = document.createElement('div');
+      card.className = 'qcard';
+      const qHtml = isSeq(it.q)
+        ? '<div class="seqbox">' + esc(it.q) + '</div>'
+        : esc(it.q);
+      card.innerHTML =
+        '<div class="qhead"><span class="qnum">' + (i + 1) + '</span>' +
+        '<div class="qtext">' + qHtml + '</div></div>' +
+        '<div class="qrow">' +
+          '<input class="qinput" type="text" inputmode="numeric" placeholder="?" aria-label="Jawaban soal ' + (i + 1) + '">' +
+          '<button class="btn small chk">✅ Cek Jawaban</button>' +
+          '<button class="btn small ghost retry">🔄 Coba Lagi</button>' +
+        '</div>' +
+        '<div class="feedback"></div>' +
+        '<div class="pembahasan">💡 <b>Pembahasan:</b> ' + it.p + '</div>';
+      const input = card.querySelector('.qinput');
+      const chk = card.querySelector('.chk');
+      const retry = card.querySelector('.retry');
+      const fb = card.querySelector('.feedback');
+      const pem = card.querySelector('.pembahasan');
+      function doCheck(){
+        if(chk.dataset.locked === '1') return;
+        if(input.value.trim() === ''){
+          fb.className = 'feedback no';
+          fb.textContent = '✏️ Tulis dulu jawabanmu di kotak, ya!';
+          return;
+        }
+        if(isAns(input.value, it.a)){
+          chk.dataset.locked = '1';
+          fb.className = 'feedback ok';
+          fb.textContent = '🎉 Benar! Jawabanmu tepat: ' + it.a + '.';
+          pem.classList.add('show');
+          input.readOnly = true;
+          chk.textContent = '✔ Tepat!';
+          if(!correctSet.has(id)){
+            correctSet.add(id);
+            updateScorePill();
+            updateSecScore(key);
+          }
+          burst(['⭐','✨'], 6);
+        } else {
+          fb.className = 'feedback no';
+          fb.textContent = '😅 Belum tepat. Coba lagi, atau pelajari pembahasannya di bawah!';
+          pem.classList.add('show');
+        }
+      }
+      chk.addEventListener('click', doCheck);
+      input.addEventListener('keydown', e => { if(e.key === 'Enter') doCheck(); });
+      retry.addEventListener('click', () => {
+        chk.dataset.locked = '0';
+        input.value = '';
+        input.readOnly = false;
+        fb.className = 'feedback';
+        fb.textContent = '';
+        pem.classList.remove('show');
+        chk.textContent = '✅ Cek Jawaban';
+        input.focus();
+      });
+      box.appendChild(card);
+    });
+  });
+}
+function updateSecScore(key){
+  const items = LAT[key];
+  let n = 0;
+  items.forEach((_, i) => { if(correctSet.has(key + '-' + i)) n++; });
+  const el = document.getElementById('score-' + key);
+  if(el) el.textContent = 'Benar: ' + n + '/' + items.length;
+  const done = document.getElementById('done-' + key);
+  if(done && n === items.length && !done.classList.contains('show')){
+    done.classList.add('show');
+    burst(['🎉','🏆','⭐','✨'], 20);
+  }
+}
+
+/* ================= EXIT TICKET (3 soal pilihan) ================= */
+function renderExit(){
+  const list = document.getElementById('exit-list');
+  EXIT.forEach((it, i) => {
+    const id = 'exit-' + i;
+    const card = document.createElement('div');
+    card.className = 'qcard';
+    card.innerHTML =
+      '<div class="qhead"><span class="qnum">' + (i + 1) + '</span>' +
+      '<div class="qtext">' + esc(it.q) + '</div></div>' +
+      '<div class="opts">' + it.opts.map((o, oi) =>
+        '<button class="opt" data-oi="' + oi + '">' + esc(o) + '</button>').join('') + '</div>' +
+      '<div class="qrow"><button class="btn small chk">✅ Cek Jawaban</button></div>' +
+      '<div class="feedback"></div>' +
+      '<div class="pembahasan">💡 <b>Pembahasan:</b> ' + it.p + '</div>';
+    let chosen = -1;
+    card.querySelectorAll('.opt').forEach(b =>
+      b.addEventListener('click', () => {
+        if(card.dataset.locked === '1') return;
+        card.querySelectorAll('.opt').forEach(x => x.classList.remove('selected'));
+        b.classList.add('selected');
+        chosen = +b.dataset.oi;
+      }));
+    const chk = card.querySelector('.chk');
+    const fb = card.querySelector('.feedback');
+    const pem = card.querySelector('.pembahasan');
+    chk.addEventListener('click', () => {
+      if(card.dataset.locked === '1') return;
+      if(chosen < 0){
+        fb.className = 'feedback no';
+        fb.textContent = '👆 Pilih dulu salah satu jawaban, ya!';
+        return;
+      }
+      card.dataset.locked = '1';
+      card.querySelectorAll('.opt').forEach(x => {
+        x.disabled = true;
+        const oi = +x.dataset.oi;
+        if(oi === it.ans) x.classList.add('correct');
+        else if(oi === chosen) x.classList.add('wrong');
+      });
+      if(chosen === it.ans){
+        fb.className = 'feedback ok';
+        fb.textContent = '🎉 Benar! Jawabanmu tepat.';
+        if(!correctSet.has(id)){
+          correctSet.add(id);
+          updateScorePill();
+          checkExitDone();
+        }
+      } else {
+        fb.className = 'feedback no';
+        fb.textContent = '😅 Belum tepat. Jawaban benar ditandai hijau — pelajari pembahasannya, ya!';
+      }
+      pem.classList.add('show');
+    });
+    list.appendChild(card);
+  });
+}
+function checkExitDone(){
+  let n = 0;
+  EXIT.forEach((_, i) => { if(correctSet.has('exit-' + i)) n++; });
+  if(n === EXIT.length){
+    document.getElementById('exit-done').classList.add('show');
+    burst(['🎉','🌟','🎟️','⭐'], 20);
+  }
+}
+
+/* ================= GAME: TANTANGAN POLA ================= */
+const gEl = {
+  start: document.getElementById('game-start'),
+  play: document.getElementById('game-play'),
+  end: document.getElementById('game-end'),
+  round: document.getElementById('g-round'),
+  lives: document.getElementById('g-lives'),
+  score: document.getElementById('g-score'),
+  type: document.getElementById('g-type'),
+  seq: document.getElementById('g-seq'),
+  opts: document.getElementById('g-opts'),
+  fb: document.getElementById('g-feedback'),
+  timer: document.getElementById('g-timerfill'),
+  endEmoji: document.getElementById('g-end-emoji'),
+  endTitle: document.getElementById('g-end-title'),
+  endScore: document.getElementById('g-end-score'),
+  stars: document.getElementById('g-stars'),
+  endMsg: document.getElementById('g-end-msg')
+};
+let g = { i:0, score:0, lives:3, t:GAME_TIME, timer:null, locked:false };
+let gTimeout = null;
+
+function stopGameTimer(){
+  if(g.timer){ clearInterval(g.timer); g.timer = null; }
+  if(gTimeout){ clearTimeout(gTimeout); gTimeout = null; }
+}
+function resumeGame(){
+  if(slides[cur].dataset.group !== 'Game' || gEl.play.hidden) return;
+  if(g.locked){
+    // transisi ronde tertahan karena pindah slide — lanjutkan
+    if(!gTimeout) gTimeout = setTimeout(nextRound, 400);
+  } else if(!g.timer){
+    g.timer = setInterval(tick, 100);
+  }
+}
+function hearts(){
+  return '❤️'.repeat(Math.max(0, g.lives)) + '🖤'.repeat(Math.max(0, 3 - g.lives));
+}
+function startGame(){
+  stopGameTimer();
+  g = { i:0, score:0, lives:3, t:GAME_TIME, timer:null, locked:false };
+  gEl.start.hidden = true;
+  gEl.end.hidden = true;
+  gEl.play.hidden = false;
+  showRound();
+}
+function showRound(){
+  stopGameTimer();
+  g.locked = false;
+  g.t = GAME_TIME;
+  const q = GAME[g.i];
+  gEl.round.textContent = 'Ronde ' + (g.i + 1) + '/' + GAME.length;
+  gEl.lives.textContent = hearts();
+  gEl.score.textContent = '⭐ Poin: ' + g.score;
+  gEl.type.textContent = '✨ ' + q.type;
+  gEl.seq.textContent = q.seq;
+  gEl.fb.className = 'feedback';
+  gEl.fb.textContent = '';
+  gEl.timer.style.width = '100%';
+  gEl.timer.style.background = 'linear-gradient(90deg,#00b894,#fdcb6e)';
+  const idxs = q.opts.map((_, k) => k).sort(() => Math.random() - 0.5);
+  gEl.opts.innerHTML = '';
+  idxs.forEach(oi => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.dataset.oi = oi;
+    b.textContent = q.opts[oi];
+    b.addEventListener('click', () => pick(b, oi));
+    gEl.opts.appendChild(b);
+  });
+  g.timer = setInterval(tick, 100);
+}
+function tick(){
+  if(g.locked) return;
+  g.t -= 0.1;
+  if(g.t <= 0){
+    g.t = 0;
+    gEl.timer.style.width = '0%';
+    timeout();
+    return;
+  }
+  gEl.timer.style.width = (g.t / GAME_TIME * 100) + '%';
+  if(g.t <= 5) gEl.timer.style.background = 'linear-gradient(90deg,#d63031,#e17055)';
+}
+function lockOptions(correctOi, chosenOi){
+  gEl.opts.querySelectorAll('.opt').forEach(b => {
+    b.disabled = true;
+    if(+b.dataset.oi === correctOi) b.classList.add('correct');
+    else if(chosenOi !== null && +b.dataset.oi === chosenOi) b.classList.add('wrong');
+  });
+}
+function pick(btn, oi){
+  if(g.locked) return;
+  g.locked = true;
+  stopGameTimer();
+  const q = GAME[g.i];
+  if(oi === q.ans){
+    g.score += 10;
+    gEl.fb.className = 'feedback ok';
+    gEl.fb.textContent = '✅ Benar! +10 poin. Jawabannya ' + q.opts[q.ans] + '.';
+    gEl.opts.querySelectorAll('.opt').forEach(x => x.disabled = true);
+    btn.classList.add('correct');
+    burst(['⭐','✨'], 6);
+  } else {
+    g.lives--;
+    gEl.fb.className = 'feedback no';
+    gEl.fb.textContent = '❌ Belum tepat. Jawaban benar: ' + q.opts[q.ans] + '.';
+    lockOptions(q.ans, oi);
+  }
+  gEl.lives.textContent = hearts();
+  gEl.score.textContent = '⭐ Poin: ' + g.score;
+  gTimeout = setTimeout(nextRound, 1500);
+}
+function timeout(){
+  if(g.locked) return;
+  g.locked = true;
+  stopGameTimer();
+  const q = GAME[g.i];
+  g.lives--;
+  gEl.fb.className = 'feedback no';
+  gEl.fb.textContent = '⏰ Waktu habis! Jawaban benar: ' + q.opts[q.ans] + '.';
+  lockOptions(q.ans, null);
+  gEl.lives.textContent = hearts();
+  gTimeout = setTimeout(nextRound, 1500);
+}
+function nextRound(){
+  gTimeout = null;
+  if(g.lives <= 0){ endGame(); return; }
+  g.i++;
+  if(g.i >= GAME.length){ endGame(); return; }
+  showRound();
+}
+function endGame(){
+  stopGameTimer();
+  gEl.play.hidden = true;
+  gEl.end.hidden = false;
+  let stars = 1;
+  if(g.score >= 70) stars = 3;
+  else if(g.score >= 40) stars = 2;
+  gEl.stars.textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+  if(stars === 3){
+    gEl.endEmoji.textContent = '🏆';
+    gEl.endTitle.textContent = 'Luar biasa, Detektif Pola!';
+    gEl.endMsg.textContent = 'Kamu menguasai semua jenis pola bilangan! 🎉';
+    burst(['🎉','🏆','⭐','✨','🌟'], 24);
+  } else if(stars === 2){
+    gEl.endEmoji.textContent = '🌟';
+    gEl.endTitle.textContent = 'Hebat!';
+    gEl.endMsg.textContent = 'Sedikit lagi menuju sempurna. Coba main lagi, atau lanjut ke exit ticket!';
+  } else {
+    gEl.endEmoji.textContent = '💪';
+    gEl.endTitle.textContent = 'Terus semangat!';
+    gEl.endMsg.textContent = 'Baca lagi materinya sebentar, lalu coba main lagi. Kamu pasti bisa!';
+  }
+  gEl.endScore.textContent = 'Poin akhir: ' + g.score + ' dari ' + (GAME.length * 10);
+}
+document.getElementById('btn-game-start').addEventListener('click', startGame);
+document.getElementById('btn-game-replay').addEventListener('click', startGame);
+
+/* ================= INISIALISASI ================= */
+buildMenu();
+refreshMenu();
+renderLatihan();
+renderExit();
+updateScorePill();
+</script>
+</body>
+</html>
